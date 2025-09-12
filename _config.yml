@@ -69,7 +69,7 @@ reCaptcha:
   secret                 :
 atom_feed:
   path                   : # blank (default) uses feed.xml
-  hide                   : # true, false (default)
+  hide                   : true
 search                   :  true
 search_full_content      :  true
 search_provider          :  lunr #(default), algolia, google
@@ -144,7 +144,6 @@ footer:
   links: []
   copyright: ""
   powered_by: false
-  feed: false
 
 # Reading Files
 include:

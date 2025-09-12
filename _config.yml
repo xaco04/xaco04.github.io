@@ -141,10 +141,10 @@ author:
 
 # Site Footer
 footer:
-  links: [] 
+  links: []
   copyright: ""
   powered_by: false
-
+  feed: false
 
 # Reading Files
 include:

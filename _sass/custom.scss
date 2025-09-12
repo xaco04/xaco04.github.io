@@ -1,0 +1,5 @@
+/* Oculta la barra inferior completa del footer */
+.site-footer .site-footer__links,
+.site-footer .site-footer__copyright {
+  display: none;
+}

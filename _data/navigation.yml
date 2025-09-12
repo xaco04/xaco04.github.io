@@ -1,11 +1,11 @@
 # main links
 main:
   - title: "Home"
-    url: https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/
+    url: https://xaco04.github.io/
   - title: "Blog"
-    url: https://mmistakes.github.io/minimal-mistakes/about/
+    url: https://xaco04.github.io/
   - title: "Proyectos"
-    url: /year-archive/
+    url: https://xaco04.github.io/
   - title: "Sobre mí"
-    url: /collection-archive/
+    url: https://xaco04.github.io/
 

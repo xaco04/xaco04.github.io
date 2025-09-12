@@ -3,3 +3,8 @@
 .site-footer .site-footer__copyright {
   display: none;
 }
+
+/* Oculta todo el footer de Minimal Mistakes */
+footer.site-footer {
+  display: none !important;
+}

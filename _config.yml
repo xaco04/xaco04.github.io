@@ -45,9 +45,9 @@ comments:
     # https://developers.facebook.com/docs/plugins/comments
     appid                :
     num_posts            : # 5 (default)
-    colorscheme          : # "light" (default), "dark"
+    colorscheme          : "dark"
   utterances:
-    theme                : # "github-light" (default), "github-dark"
+    theme                : "github-dark"
     issue_term           : # "pathname" (default)
   giscus:
     repo_id              : ""
@@ -119,7 +119,6 @@ author:
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
   bio              : "DevOps entusiasta que se divierte automatizando infraestructuras y domando sistemas Linux. Trabajo con AWS, RHEL, Ansible y estoy explorando el mundo de OpenShift. Cuando no estoy entre servidores y pipelines, me verás de ruta en la montaña o en Steam :)"
   location         : "Catalonia/Spain"
-  email            : "xavivico04@gmail.com"
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<url>
+<loc>http://localhost:4000/seguridad/red%20hat/open%20source/Seguridad-empresarial-con-red-hat/</loc>
+<lastmod>2025-09-15T00:00:00+02:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/automation/ansible/redhat/AAP-Guia-de-instalacion-2.5/</loc>
+<lastmod>2025-10-01T00:00:00+02:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/projects/JetXpeRience/</loc>
+<lastmod>2023-09-15T00:00:00+02:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/about/</loc>
+<lastmod>2025-10-01T16:30:00+02:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/projects/</loc>
+</url>
+</urlset>

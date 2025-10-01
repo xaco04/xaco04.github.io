@@ -1,0 +1,1143 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="es" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Red Hat Ansible Automation Platform 2.5: Guía de Instalación en RHEL 10 (Topología Growth Contenerizada) - Xavi Vico Marti</title>
+<meta name="description" content="Sumérgete en la instalación de Red Hat Ansible Automation Platform 2.5 en RHEL 10. Guía práctica para configurar una topología ‘Growth’ contenerizada, ideal para desarrollo y pruebas.">
+
+
+  <meta name="author" content="Xavi Vico Marti">
+  
+  <meta property="article:author" content="Xavi Vico Marti">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="es">
+<meta property="og:site_name" content="Xavi Vico Marti">
+<meta property="og:title" content="Red Hat Ansible Automation Platform 2.5: Guía de Instalación en RHEL 10 (Topología Growth Contenerizada)">
+<meta property="og:url" content="http://localhost:4000/automation/ansible/redhat/AAP-Guia-de-instalacion-2.5/">
+
+
+  <meta property="og:description" content="Sumérgete en la instalación de Red Hat Ansible Automation Platform 2.5 en RHEL 10. Guía práctica para configurar una topología ‘Growth’ contenerizada, ideal para desarrollo y pruebas.">
+
+
+
+  <meta property="og:image" content="http://localhost:4000/assets/images/RedHatbanner.png">
+
+
+
+
+
+  <meta property="article:published_time" content="2025-10-01T00:00:00+02:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/automation/ansible/redhat/AAP-Guia-de-instalacion-2.5/">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+<!-- Al final del head -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+<link rel="icon" href="/assets/images/faviconsol.png" type="image/x-icon">
+<link rel="shortcut icon" href="/assets/images/faviconsol.png" type="image/x-icon">
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single wide" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Saltar a navegación principal</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Saltar a contenido</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Saltar a pie</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/"><img src="/assets/images/xaco04logo.png" alt=" "></a>
+        
+        <a class="site-title" href="/">
+          
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/"
+                
+                
+              >Home</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/"
+                
+                
+              >Blog</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/projects/"
+                
+                
+              >Projects</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/about/"
+                
+                
+              >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Alternar búsqueda</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Alternar menú</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+  
+
+
+
+
+
+
+
+<div class="page__hero--overlay"
+  style=" background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/assets/images/RedHatbanner.png');"
+>
+  
+    <div class="wrapper">
+      <h1 id="page-title" class="page__title" itemprop="headline">
+        
+          Red Hat Ansible Automation Platform 2.5: Guía de Instalación en RHEL 10 (Topología Growth Contenerizada)
+
+        
+      </h1>
+      
+        <p class="page__lead">Sumérgete en la instalación de Red Hat Ansible Automation Platform 2.5 en RHEL 10. Guía práctica para configurar una topología ‘Growth’ contenerizada, ideal para desarrollo y pruebas.
+</p>
+      
+      
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          14 minuto(s) de lectura
+        
+      </span>
+    
+  </p>
+
+
+      
+    </div>
+  
+  
+</div>
+
+
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/assets/images/githublogo.png" alt="Xavi Vico Marti" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">Xavi Vico Marti</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Seguir</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Catalonia/Spain</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:xavivico04@gmail.com" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="https://github.com/xaco04" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Red Hat Ansible Automation Platform 2.5: Guía de Instalación en RHEL 10 (Topología Growth Contenerizada)">
+    <meta itemprop="description" content="Sumérgete en la instalación de Red Hat Ansible Automation Platform 2.5 en RHEL 10. Guía práctica para configurar una topología ‘Growth’ contenerizada, ideal para desarrollo y pruebas.">
+    <meta itemprop="datePublished" content="2025-10-01T00:00:00+02:00">
+    
+
+    <div class="page__inner-wrap">
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right ">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> En esta página</h4></header>
+              <ul class="toc__menu"><li><a href="#red-hat-ansible-automation-platform-25-tu-guía-práctica-de-instalación-en-rhel-10-topología-growth-contenerizada">Red Hat Ansible Automation Platform 2.5: Tu Guía Práctica de Instalación en RHEL 10 (Topología Growth Contenerizada)</a><ul><li><a href="#introducción">Introducción</a></li><li><a href="#entendiendo-ansible-automation-platform-aap">Entendiendo Ansible Automation Platform (AAP)</a></li><li><a href="#topologías-y-métodos-de-instalación">Topologías y Métodos de Instalación</a></li><li><a href="#componentes">Componentes</a></li><li><a href="#detalles-técnicos">Detalles Técnicos</a><ul><li><a href="#virtual-machine-requirements">Virtual machine requirements</a></li><li><a href="#system-configuration">System configuration</a></li><li><a href="#network-ports-and-protocols">Network ports and protocols</a></li></ul></li><li><a href="#instalación-de-ansible-automation-platform">Instalación de Ansible Automation Platform</a><ul><li><a href="#preparación-del-sistema-operativo">Preparación del Sistema Operativo</a></li><li><a href="#descarga-del-instalador-de-ansible-automation-platform">Descarga del Instalador de Ansible Automation Platform</a></li><li><a href="#configuración-del-archivo-de-inventario">Configuración del Archivo de Inventario</a></li></ul></li></ul></li></ul>
+            </nav>
+          </aside>
+        
+        <h2 id="red-hat-ansible-automation-platform-25-tu-guía-práctica-de-instalación-en-rhel-10-topología-growth-contenerizada">Red Hat Ansible Automation Platform 2.5: Tu Guía Práctica de Instalación en RHEL 10 (Topología Growth Contenerizada)</h2>
+
+<h3 id="introducción">Introducción</h3>
+
+<p>En esta guía, nos sumergiremos en el proceso de instalación de Red Hat Ansible Automation Platform (AAP) 2.5 en un entorno Red Hat Enterprise Linux (RHEL) 10. Nuestro objetivo es que puedas configurar rápidamente AAP utilizando una topología “Growth” contenerizada, lo que significa que todos los componentes se instalarán en una única máquina virtual.</p>
+
+<p>Desde mi experiencia, esta configuración es perfecta para desarrolladores, para realizar pruebas o para pequeñas implementaciones donde estás comenzando a explorar el poder de la automatización con AAP. Además, lo mejor de esta topología es su flexibilidad: si tus necesidades crecen, siempre podrás escalar a una arquitectura “Enterprise” más compleja, con alta disponibilidad y recursos distribuidos.</p>
+
+<p>A lo largo de este artículo, te guiaré por los requisitos previos del sistema, la configuración esencial del entorno y un repaso por los componentes clave de AAP, para que tengas una base sólida antes de empezar la instalación paso a paso.</p>
+
+<h3 id="entendiendo-ansible-automation-platform-aap">Entendiendo Ansible Automation Platform (AAP)</h3>
+
+<p>Antes de meternos de lleno en los detalles técnicos, es fundamental entender qué es exactamente Ansible Automation Platform y por qué se ha convertido en una herramienta tan valiosa.</p>
+
+<p>Para situarnos mejor, vamos a entender conceptos:</p>
+
+<ul>
+  <li><strong>Ansible</strong>: el motor de automatización, la herramienta base que permite definir y ejecutar tareas en servidores y sistemas.</li>
+  <li><strong>AWX</strong>: el proyecto open source que añade una interfaz gráfica y servicios básicos para gestionar Ansible de forma más cómoda.</li>
+  <li><strong>AAP (Ansible Automation Platform)</strong>: la versión empresarial respaldada por Red Hat, que parte de AWX y lo expande con seguridad, soporte oficial y funcionalidades avanzadas para producción y grandes organizaciones.</li>
+</ul>
+
+<p>Imagina que tienes que realizar la misma tarea repetidamente en decenas, o incluso cientos, de servidores o sistemas. Suena aburrido y un palo…, Ansible nació para resolver ese problema, permite escribir instrucciones que tus sistemas pueden ejecutar por ti, como, por ejemplo: “instalar un servidor web Apache en todos mis servidores Linux”. Pues bien, AAP eleva esta capacidad a un nivel empresarial.</p>
+
+<p>Piensa en AAP como la versión corporativa y robusta de AWX, el proyecto de código abierto y gratuito de Ansible. Mientras que AWX es fantástico para experimentar y familiarizarte con la interfaz y los conceptos de automatización, AAP añade capas críticas de seguridad, un soporte oficial de Red Hat inestimable, y herramientas avanzadas para gestionar entornos de gran escala con total confianza. No se limita a ejecutar comandos; AAP te ayuda a orquestar procesos complejos, centralizar inventarios y credenciales, y facilitar el trabajo en equipo a través de una interfaz gráfica intuitiva.</p>
+
+<p>Muchas organizaciones empiezan con AWX para probar las aguas, pero cuando la automatización se convierte en un pilar fundamental de sus operaciones, necesitan una plataforma estable, respaldada y con funcionalidades avanzadas. Ahí es precisamente donde brilla AAP, incluyendo componentes como Automation Controller, Execution Environments, Automation Mesh, acceso a contenido validado, parches de seguridad y, crucialmente, el soporte oficial de Red Hat.</p>
+
+<h3 id="topologías-y-métodos-de-instalación">Topologías y Métodos de Instalación</h3>
+
+<p>Cuando instalas Ansible Automation Platform, la forma en que decides organizar tu infraestructura se conoce como “topología”. Esto define cómo se distribuyen los diferentes componentes de AAP en tus servidores y cómo se interconectan para asegurar un rendimiento óptimo y una operación estable.</p>
+
+<p>Red Hat valida y recomienda ciertas topologías de despliegue para asegurar que la plataforma funcione de manera fiable y con soporte completo:</p>
+
+<ul>
+  <li><strong>Topología Enterprise</strong>: Diseñada para organizaciones grandes o entornos de producción críticos. Se enfoca en alta disponibilidad, máximo rendimiento y escalabilidad para manejar grandes volúmenes de usuarios y cargas de trabajo sin interrupciones.</li>
+  <li><strong>Topología Growth</strong>: Ideal para organizaciones más pequeñas, entornos de desarrollo o con recursos limitados. Permite un despliegue más simple y económico al principio, con la flexibilidad de crecer y escalar a medida que tus necesidades evolucionan.</li>
+</ul>
+
+<p>Es importante recordar que, si bien puedes instalar AAP en otras configuraciones, Red Hat solo garantiza soporte completo para las topologías que ellos mismos han probado y publicado. Utilizar una topología validada asegura que tu plataforma sea estable y confiable a largo plazo.</p>
+
+<p>Existen tres métodos principales para instalar y desplegar Ansible Automation Platform 2.5, dependiendo de tu infraestructura y tus preferencias de gestión. Para esta guía, nos centraremos en el método “Contenedores” y la topología “Growth”.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Método</th>
+      <th style="text-align: left">Infraestructura</th>
+      <th style="text-align: left">Descripción</th>
+      <th style="text-align: left">Topologías probadas</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">RPM</td>
+      <td style="text-align: left">Máquinas virtuales y servidores físicos</td>
+      <td style="text-align: left">El instalador RPM despliega AAP en Red Hat Enterprise Linux utilizando paquetes RPM. El cliente gestiona el ciclo de vida del producto e infraestructura.</td>
+      <td style="text-align: left">RPM growth topology, RPM enterprise topology</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Contenedores</td>
+      <td style="text-align: left">Máquinas virtuales y servidores físicos</td>
+      <td style="text-align: left">El instalador basado en contenedores utiliza Podman para ejecutar AAP en contenedores sobre RHEL. El cliente gestiona el ciclo de vida del producto e infraestructura.</td>
+      <td style="text-align: left">Container growth topology, Container enterprise topology</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Operator</td>
+      <td style="text-align: left">Red Hat OpenShift</td>
+      <td style="text-align: left">El operador despliega AAP dentro de OpenShift usando Red Hat OpenShift Operators. El cliente gestiona el ciclo de vida del producto e infraestructura.</td>
+      <td style="text-align: left">Operator growth topology, Operator enterprise topology</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="componentes">Componentes</h3>
+
+<p>Para armar el “rompecabezas” de Ansible Automation Platform, es crucial conocer las piezas que lo componen. AAP no es solo una herramienta, sino un ecosistema de servicios interconectados que trabajan juntos para potenciar tu automatización.</p>
+
+<p>A continuación, te presento un resumen de los componentes más importantes que debemos conocer, basándome en la documentación oficial de Red Hat y mi propia experiencia:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Componente</th>
+      <th style="text-align: left">Descripción</th>
+      <th style="text-align: left">¿Por qué importa?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Platform Gateway</td>
+      <td style="text-align: left">La puerta de entrada a AAP. Maneja autenticación, permisos y guarda un registro de cambios (activity stream).</td>
+      <td style="text-align: left">Te logueas una sola vez y accedes a todo. Además, tienes trazabilidad de lo que pasa.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Automation Controller</td>
+      <td style="text-align: left">El cerebro de la plataforma. Define, ejecuta y escala automatizaciones.</td>
+      <td style="text-align: left">Permite orquestar playbooks desde lo simple hasta lo empresarial.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Automation Hub</td>
+      <td style="text-align: left">El “mercado central” de colecciones certificadas por Red Hat y partners.</td>
+      <td style="text-align: left">Usas contenido probado y soportado, sin reinventar la rueda.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Private Automation Hub</td>
+      <td style="text-align: left">Tu propio hub privado y desconectado. Sincroniza contenido y guarda colecciones personalizadas.</td>
+      <td style="text-align: left">Ideal para entornos on-premise o integrados con CI/CD.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">High Availability Hub</td>
+      <td style="text-align: left">Una versión redundante y escalable del hub con múltiples nodos.</td>
+      <td style="text-align: left">Alta disponibilidad = menos caídas y más tranquilidad.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Event-Driven Ansible Controller</td>
+      <td style="text-align: left">Automatización reactiva: escucha eventos y ejecuta acciones con rulebooks.</td>
+      <td style="text-align: left">Aumenta la agilidad y automatiza decisiones en tiempo real.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Automation Mesh</td>
+      <td style="text-align: left">Una red de nodos distribuida que reparte la carga de trabajo.</td>
+      <td style="text-align: left">Escalabilidad, resiliencia y flexibilidad en entornos grandes o dispersos.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Execution Environments</td>
+      <td style="text-align: left">Contenedores donde se ejecutan los playbooks. Incluyen motor + módulos.</td>
+      <td style="text-align: left">Portabilidad y consistencia: “si funciona aquí, funciona en todos lados”.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Ansible Galaxy</td>
+      <td style="text-align: left">Comunidad para compartir roles y colecciones.</td>
+      <td style="text-align: left">Reutilizas contenido y aceleras tus proyectos.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Content Navigator</td>
+      <td style="text-align: left">Interfaz de texto (TUI) y CLI principal para construir y ejecutar automatizaciones.</td>
+      <td style="text-align: left">Tu navaja suiza en la terminal, base de futuros IDEs.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">PostgreSQL</td>
+      <td style="text-align: left">Base de datos relacional donde se guarda todo: inventarios, credenciales, historial.</td>
+      <td style="text-align: left">La memoria de la plataforma.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="detalles-técnicos">Detalles Técnicos</h3>
+
+<p>Esta sección se enfoca en los requisitos validados por Red Hat para una instalación “Growth” contenerizada. Aquí te muestro el diseño y las especificaciones para desplegar AAP en una única máquina virtual, de forma clara y sencilla.</p>
+
+<h4 id="virtual-machine-requirements">Virtual machine requirements</h4>
+
+<p>Basándonos en la documentación de Red Hat, estos son los requisitos mínimos de hardware para tu VM de RHEL 10 en una topología “Growth”. Aunque estos son los mínimos, mi consejo es que, si puedes, siempre asignes un poco más, especialmente en RAM, para una mejor experiencia:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Requirement</th>
+      <th style="text-align: left">Minimum requirement</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">RAM</td>
+      <td style="text-align: left">16 GB</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">CPUs</td>
+      <td style="text-align: left">4</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Local disk</td>
+      <td style="text-align: left">Total available disk space: 60 GB<br />Installation directory: 15 GB (if on a dedicated partition)<br />/var/tmp for online installations: 1 GB<br />/var/tmp for offline or bundled installations: 3 GB<br />Temporary directory (defaults to /tmp) for offline or bundled installations: 10GB</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Disk IOPS</td>
+      <td style="text-align: left">3000</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="system-configuration">System configuration</h4>
+
+<p>Estos son los aspectos clave que tu sistema RHEL 10 debe cumplir, según la documentación de Red Hat. Presta especial atención a la suscripción, ya que es un paso que a menudo se pasa por alto y puede causar frustración:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Tipo</th>
+      <th style="text-align: left">Descripción</th>
+      <th style="text-align: left">Notas</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Suscripción</td>
+      <td style="text-align: left">Suscripción válida de Red Hat Ansible Automation Platform<br />Suscripción válida de Red Hat Enterprise Linux (para poder usar los repositorios BaseOS y AppStream)</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Sistema operativo</td>
+      <td style="text-align: left">Red Hat Enterprise Linux 9.2 o versiones menores posteriores de Red Hat Enterprise Linux 9.<br />Red Hat Enterprise Linux 10 o versiones menores posteriores de Red Hat Enterprise Linux 10.</td>
+      <td style="text-align: left">—</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Arquitectura de CPU</td>
+      <td style="text-align: left">x86_64, AArch64, s390x (IBM Z), ppc64le (IBM Power)</td>
+      <td style="text-align: left">—</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ansible-core</td>
+      <td style="text-align: left">RHEL 9: el programa de instalación usa <code class="language-plaintext highlighter-rouge">ansible-core</code> 2.14; la operación de Ansible Automation Platform usa <code class="language-plaintext highlighter-rouge">ansible-core</code> 2.16.<br />RHEL 10: el programa de instalación y la operación de Ansible Automation Platform usan <code class="language-plaintext highlighter-rouge">ansible-core</code> 2.16.</td>
+      <td style="text-align: left">El programa de instalación utiliza el paquete <code class="language-plaintext highlighter-rouge">ansible-core</code> del repositorio AppStream de RHEL. Ansible Automation Platform incluye <code class="language-plaintext highlighter-rouge">ansible-core</code> 2.16 para su operación, por lo que no es necesario instalarlo manualmente.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Navegador</td>
+      <td style="text-align: left">Una versión actualmente soportada de Mozilla Firefox o Google Chrome</td>
+      <td style="text-align: left">—</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Base de datos</td>
+      <td style="text-align: left">PostgreSQL 15</td>
+      <td style="text-align: left">Las bases de datos externas (soporte por el cliente) requieren soporte ICU.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="network-ports-and-protocols">Network ports and protocols</h4>
+
+<p>A continuación, se listan los puertos de red y protocolos que AAP utiliza para la comunicación entre sus componentes, según la documentación oficial de Red Hat. Es crucial que estos puertos estén abiertos en tu firewall para asegurar la correcta operación de la plataforma:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Port number</th>
+      <th style="text-align: left">Protocol</th>
+      <th style="text-align: left">Service</th>
+      <th style="text-align: left">Source</th>
+      <th style="text-align: left">Destination</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">80/443</td>
+      <td style="text-align: left">TCP</td>
+      <td style="text-align: left">HTTP/HTTPS</td>
+      <td style="text-align: left">Event-Driven Ansible</td>
+      <td style="text-align: left">Automation hub</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">80/443</td>
+      <td style="text-align: left">TCP</td>
+      <td style="text-align: left">HTTP/HTTPS</td>
+      <td style="text-align: left">Event-Driven Ansible</td>
+      <td style="text-align: left">Automation controller</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">80/443</td>
+      <td style="text-align: left">TCP</td>
+      <td style="text-align: left">HTTP/HTTPS</td>
+      <td style="text-align: left">Automation controller</td>
+      <td style="text-align: left">Automation hub</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">80/443</td>
+      <td style="text-align: left">TCP</td>
+      <td style="text-align: left">HTTP/HTTPS</td>
+      <td style="text-align: left">Platform gateway</td>
+      <td style="text-align: left">Automation controller</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">80/443</td>
+      <td style="text-align: left">TCP</td>
+      <td style="text-align: left">HTTP/HTTPS</td>
+      <td style="text-align: left">Platform gateway</td>
+      <td style="text-align: left">Automation hub</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">80/443</td>
+      <td style="text-align: left">TCP</td>
+      <td style="text-align: left">HTTP/HTTPS</td>
+      <td style="text-align: left">Platform gateway</td>
+      <td style="text-align: left">Event-Driven Ansible</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">5432</td>
+      <td style="text-align: left">TCP</td>
+      <td style="text-align: left">PostgreSQL</td>
+      <td style="text-align: left">Event-Driven Ansible</td>
+      <td style="text-align: left">External database</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">5432</td>
+      <td style="text-align: left">TCP</td>
+      <td style="text-align: left">PostgreSQL</td>
+      <td style="text-align: left">Platform gateway</td>
+      <td style="text-align: left">External database</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">5432</td>
+      <td style="text-align: left">TCP</td>
+      <td style="text-align: left">PostgreSQL</td>
+      <td style="text-align: left">Automation hub</td>
+      <td style="text-align: left">External database</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">5432</td>
+      <td style="text-align: left">TCP</td>
+      <td style="text-align: left">PostgreSQL</td>
+      <td style="text-align: left">Automation controller</td>
+      <td style="text-align: left">External database</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">6379</td>
+      <td style="text-align: left">TCP</td>
+      <td style="text-align: left">Redis</td>
+      <td style="text-align: left">Event-Driven Ansible</td>
+      <td style="text-align: left">Redis container</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">6379</td>
+      <td style="text-align: left">TCP</td>
+      <td style="text-align: left">Redis</td>
+      <td style="text-align: left">Platform gateway</td>
+      <td style="text-align: left">Redis container</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">8443</td>
+      <td style="text-align: left">TCP</td>
+      <td style="text-align: left">HTTPS</td>
+      <td style="text-align: left">Platform gateway</td>
+      <td style="text-align: left">Platform gateway</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">27199</td>
+      <td style="text-align: left">TCP</td>
+      <td style="text-align: left">Receptor</td>
+      <td style="text-align: left">Automation controller</td>
+      <td style="text-align: left">Execution container</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="instalación-de-ansible-automation-platform">Instalación de Ansible Automation Platform</h3>
+
+<p>La instalación de Ansible Automation Platform requiere una serie de pasos preparatorios para asegurar un despliegue sin problemas. Nos centraremos en una instalación “Growth” contenerizada en RHEL 10.</p>
+
+<h4 id="preparación-del-sistema-operativo">Preparación del Sistema Operativo</h4>
+
+<p><strong>Configuración del Usuario y Privilegios Sudo</strong></p>
+
+<p>Para la instalación, el usuario que ejecuta el instalador debe tener permisos para elevar privilegios a root sin necesidad de introducir una contraseña. Esto es fundamental, ya que muchos pasos del proceso requieren modificar servicios, paquetes y configuraciones críticas del sistema.</p>
+
+<p>Para configurar esto, edita el archivo <code class="language-plaintext highlighter-rouge">sudoers</code> y añade una línea similar a la siguiente, sustituyendo <code class="language-plaintext highlighter-rouge">user</code> por el nombre de tu usuario:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user <span class="nv">ALL</span><span class="o">=(</span>ALL<span class="o">)</span> NOPASSWD: ALL
+</code></pre></div></div>
+<p><img src="/assets/images/AAPInstallguide/AAP01.png" alt="Texto alternativo" /></p>
+
+<p>Esto permite a <code class="language-plaintext highlighter-rouge">user</code> ejecutar comandos como <code class="language-plaintext highlighter-rouge">root</code> con <code class="language-plaintext highlighter-rouge">sudo</code> sin pedir contraseña.</p>
+
+<p><strong>Verificación del Nombre de Host (FQDN)</strong></p>
+
+<p>Es crucial que el nombre de host de tu servidor esté configurado como un Nombre de Dominio Completamente Cualificado (FQDN). Esto asegura una comunicación adecuada entre los servicios de AAP.</p>
+
+<p>Puedes verificarlo con el siguiente comando:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">hostname</span> <span class="nt">-f</span>
+</code></pre></div></div>
+<p><img src="/assets/images/AAPInstallguide/AAP02.png" alt="Texto alternativo" /></p>
+
+<p>Si no devuelve un FQDN, deberás configurarlo en tu sistema RHEL.</p>
+
+<p><strong>Gestión de Suscripciones y Repositorios</strong></p>
+
+<p>Para acceder a los paquetes y contenedores de Red Hat, tu servidor RHEL debe estar correctamente suscrito y los repositorios necesarios deben estar habilitados.</p>
+
+<p>Asegúrate de que tu sistema está suscrito a Red Hat y que tienes acceso a los repositorios <code class="language-plaintext highlighter-rouge">BaseOS</code> y <code class="language-plaintext highlighter-rouge">AppStream</code>. Puedes comprobar el estado de tu suscripción con:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>subscription-manager status
+</code></pre></div></div>
+<p><img src="/assets/images/AAPInstallguide/AAP03.png" alt="Texto alternativo" /></p>
+
+<p>Si no está suscrito, regístralo con:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>subscription-manager register
+</code></pre></div></div>
+
+<p>Es necesario que los repositorios de <code class="language-plaintext highlighter-rouge">AppStream</code> y <code class="language-plaintext highlighter-rouge">BaseOS</code> estén habilitados, para ello verificamos que los tenemos activos.
+Aquí tienes una imagen que muestra cómo verificar los repositorios activos:</p>
+
+<p><img src="/assets/images/AAPInstallguide/AAP04.png" alt="Texto alternativo" /></p>
+
+<p>Siguiente paso, instalamos el paquete <code class="language-plaintext highlighter-rouge">ansible-core</code>, que el instalador de AAP utilizará.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>dnf <span class="nb">install </span>ansible-core <span class="nt">-y</span>
+</code></pre></div></div>
+<p><img src="/assets/images/AAPInstallguide/AAP05.png" alt="Texto alternativo" /></p>
+
+<p>Y opcionalmente podemos instalar los paquetes <code class="language-plaintext highlighter-rouge">wget</code>, <code class="language-plaintext highlighter-rouge">git-core</code>, <code class="language-plaintext highlighter-rouge">rsync</code> y <code class="language-plaintext highlighter-rouge">vim</code> que nos pueden ser útiles durante la instalación:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>dnf <span class="nb">install </span>wget git-core rsync vim <span class="nt">-y</span>
+</code></pre></div></div>
+
+<h4 id="descarga-del-instalador-de-ansible-automation-platform">Descarga del Instalador de Ansible Automation Platform</h4>
+
+<p>Visitamos el portal de descargas de Ansible Automation Platform. Desde allí es posible obtener las versiones más recientes del instalador.</p>
+
+<p>Existen dos modalidades principales de instalación:</p>
+
+<ul>
+  <li><strong>Instalación Online</strong>: Selecciona la opción “Ansible Automation Platform 2.5 Containerized Setup”. En este caso, durante el proceso de instalación, el instalador descargará los contenedores necesarios directamente desde los repositorios de Red Hat.</li>
+  <li><strong>Instalación Offline (paquete completo)</strong>: Selecciona la opción “Ansible Automation Platform 2.5 Containerized Setup Bundle”. Este paquete incluye todos los artefactos requeridos para entornos aislados de Internet o con restricciones de red.</li>
+</ul>
+
+<p>Nosotros para esta guía elegiremos la online, una vez elegida la modalidad, descargamos el archivo <code class="language-plaintext highlighter-rouge">.tar.gz</code> correspondiente a la versión y arquitectura del sistema.</p>
+
+<p>Aquí tienes una imagen que ilustra la descarga desde el portal:</p>
+
+<p><img src="/assets/images/AAPInstallguide/AAP06.png" alt="Texto alternativo" /></p>
+
+<p>Los archivos descargados deben copiarse a la máquina donde se realizará la instalación. Esto suele hacerse desde la estación de administración hacia el servidor RHEL destino.</p>
+
+<p>La forma más segura de realizar esta transferencia es mediante SCP (Secure Copy Protocol).</p>
+
+<p>En el servidor RHEL, tendremos que definir un directorio que servirá como punto de instalación.</p>
+
+<p>Requisito importante: debemos asegurarnos de contar con al menos 15 GB de espacio libre en el directorio seleccionado, ya que la instalación inicial genera múltiples contenedores y datos temporales.</p>
+
+<p>En este caso utilizaremos <code class="language-plaintext highlighter-rouge">/home/user/demos</code> para descomprimir el archivo tar:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> /home/user/demos
+</code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">df</span> <span class="nt">-h</span> /home/user/demos
+</code></pre></div></div>
+<p><img src="/assets/images/AAPInstallguide/AAP07.png" alt="Texto alternativo" /></p>
+
+<p>Con los archivos ya presentes en el servidor, vamos a descomprimir el instalador en el directorio <code class="language-plaintext highlighter-rouge">demos</code>.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">tar</span> <span class="nt">-xvzf</span> ansible-automation-platform-setup-2.5-containerized-tar.gz <span class="nt">-C</span> /home/user/demos
+</code></pre></div></div>
+<p><img src="/assets/images/AAPInstallguide/AAP08.png" alt="Texto alternativo" /></p>
+
+<p>Al finalizar, se creará un directorio con todos los archivos y scripts necesarios para continuar con el despliegue de la plataforma.</p>
+
+<h4 id="configuración-del-archivo-de-inventario">Configuración del Archivo de Inventario</h4>
+
+<p><img src="/assets/images/AAPInstallguide/AAP09.png" alt="Texto alternativo" /></p>
+
+<p>Cuando instalamos Ansible Automation Platform (AAP), todo gira en torno a un archivo llamado <code class="language-plaintext highlighter-rouge">inventory</code>. Este archivo es como el “mapa” que le dice al instalador qué componentes debe desplegar, en qué servidores y con qué configuraciones.</p>
+
+<p>Sin este archivo, el instalador no sabe qué hacer, así que aquí te explico cómo funciona y cómo puedes adaptarlo a tu entorno.</p>
+
+<p>Dentro del paquete de instalación que hemos descargado vienen ejemplos de inventario:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">inventory</code>: pensado para instalaciones enterprise (distribuidas, con varios nodos).</li>
+  <li><code class="language-plaintext highlighter-rouge">inventory-growth</code>: pensado para instalaciones all-in-one (todo en un mismo servidor).</li>
+</ul>
+
+<p><img src="/assets/images/AAPInstallguide/AAP10.png" alt="Texto alternativo" /></p>
+
+<p>La topología que queremos implementar es la growth, vamos a modificar el <code class="language-plaintext highlighter-rouge">inventory-growth</code> para que se ajuste a nuestra configuración.</p>
+
+<p>Para ello abrimos el archivo y añadimos nuestro <code class="language-plaintext highlighter-rouge">fqdn</code> y credenciales de Red Hat en los campos necesarios. El archivo se verá similar a este:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># This is the AAP installer inventory file intended for the Container growth deployment topology.  </span>
+<span class="c1"># This inventory file expects to be run from the host where AAP will be installed.  </span>
+<span class="c1"># Please consult the Ansible Automation Platform product documentation about this topology's tested hardware configuration.  </span>
+<span class="c1"># https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/tested_deployment_models/container-topologies  </span>
+<span class="c1">#  </span>
+<span class="c1"># Please consult the docs if you're unsure what to add  </span>
+<span class="c1"># For all optional variables please consult the included README.md  </span>
+<span class="c1"># or the Ansible Automation Platform documentation:  </span>
+<span class="c1"># https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/containerized_installation  </span>
+ 
+<span class="c1"># This section is for your AAP Gateway host(s)  </span>
+<span class="c1"># -----------------------------------------------------  </span>
+<span class="pi">[</span><span class="nv">automationgateway</span><span class="pi">]</span>  
+<span class="s">your.fqdn.here</span>  
+ 
+<span class="c1"># This section is for your AAP Controller host(s)  </span>
+<span class="c1"># -----------------------------------------------------  </span>
+<span class="pi">[</span><span class="nv">automationcontroller</span><span class="pi">]</span>  
+<span class="s">your.fqdn.here</span>  
+ 
+<span class="c1"># This section is for your AAP Automation Hub host(s)  </span>
+<span class="c1"># -----------------------------------------------------  </span>
+<span class="pi">[</span><span class="nv">automationhub</span><span class="pi">]</span>  
+<span class="s">your.fqdn.here</span>  
+ 
+<span class="c1"># This section is for your AAP EDA Controller host(s)  </span>
+<span class="c1"># -----------------------------------------------------  </span>
+<span class="pi">[</span><span class="nv">automationeda</span><span class="pi">]</span>  
+<span class="s">your.fqdn.here</span>  
+ 
+<span class="c1"># This section is for the AAP database  </span>
+<span class="c1"># -----------------------------------------------------  </span>
+<span class="pi">[</span><span class="nv">database</span><span class="pi">]</span>  
+<span class="s">your.fqdn.here</span>  
+ 
+<span class="pi">[</span><span class="nv">all</span><span class="pi">:</span><span class="nv">vars</span><span class="pi">]</span>  
+<span class="c1"># Ansible  </span>
+<span class="s">ansible_connection=local</span>  
+ 
+<span class="c1"># Common variables  </span>
+<span class="c1"># https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/containerized_installation/appendix-inventory-files-vars#ref-general-inventory-variables  </span>
+<span class="c1"># -----------------------------------------------------  </span>
+<span class="s">postgresql_admin_username=postgres</span>  
+<span class="s">postgresql_admin_password=your_postgresql_admin_password</span>  
+ 
+<span class="s">registry_username=your_rhn_username</span>  
+<span class="s">registry_password=your_rhn_password</span>  
+ 
+<span class="s">redis_mode=standalone</span>  
+ 
+<span class="c1"># AAP Gateway  </span>
+<span class="c1"># https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/containerized_installation/appendix-inventory-files-vars#ref-gateway-variables  </span>
+<span class="c1"># -----------------------------------------------------  </span>
+<span class="s">gateway_admin_password=your_gateway_admin_password</span>  
+<span class="s">gateway_pg_host=your.fqdn.here</span>  
+<span class="s">gateway_pg_password=your_gateway_pg_password</span>  
+ 
+<span class="c1"># AAP Controller  </span>
+<span class="c1"># https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/containerized_installation/appendix-inventory-files-vars#ref-controller-variables  </span>
+<span class="c1"># -----------------------------------------------------  </span>
+<span class="s">controller_admin_password=your_controller_admin_password</span>  
+<span class="s">controller_pg_host=your.fqdn.here</span>  
+<span class="s">controller_pg_password=your_controller_pg_password</span>  
+<span class="s">controller_percent_memory_capacity=0.5</span>  
+ 
+<span class="c1"># AAP Automation Hub  </span>
+<span class="c1"># https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/containerized_installation/appendix-inventory-files-vars#ref-hub-variables  </span>
+<span class="c1"># -----------------------------------------------------  </span>
+<span class="s">hub_admin_password=your_hub_admin_password</span>  
+<span class="s">hub_pg_host=your.fqdn.here</span>  
+<span class="s">hub_pg_password=your_hub_pg_password</span>  
+<span class="s">hub_seed_collections=false</span>  
+ 
+<span class="c1"># AAP EDA Controller  </span>
+<span class="c1"># https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/containerized_installation/appendix-inventory-files-vars#event-driven-ansible-controller  </span>
+<span class="c1"># -----------------------------------------------------  </span>
+<span class="s">eda_admin_password=your_eda_admin_password</span>  
+<span class="s">eda_pg_host=your.fqdn.here</span>  
+<span class="s">eda_pg_password=your_eda_pg_password</span> 
+</code></pre></div></div>
+
+<p>Sustituimos <code class="language-plaintext highlighter-rouge">your.fqdn.here</code> por el <code class="language-plaintext highlighter-rouge">fqdn</code> de nuestra instancia donde instalaremos el Ansible Automation Platform.</p>
+
+<p>Modificamos el <code class="language-plaintext highlighter-rouge">&lt;set your own&gt;</code> por las contraseñas que queramos para nuestro usuario admin en cada componente que se indica en el inventario.</p>
+
+<p>Y en los campos <code class="language-plaintext highlighter-rouge">registry_username=your_rhn_username</code> y <code class="language-plaintext highlighter-rouge">registry_password=your_rhn_password</code> indicamos nuestro usuario y contraseña de la cuenta de Red Hat.</p>
+
+<p>Una vez lo tenemos todo listo podemos lanzar el instalador y indicar el archivo de inventario correspondiente (opción <code class="language-plaintext highlighter-rouge">-i</code>). Asegúrate de estar en el directorio donde descomprimiste el instalador (e.g., <code class="language-plaintext highlighter-rouge">/home/user/demos/ansible-automation-platform-containerized-setup-2.5-19</code>).</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> /home/user/demos/ansible-automation-platform-containerized-setup-2.5-19
+ansible-playbook <span class="nt">-i</span> inventory-growth ansible.containerized_installer.install
+</code></pre></div></div>
+<p><img src="/assets/images/AAPInstallguide/AAP11.png" alt="Texto alternativo" />
+<img src="/assets/images/AAPInstallguide/AAP12.png" alt="Texto alternativo" /></p>
+
+<p>Cuando finalice la instalación de Ansible Automation Platform (AAP), el siguiente paso es comprobar que la interfaz web esté disponible.</p>
+
+<p>De manera predeterminada, puedes acceder escribiendo en tu navegador:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://&lt;gateway_node&gt;:443
+</code></pre></div></div>
+
+<p>Aquí debes reemplazar <code class="language-plaintext highlighter-rouge">&lt;gateway_node&gt;</code> por el nombre o la dirección IP del servidor donde desplegaste el Automation Gateway.</p>
+
+<p>Para entrar al panel, utiliza el usuario administrador (<code class="language-plaintext highlighter-rouge">gateway_admin_username</code>) y la contraseña que definiste en la instalación (<code class="language-plaintext highlighter-rouge">gateway_admin_password</code>).</p>
+
+<p>Aquí tienes una captura de pantalla de la pantalla de inicio de sesión de AAP:
+<img src="/assets/images/AAPInstallguide/AAP13.png" alt="Texto alternativo" /></p>
+
+<p>Para habilitar el soporte completo y recibir actualizaciones, debemos activar la suscripción de Ansible Automation Platform. Dentro de la interfaz web, nos dirigimos a la sección de administración de suscripciones e introducimos nuestras credenciales de acceso de Red Hat (Client ID y Client Secret).</p>
+
+<p><img src="/assets/images/AAPInstallguide/AAP14.png" alt="Texto alternativo" /></p>
+
+<p>Finalmente, ya accedemos, ahora podemos empezar a explorar todas las capacidades de automatización que ofrece Ansible Automation Platform.</p>
+
+<p><img src="/assets/images/AAPInstallguide/AAP15.png" alt="Texto alternativo" /></p>
+
+<p>Mi idea con este artículo era desmitificar el proceso, compartir contigo esa “receta” que a mí me ha funcionado bien para arrancar rápido con una topología “Growth”. Podemos pensar en ella como un campo de pruebas personal, donde podemos cacharrear, aprender y, lo más importante, empezar a ver lo que ofrece AAP sin el estrés de una configuración gigante. Y con una gran flexibilidad para crecer cuando nosotros queramos.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Etiquetas: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#aap" class="page__taxonomy-item p-category" rel="tag">AAP</a><span class="sep">, </span>
+    
+      <a href="/tags/#ansibleautomationplatform" class="page__taxonomy-item p-category" rel="tag">AnsibleAutomationPlatform</a><span class="sep">, </span>
+    
+      <a href="/tags/#containerized" class="page__taxonomy-item p-category" rel="tag">Containerized</a><span class="sep">, </span>
+    
+      <a href="/tags/#installationguide" class="page__taxonomy-item p-category" rel="tag">InstallationGuide</a><span class="sep">, </span>
+    
+      <a href="/tags/#rhel" class="page__taxonomy-item p-category" rel="tag">RHEL</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categorías: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#ansible" class="page__taxonomy-item p-category" rel="tag">Ansible</a><span class="sep">, </span>
+    
+      <a href="/categories/#automation" class="page__taxonomy-item p-category" rel="tag">Automation</a><span class="sep">, </span>
+    
+      <a href="/categories/#redhat" class="page__taxonomy-item p-category" rel="tag">RedHat</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Actualizado:</strong> <time class="dt-published" datetime="2025-10-01T00:00:00+02:00">October 1, 2025</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  <h4 class="page__share-title">Compartir en</h4>
+
+  <a href="https://x.com/intent/tweet?text=Red+Hat+Ansible+Automation+Platform+2.5%3A+Gu%C3%ADa+de+Instalaci%C3%B3n+en+RHEL+10+%28Topolog%C3%ADa+Growth+Contenerizada%29%20http%3A%2F%2Flocalhost%3A4000%2Fautomation%2Fansible%2Fredhat%2FAAP-Guia-de-instalacion-2.5%2F" class="btn btn--x" aria-label="Share on X" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Compartir en X">
+    <i class="fab fa-fw fa-x-twitter" aria-hidden="true"></i><span> X</span>
+  </a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fautomation%2Fansible%2Fredhat%2FAAP-Guia-de-instalacion-2.5%2F" class="btn btn--facebook" aria-label="Share on Facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Compartir en Facebook">
+    <i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span>
+  </a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/automation/ansible/redhat/AAP-Guia-de-instalacion-2.5/" class="btn btn--linkedin" aria-label="Share on LinkedIn" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Compartir en LinkedIn">
+    <i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span>
+  </a>
+
+  <a href="https://bsky.app/intent/compose?text=Red+Hat+Ansible+Automation+Platform+2.5%3A+Gu%C3%ADa+de+Instalaci%C3%B3n+en+RHEL+10+%28Topolog%C3%ADa+Growth+Contenerizada%29%20http%3A%2F%2Flocalhost%3A4000%2Fautomation%2Fansible%2Fredhat%2FAAP-Guia-de-instalacion-2.5%2F" class="btn btn--bluesky" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Compartir en Bluesky">
+    <i class="fab fa-fw fa-bluesky" aria-hidden="true"></i><span> Bluesky</span>
+  </a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/seguridad/red%20hat/open%20source/Seguridad-empresarial-con-red-hat/" class="pagination--pager" title="Seguridad Empresarial con Red Hat: Más Allá del Código Abierto">Anterior</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Siguiente</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    
+<div class="page__related">
+  
+  <h2 class="page__related-title">Puede que también te interese</h2>
+  <div class="grid__wrapper">
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/seguridad/red%20hat/open%20source/Seguridad-empresarial-con-red-hat/" rel="permalink">Seguridad Empresarial con Red Hat: Más Allá del Código Abierto
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          19 minuto(s) de lectura
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Exploramos cómo Red Hat refuerza la seguridad empresarial más allá del software de código abierto, integrando RHEL, SELinux, Ansible, Insights y OpenShift.
+</p>
+  </article>
+</div>
+
+    
+  </div>
+</div>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Términos de búsqueda...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Términos de búsqueda..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+<script>
+  const swiper = new Swiper(".mySwiper", {
+    slidesPerView: 1,
+    spaceBetween: 20,
+    loop: true,
+    pagination: { el: ".swiper-pagination", clickable: true },
+    navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+    breakpoints: { 768: { slidesPerView: 2 }, 1200: { slidesPerView: 3 } },
+  });
+</script>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+  </body>
+</html>

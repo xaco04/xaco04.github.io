@@ -12,12 +12,12 @@
 
 # theme                  : "minimal-mistakes-jekyll"
 remote_theme           : "mmistakes/minimal-mistakes"
-minimal_mistakes_skin    : "dark" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
+minimal_mistakes_skin    : "default" # "default", "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
 
 # Site Settings
 locale                   : "es"
 rtl                      : false
-title                    : "xaco04"
+title                    : "Xavi Vico Marti"
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
 name                     : "Xavi Vico Marti"
@@ -26,8 +26,8 @@ url                      : # the base hostname & protocol for your site e.g. "ht
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
 teaser                   : #
-logo                     : # path of logo image to display in the masthead, e.g. "/assets/images/88x88.png"
-masthead_title           : # overrides the website title displayed in the masthead, use " " for no title
+logo                     : "assets/images/xaco04logo.png"
+masthead_title           : " "
 breadcrumbs              : # true, false (default)
 words_per_minute         : 200
 enable_copy_code_button  : # true, false (default)
@@ -114,8 +114,8 @@ analytics:
 # Site Author
 author:
   name             : "Xavi Vico Marti"
-  avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "DevOps entusiasta que se divierte automatizando infraestructuras y domando sistemas Linux. Trabajo con AWS, RHEL, Ansible y estoy explorando el mundo de OpenShift. Cuando no estoy entre servidores y pipelines, me verás de ruta en la montaña o en Steam :)"
+  avatar           : "/assets/images/githublogo.png"
+  bio              : ""
   location         : "Catalonia/Spain"
   links:
     - label: "Email"
@@ -306,3 +306,11 @@ defaults:
       comments: # true
       share: true
       related: true
+
+
+
+# Colecciones personalizadas
+collections:
+  projects:
+    output: true
+    permalink: /projects/:title/

@@ -1,11 +1,10 @@
 # main links
 main:
   - title: "Home"
-    url: https://xaco04.github.io/
+    url: /
   - title: "Blog"
-    url: https://xaco04.github.io/
-  - title: "Proyectos"
-    url: https://xaco04.github.io/
-  - title: "Sobre mí"
-    url: https://xaco04.github.io/
-
+    url: /blog/
+  - title: "Projects"
+    url: /projects/
+  - title: "About"
+    url: /about/

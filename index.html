@@ -1,4 +1,92 @@
 ---
-layout: home
-author_profile: false
+layout: splash
+classes: home-cards
+title: "Xavi Vico Martí"
+excerpt: "DevOps Engineer - Infrastructure Automation & Monitoring<br />"
+header:
+  overlay_color: "#5e616c"
+  overlay_image: /assets/images/banner.png
+  caption: ""
+feature_row:
+  - image_path: /assets/images/rhel.png
+    alt: "customizable"
+    title: "Red Hat Enterprise Linux"
+    excerpt: "Everything from the menus, sidebars, comments, and more can be configured."
+    url: "/docs/configuration/"
+    btn_label: "Learn more"
+  - image_path: /assets/images/ansible.png
+    alt: "fully responsive"
+    title: "Ansible"
+    excerpt: "Built with HTML5 + CSS3. All layouts are fully responsive."
+    url: "/docs/layouts/"
+    btn_label: "Learn more"
+  - image_path: /assets/images/instana.png
+    alt: "monitoring"
+    title: "Instana"
+    excerpt: "Application performance monitoring and observability."
+    url: "/docs/layouts/"
+    btn_label: "Learn more"
+  - image_path: /assets/images/kubernetes.png
+    alt: "k8s"
+    title: "Kubernetes"
+    excerpt: "Orchestration and container management."
+    url: "/docs/license/"
+    btn_label: "Learn more"
+  - image_path: /assets/images/openshift.png
+    alt: "openshift"
+    title: "Red Hat OpenShift"
+    excerpt: "Enterprise Kubernetes platform."
+    url: "/docs/license/"
+    btn_label: "Learn more"
+  - image_path: /assets/images/aws.png
+    alt: "aws"
+    title: "Amazon Web Services"
+    excerpt: "Cloud computing services."
+    url: "/docs/layouts/"
+    btn_label: "Learn more"
+  - image_path: /assets/images/kubernetes.png
+    alt: "k8s"
+    title: "Kubernetes"
+    excerpt: "Orchestration and container management."
+    url: "/docs/license/"
+    btn_label: "Learn more"
+  - image_path: /assets/images/kubernetes.png
+    alt: "k8s"
+    title: "Kubernetes"
+    excerpt: "Orchestration and container management."
+    url: "/docs/license/"
+    btn_label: "Learn more"
 ---
+<section class="home-cards-redhat">
+  <div class="cards-grid">
+    {% assign posts = site.posts | slice: 0,6 %}
+
+    <!-- Card grande -->
+    {% assign first = posts[0] %}
+    <article class="card card-large">
+      <div class="card-content">
+        <h2><a href="{{ first.url | relative_url }}">{{ first.title }}</a></h2>
+        <p>{{ first.excerpt | strip_html | truncate: 150 }}</p>
+        <a href="{{ first.url | relative_url }}" class="btn">Leer más</a>
+      </div>
+    <!--  {% if first.header.overlay_image %}
+      <img src="{{ first.header.overlay_image | relative_url }}" alt="{{ first.title }}">
+      {% endif %} -->
+    </article>
+
+    <!-- Card secundaria -->
+    {% assign second = posts[1] %}
+    <article class="card card-secondary">
+      <h3><a href="{{ second.url | relative_url }}">{{ second.title }}</a></h3>
+      <a href="{{ second.url | relative_url }}" class="btn">Leer más</a>
+    </article>
+
+    <!-- Cards pequeñas -->
+    {% for post in posts offset:2 %}
+    <article class="card card-small">
+      <span class="tag">Nuevo</span>
+      <h4><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h4>
+    </article>
+    {% endfor %}
+  </div>
+</section>

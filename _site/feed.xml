@@ -1,12 +1,418 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2025-10-01T13:13:02+02:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Xavi Vico Marti</title><subtitle>An amazing website.</subtitle><author><name>Xavi Vico Marti</name></author><entry><title type="html">Red Hat Ansible Automation Platform 2.5: Guía de Instalación en RHEL 10 (Topología Growth Contenerizada)</title><link href="http://localhost:4000/automation/ansible/redhat/AAP-Guia-de-instalacion-2.5/" rel="alternate" type="text/html" title="Red Hat Ansible Automation Platform 2.5: Guía de Instalación en RHEL 10 (Topología Growth Contenerizada)" /><published>2025-10-01T00:00:00+02:00</published><updated>2025-10-01T00:00:00+02:00</updated><id>http://localhost:4000/automation/ansible/redhat/AAP-Guia-de%20instalacion-2.5</id><content type="html" xml:base="http://localhost:4000/automation/ansible/redhat/AAP-Guia-de-instalacion-2.5/"><![CDATA[<h2 id="red-hat-ansible-automation-platform-25-tu-guía-práctica-de-instalación-en-rhel-10-topología-growth-contenerizada">Red Hat Ansible Automation Platform 2.5: Tu Guía Práctica de Instalación en RHEL 10 (Topología Growth Contenerizada)</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2025-10-24T14:27:56+02:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Xavi Vico Marti</title><subtitle>An amazing website.</subtitle><author><name>Xavi Vico Marti</name></author><entry><title type="html">Red Hat Enterprise Linux: Integración de RHEL 10 con Active Directory 2019 usando SSSD y realmd</title><link href="http://localhost:4000/redhat/activedirectory/RHEL-Integracion-RHEL-10-con-AD/" rel="alternate" type="text/html" title="Red Hat Enterprise Linux: Integración de RHEL 10 con Active Directory 2019 usando SSSD y realmd" /><published>2025-10-14T00:00:00+02:00</published><updated>2025-10-14T00:00:00+02:00</updated><id>http://localhost:4000/redhat/activedirectory/RHEL-Integracion-RHEL-10-con-AD</id><content type="html" xml:base="http://localhost:4000/redhat/activedirectory/RHEL-Integracion-RHEL-10-con-AD/"><![CDATA[<h1 id="integración-de-rhel-10-con-active-directory-2019-usando-sssd-y-realmd">Integración de RHEL 10 con Active Directory 2019 usando SSSD y realmd</h1>
+
+<h2 id="introducción">Introducción</h2>
+
+<p>La gestión centralizada de identidades y accesos es clave. Microsoft Active Directory (AD) se ha consolidado como el estándar en muchas infraestructuras para esta tarea.</p>
+
+<p>En esta guía, desglosaremos las opciones de integración y veremos paso a paso cómo conectar un sistema RHEL a un dominio de Active Directory.</p>
+
+<h2 id="opciones-de-integración-cuál-elegir">Opciones de Integración: ¿Cuál elegir?</h2>
+
+<p>Existen varias formas de lograr esta integración, cada una con sus particularidades. Aquí te presentamos las principales:</p>
+
+<h3 id="tabla-de-opciones-de-integración">Tabla de opciones de integración</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Opción de Integración</th>
+      <th>Descripción Técnica</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>System Security Services Daemon (SSSD)</strong></td>
+      <td>Es el componente de autenticación y resolución de identidades más moderno y recomendado. Permite a RHEL integrarse de forma nativa con dominios Active Directory utilizando protocolos como Kerberos, LDAP y DNS. Ofrece funcionalidades avanzadas como caché de credenciales, resolución de grupos y usuarios, mapeo de atributos AD a NSS/PAM, y soporte para autenticación offline. SSSD actúa como un middleware entre las aplicaciones del sistema y las fuentes externas de identidad, centralizando la gestión de políticas y sesiones.</td>
+    </tr>
+    <tr>
+      <td><strong>Samba Winbind</strong></td>
+      <td>Implementación basada en Samba que permite a los sistemas Linux funcionar como miembros de un dominio Windows/AD. Utiliza protocolos SMB/CIFS, NTLM y Kerberos, proporcionando resolución de usuarios y grupos de dominio a través de nsswitch y PAM. Aunque es funcional, su arquitectura basada en SMB puede implicar una mayor carga y dependencia del stack de Samba en comparación con SSSD.</td>
+    </tr>
+    <tr>
+      <td><strong>Managed Service Account (MSA)</strong></td>
+      <td>Una característica de Active Directory que permite crear cuentas de servicio administradas. Diseñada para que aplicaciones o demonios específicos en RHEL se autentiquen contra AD de forma segura sin requerir la unión completa del host al dominio. Las MSA gestionan automáticamente la rotación de contraseñas y las políticas de autenticación mediante Kerberos, reduciendo la sobrecarga administrativa y los riesgos asociados a credenciales estáticas. Ideal para servicios, no para login de usuarios interactivos.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>En esta guía, nos centraremos en el método más recomendado y versátil para una integración profunda: <strong>SSSD</strong>.</p>
+
+<h2 id="descubriendo-sssd">Descubriendo SSSD</h2>
+
+<p>El <strong>System Security Services Daemon (SSSD)</strong> es un servicio esencial en los sistemas Linux/UNIX que actúa como intermediario inteligente para la gestión de identidad y autenticación. Su propósito es conectar tu sistema local (el “cliente SSSD”) a diversas fuentes de identidad y mecanismos de autenticación remotos (los “proveedores”).</p>
+
+<p>SSSD opera en dos etapas clave:</p>
+
+<ol>
+  <li><strong>Conexión con el proveedor remoto:</strong> Se comunica con un proveedor remoto (LDAP, AD, Kerberos, IdM) para obtener información de identidad del usuario (UID, GID, etc.) y datos necesarios para autenticación.</li>
+  <li><strong>Caché local de identidad y credenciales:</strong> Crea y mantiene una caché local de esta información, permitiendo autenticación offline y mejor rendimiento.</li>
+</ol>
+
+<p>Gracias a esta arquitectura, los usuarios pueden autenticarse en Linux usando cuentas almacenadas en el proveedor remoto sin crear cuentas locales duplicadas. SSSD puede configurarse para crear directorios de inicio automáticamente.</p>
+
+<h3 id="los-pilares-de-la-autenticación-pam-y-nss">Los Pilares de la Autenticación: PAM y NSS</h3>
+
+<p>SSSD obtiene la información de identidad desde un servidor remoto y la almacena localmente. ¿Cómo utiliza el sistema operativo esa información?</p>
+
+<h4 id="pam-pluggable-authentication-modules">PAM (Pluggable Authentication Modules)</h4>
+
+<ul>
+  <li><strong>Función:</strong> Autenticación y autorización de usuarios.</li>
+  <li><strong>Pregunta clave:</strong> “¿Puede este usuario autenticarse y acceder?”</li>
+</ul>
+
+<h4 id="nss-name-service-switch">NSS (Name Service Switch)</h4>
+
+<ul>
+  <li><strong>Función:</strong> Define de dónde obtener información sobre usuarios, grupos, hosts, contraseñas, etc.</li>
+  <li><strong>Archivo de configuración:</strong> <code class="language-plaintext highlighter-rouge">/etc/nsswitch.conf</code></li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>passwd:     files ldap sss
+group:      files ldap sss
+shadow:     files ldap sss
+hosts:      files dns sss
+</code></pre></div></div>
+<p>Esto significa que, para passwd (usuarios), el sistema primero busca en /etc/passwd (files), luego en un servidor LDAP (ldap), y finalmente consulta a SSSD (sss).</p>
+
+<ul>
+  <li><strong>Pregunta clave:</strong> “¿De dónde obtengo la información de este usuario (UID, GID, nombre)?”</li>
+</ul>
+
+<h4 id="flujo-de-autenticación-detallado">Flujo de Autenticación Detallado</h4>
+
+<p><img src="/assets/images/20251024/20251024-01.png" alt="Texto alternativo" /></p>
+
+<h3 id="requisitos-y-opciones-de-mapeo-de-ids">Requisitos y Opciones de Mapeo de IDs</h3>
+
+<h4 id="tipos-de-servidores-de-identidad-compatibles-con-sssd">Tipos de Servidores de Identidad Compatibles con SSSD</h4>
+
+<p>SSSD es altamente versátil y puede interactuar con diversas fuentes de identidad:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Tipo de Servidor</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Active Directory (AD)</strong></td>
+      <td>Servicio de directorio de Microsoft que proporciona autenticación, autorización y políticas centralizadas, el foco de nuestro artículo.</td>
+    </tr>
+    <tr>
+      <td><strong>Identity Management (IdM) en RHEL</strong></td>
+      <td>Implementación de gestión de identidades integrada en RHEL basada en FreeIPA, ideal para entornos Linux puros o híbridos compatibles con AD.</td>
+    </tr>
+    <tr>
+      <td><strong>Servidores genéricos LDAP o Kerberos</strong></td>
+      <td>Sistemas de directorio o autenticación basados en estándares abiertos que proporcionan servicios de identidad sin la complejidad inherente de Active Directory o las características de IdM.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="posix-id-mapping-vs-posix-attributes">POSIX ID Mapping vs. POSIX Attributes</h4>
+
+<p>Cuando integramos Linux con Active Directory, nos enfrentamos a una diferencia fundamental: cómo manejan las identidades los usuarios.</p>
+
+<ul>
+  <li>Linux utiliza <strong>UID (User ID)</strong> y <strong>GID (Group ID)</strong>, siguiendo el estándar POSIX.</li>
+  <li>Windows AD utiliza <strong>SID (Security ID)</strong>, un identificador único globalmente.</li>
+</ul>
+
+<p>Para que un usuario de Active Directory pueda acceder a un sistema Linux, necesitamos traducir o asignar esos identificadores de Windows (SID) a los de Linux (UID/GID).<br />
+Aquí es donde SSSD ofrece dos opciones principales:</p>
+
+<ol>
+  <li><strong>POSIX ID Mapping</strong></li>
+  <li><strong>POSIX Attributes</strong></li>
+</ol>
+
+<h5 id="posix-id-mapping-mapeo-automático">POSIX ID Mapping (mapeo automático)</h5>
+
+<ul>
+  <li>Esta es la opción predeterminada.</li>
+  <li>En este modo, SSSD genera automáticamente los <strong>UID</strong> y <strong>GID</strong> a partir del <strong>SID</strong> de cada usuario de AD mediante un algoritmo interno.</li>
+  <li>Así, no es necesario modificar nada dentro de Active Directory.</li>
+</ul>
+
+<h5 id="posix-attributes-atributos-posix-en-ad">POSIX Attributes (atributos POSIX en AD)</h5>
+
+<ul>
+  <li>En este modo, los <strong>UID</strong> y <strong>GID</strong> se definen directamente en Active Directory, utilizando los atributos POSIX estándar (como <code class="language-plaintext highlighter-rouge">uidNumber</code>, <code class="language-plaintext highlighter-rouge">gidNumber</code>, <code class="language-plaintext highlighter-rouge">unixHomeDirectory</code>, etc.).</li>
+  <li>SSSD simplemente lee esos valores cuando el usuario inicia sesión.</li>
+  <li>Requiere editar o extender el esquema de AD para incluir los atributos POSIX, y la configuración es más compleja.</li>
+</ul>
+
+<h2 id="demo-integrando-rhel-con-active-directory">¡Demo! Integrando RHEL con Active Directory</h2>
+
+<p>En esta práctica, integraremos un sistema <strong>RHEL 10</strong> a un dominio de <strong>Active Directory 2019</strong> utilizando <strong>SSSD</strong> y el método de <strong>POSIX ID Mapping</strong>.</p>
+
+<p>Utilizaremos un dominio ficticio para fines educativos: <code class="language-plaintext highlighter-rouge">umbrella.corp</code>.</p>
+
+<p>El objetivo es permitir que los usuarios de Active Directory puedan autenticarse directamente en Linux con su nombre de usuario y contraseña de AD, sin necesidad de crear cuentas locales en RHEL.<br />
+Gracias a SSSD y POSIX ID Mapping, RHEL asignará automáticamente los <strong>UID</strong> y <strong>GID</strong> a los usuarios de AD, garantizando una identidad única dentro del sistema Linux sin modificar Active Directory.</p>
+
+<hr />
+
+<h3 id="información-de-los-sistemas">Información de los Sistemas</h3>
+
+<h4 id="rhel-100">RHEL 10.0</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Campo</th>
+      <th>Valor</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Hostname</strong></td>
+      <td>leon</td>
+    </tr>
+    <tr>
+      <td><strong>IP</strong></td>
+      <td>192.168.6.4</td>
+    </tr>
+    <tr>
+      <td><strong>Sistema Operativo</strong></td>
+      <td>RHEL 10.0</td>
+    </tr>
+    <tr>
+      <td><strong>Rol</strong></td>
+      <td>Servidor Linux a integrar con Active Directory</td>
+    </tr>
+    <tr>
+      <td><strong>Dominio</strong></td>
+      <td>umbrella.corp</td>
+    </tr>
+    <tr>
+      <td><strong>DNS Primario</strong></td>
+      <td>192.168.6.7</td>
+    </tr>
+    <tr>
+      <td><strong>Estado Integración AD</strong></td>
+      <td>Pendiente</td>
+    </tr>
+    <tr>
+      <td><strong>Comentarios</strong></td>
+      <td>Usará SSSD y realmd para unir al dominio</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h4 id="windows-server-2019-active-directory--dns">Windows Server 2019 (Active Directory / DNS)</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Campo</th>
+      <th>Valor</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Hostname</strong></td>
+      <td>WIN-TURSKABH596</td>
+    </tr>
+    <tr>
+      <td><strong>IP</strong></td>
+      <td>192.168.6.7</td>
+    </tr>
+    <tr>
+      <td><strong>Sistema Operativo</strong></td>
+      <td>Windows Server 2019</td>
+    </tr>
+    <tr>
+      <td><strong>Rol</strong></td>
+      <td>Controlador de Dominio / DNS</td>
+    </tr>
+    <tr>
+      <td><strong>Dominio</strong></td>
+      <td>umbrella.corp</td>
+    </tr>
+    <tr>
+      <td><strong>DNS Primario</strong></td>
+      <td>192.168.6.7</td>
+    </tr>
+    <tr>
+      <td><strong>Comentarios</strong></td>
+      <td>Servidor principal del dominio, provee DNS interno</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<blockquote>
+  <p><strong>Nota:</strong><br />
+El controlador de dominio también funciona como servidor DNS del dominio.<br />
+Esto es importante porque Active Directory depende del DNS para localizar controladores de dominio y otros servicios.<br />
+RHEL apunta a este DNS para poder resolver nombres dentro del dominio y autenticar usuarios correctamente.</p>
+</blockquote>
+
+<hr />
+
+<h3 id="requisitos-previos">Requisitos previos</h3>
+
+<p>Antes de empezar, hay que asegurarse de que el entorno tiene:</p>
+
+<ul>
+  <li><strong>Conectividad de red</strong> Los puertos necesarios para la comunicación con AD deben estar abiertos.</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th>Servicio</th>
+      <th>Puerto</th>
+      <th>Protocolo</th>
+      <th>Notas</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>DNS</strong></td>
+      <td>53</td>
+      <td>UDP y TCP</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td><strong>LDAP</strong></td>
+      <td>389</td>
+      <td>UDP y TCP</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td><strong>LDAPS</strong></td>
+      <td>636</td>
+      <td>TCP</td>
+      <td>Opcional</td>
+    </tr>
+    <tr>
+      <td><strong>Samba</strong></td>
+      <td>445</td>
+      <td>UDP y TCP</td>
+      <td>Para los Objetos de Directiva de Grupo (GPO)</td>
+    </tr>
+    <tr>
+      <td><strong>Kerberos</strong></td>
+      <td>88</td>
+      <td>UDP y TCP</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td><strong>Kerberos (kadmin)</strong></td>
+      <td>464</td>
+      <td>UDP y TCP</td>
+      <td>Usado por <em>kadmin</em> para establecer y cambiar contraseñas</td>
+    </tr>
+    <tr>
+      <td><strong>Catálogo Global LDAP</strong></td>
+      <td>3268</td>
+      <td>TCP</td>
+      <td>Si se usa la opción <code class="language-plaintext highlighter-rouge">id_provider = ad</code></td>
+    </tr>
+    <tr>
+      <td><strong>Catálogo Global LDAPS</strong></td>
+      <td>3269</td>
+      <td>TCP</td>
+      <td>Opcional</td>
+    </tr>
+    <tr>
+      <td><strong>NTP</strong></td>
+      <td>123</td>
+      <td>UDP</td>
+      <td>Opcional</td>
+    </tr>
+    <tr>
+      <td><strong>NTP</strong></td>
+      <td>323</td>
+      <td>UDP</td>
+      <td>Opcional</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<ul>
+  <li><strong>Configuración DNS</strong></li>
+</ul>
+
+<p>El servidor DNS de tu RHEL debe apuntar al controlador de dominio de Active Directory.<br />
+Puedes verificarlo en <code class="language-plaintext highlighter-rouge">/etc/resolv.conf</code>.</p>
+
+<p><img src="/assets/images/20251024/20251024-02.png" alt="Texto alternativo" />
+<img src="/assets/images/20251024/20251024-03.png" alt="Texto alternativo" /></p>
+
+<hr />
+
+<ul>
+  <li><strong>Sincronización de hora (NTP)</strong></li>
+</ul>
+
+<p>La hora del sistema RHEL debe estar sincronizada con el AD.<br />
+Esto es crítico para el correcto funcionamiento de <strong>Kerberos</strong>.</p>
+
+<p><img src="/assets/images/20251024/20251024-04.png" alt="Texto alternativo" /></p>
+
+<hr />
+
+<h3 id="empecemos-con-la-instalación">Empecemos con la instalación</h3>
+
+<p>Para empezar, instalamos los paquetes esenciales para la integración con Active Directory y el funcionamiento de SSSD:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>dnf <span class="nb">install </span>samba-common-tools realmd oddjob oddjob-mkhomedir sssd adcli krb5-workstation
+</code></pre></div></div>
+<p><img src="/assets/images/20251024/20251024-05.png" alt="Texto alternativo" /></p>
+
+<p>Una vez instalados los paquetes, podemos usar realm discover para verificar la existencia y obtener información sobre nuestro dominio de Active Directory</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>realm discover ad.example.com
+</code></pre></div></div>
+
+<p><img src="/assets/images/20251024/20251024-06.png" alt="Texto alternativo" /></p>
+
+<p>Es normal que el configured salga como no antes de unirse al dominio.</p>
+
+<p>Antes de unir RHEL al dominio, es necesario ajustar las políticas criptográficas para soportar algunas configuraciones de Active Directory más antiguas</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>update-crypto-policies <span class="nt">--set</span> DEFAULT:AD-SUPPORT-LEGACY
+</code></pre></div></div>
+
+<p><img src="/assets/images/20251024/20251024-07.png" alt="Texto alternativo" /></p>
+
+<p>Se recomienda hacer un reboot para que se apliquen las politicas, es necessario reiniciar los servicios para que se aplique y con el reboot se inician todos de nuevo…</p>
+
+<p>Esto permite que el sistema Linux utilice algoritmos y protocolos de cifrado compatibles con versiones de Active Directory que aún no soportan las políticas criptográficas más estrictas de RHEL 10 por defecto. Si no se aplica este ajuste, el intento de unir el dominio (realm join) puede fallar debido a incompatibilidades de cifrado o autenticación.</p>
+
+<p>Ahora, el paso crucial, unir el sistema RHEL al dominio de Active Directory. El comando realm join no solo une el equipo, sino que también configura SSSD automáticamente con los parámetros adecuados. Te pedirá la contraseña de un usuario con permisos para unir equipos al dominio (por ejemplo, el usuario Administrator de AD).</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>realm <span class="nb">join </span>ad.example.com <span class="nt">-v</span> 
+</code></pre></div></div>
+<p><img src="/assets/images/20251024/20251024-08.png" alt="Texto alternativo" />
+<img src="/assets/images/20251024/20251024-09.png" alt="Texto alternativo" /></p>
+
+<p>Para comprobar que la integración ha sido exitosa y que los usuarios de Active Directory son reconocidos en RHEL, podemos usar el comando getent passwd con un usuario de AD.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>getent passwd administrator@ad.example.com
+</code></pre></div></div>
+<p><img src="/assets/images/20251024/20251024-10.png" alt="Texto alternativo" /></p>
+
+<p>Ahora RHEL ja está integrado con Active Directory. Cualquier usuario de AD puede iniciar sesión en RHEL utilizando las credenciales de dominio</p>]]></content><author><name>Xavi Vico Marti</name></author><category term="RedHat" /><category term="ActiveDirectory" /><category term="RHEL" /><category term="ActiveDirectory" /><category term="SSSD" /><summary type="html"><![CDATA[Guía para integrar Red Hat Enterprise Linux 10.0 (RHEL 10) con Active Directory 2019, utilizando las herramientas SSSD y realmd]]></summary></entry><entry><title type="html">Red Hat Ansible Automation Platform 2.5: Guía de Instalación en RHEL 10 (Topología Growth Contenerizada)</title><link href="http://localhost:4000/automation/ansible/redhat/AAP-Guia-de-instalacion-2.5/" rel="alternate" type="text/html" title="Red Hat Ansible Automation Platform 2.5: Guía de Instalación en RHEL 10 (Topología Growth Contenerizada)" /><published>2025-10-01T00:00:00+02:00</published><updated>2025-10-01T00:00:00+02:00</updated><id>http://localhost:4000/automation/ansible/redhat/AAP-Guia-de%20instalacion-2.5</id><content type="html" xml:base="http://localhost:4000/automation/ansible/redhat/AAP-Guia-de-instalacion-2.5/"><![CDATA[<h2 id="red-hat-ansible-automation-platform-25-tu-guía-práctica-de-instalación-en-rhel-10-topología-growth-contenerizada">Red Hat Ansible Automation Platform 2.5: Tu Guía Práctica de Instalación en RHEL 10 (Topología Growth Contenerizada)</h2>
 
 <h3 id="introducción">Introducción</h3>
 
-<p>En esta guía, nos sumergiremos en el proceso de instalación de Red Hat Ansible Automation Platform (AAP) 2.5 en un entorno Red Hat Enterprise Linux (RHEL) 10. Nuestro objetivo es que puedas configurar rápidamente AAP utilizando una topología “Growth” contenerizada, lo que significa que todos los componentes se instalarán en una única máquina virtual.</p>
+<p>Esta guía sirve para ver el proceso de instalación de Red Hat Ansible Automation Platform (AAP) 2.5 en un entorno Red Hat Enterprise Linux (RHEL) 10. El objetivo es instalar AAP utilizando una topología “Growth” contenerizada, lo que significa que todos los componentes se instalarán en una única máquina virtual.</p>
 
-<p>Desde mi experiencia, esta configuración es perfecta para desarrolladores, para realizar pruebas o para pequeñas implementaciones donde estás comenzando a explorar el poder de la automatización con AAP. Además, lo mejor de esta topología es su flexibilidad: si tus necesidades crecen, siempre podrás escalar a una arquitectura “Enterprise” más compleja, con alta disponibilidad y recursos distribuidos.</p>
+<p>Esta configuración es perfecta para desarrolladores, para realizar pruebas o para pequeñas implementaciones donde estás comenzando a explorar el poder de la automatización con AAP. Además, lo mejor de esta topología es su flexibilidad, se podrá escalar a una arquitectura “Enterprise” más compleja, con alta disponibilidad y recursos distribuidos.</p>
 
-<p>A lo largo de este artículo, te guiaré por los requisitos previos del sistema, la configuración esencial del entorno y un repaso por los componentes clave de AAP, para que tengas una base sólida antes de empezar la instalación paso a paso.</p>
+<p>En este artículo, revisaremos los requisitos previos del sistema, la configuración esencial del entorno y los componentes clave de AAP, para tener una base sólida antes de empezar la instalación paso a paso.</p>
 
 <h3 id="entendiendo-ansible-automation-platform-aap">Entendiendo Ansible Automation Platform (AAP)</h3>
 
@@ -76,7 +482,7 @@
 
 <p>Para armar el “rompecabezas” de Ansible Automation Platform, es crucial conocer las piezas que lo componen. AAP no es solo una herramienta, sino un ecosistema de servicios interconectados que trabajan juntos para potenciar tu automatización.</p>
 
-<p>A continuación, te presento un resumen de los componentes más importantes que debemos conocer, basándome en la documentación oficial de Red Hat y mi propia experiencia:</p>
+<p>Los componentes más importantes que debemos conocer, basándome en la documentación oficial de Red Hat:</p>
 
 <table>
   <thead>
@@ -147,11 +553,11 @@
 
 <h3 id="detalles-técnicos">Detalles Técnicos</h3>
 
-<p>Esta sección se enfoca en los requisitos validados por Red Hat para una instalación “Growth” contenerizada. Aquí te muestro el diseño y las especificaciones para desplegar AAP en una única máquina virtual, de forma clara y sencilla.</p>
+<p>Esta sección se enfoca en los requisitos validados por Red Hat para una instalación “Growth” contenerizada. Aquí muestro el diseño y las especificaciones para desplegar AAP en una única máquina virtual, de forma clara y sencilla.</p>
 
 <h4 id="virtual-machine-requirements">Virtual machine requirements</h4>
 
-<p>Basándonos en la documentación de Red Hat, estos son los requisitos mínimos de hardware para tu VM de RHEL 10 en una topología “Growth”. Aunque estos son los mínimos, mi consejo es que, si puedes, siempre asignes un poco más, especialmente en RAM, para una mejor experiencia:</p>
+<p>Estos son los requisitos mínimos de hardware para tu VM de RHEL 10 en una topología “Growth”:</p>
 
 <table>
   <thead>
@@ -182,7 +588,7 @@
 
 <h4 id="system-configuration">System configuration</h4>
 
-<p>Estos son los aspectos clave que tu sistema RHEL 10 debe cumplir, según la documentación de Red Hat. Presta especial atención a la suscripción, ya que es un paso que a menudo se pasa por alto y puede causar frustración:</p>
+<p>Estos son los aspectos clave que tu sistema RHEL 10 debe cumplir. Atención a la suscripción, ya que es un paso que a menudo se pasa por alto y puede causar problemas:</p>
 
 <table>
   <thead>
@@ -200,7 +606,7 @@
     </tr>
     <tr>
       <td style="text-align: left">Sistema operativo</td>
-      <td style="text-align: left">Red Hat Enterprise Linux 9.2 o versiones menores posteriores de Red Hat Enterprise Linux 9.<br />Red Hat Enterprise Linux 10 o versiones menores posteriores de Red Hat Enterprise Linux 10.</td>
+      <td style="text-align: left">Red Hat Enterprise Linux 9.2 o versiones posteriores de Red Hat Enterprise Linux 9.<br />Red Hat Enterprise Linux 10 o versiones posteriores de Red Hat Enterprise Linux 10.</td>
       <td style="text-align: left">—</td>
     </tr>
     <tr>
@@ -228,7 +634,7 @@
 
 <h4 id="network-ports-and-protocols">Network ports and protocols</h4>
 
-<p>A continuación, se listan los puertos de red y protocolos que AAP utiliza para la comunicación entre sus componentes, según la documentación oficial de Red Hat. Es crucial que estos puertos estén abiertos en tu firewall para asegurar la correcta operación de la plataforma:</p>
+<p>A continuación, se listan los puertos de red y protocolos que AAP utiliza para la comunicación entre sus componentes. Es crucial que estos puertos estén abiertos en el firewall para asegurar la correcta operación de la plataforma:</p>
 
 <table>
   <thead>
@@ -342,7 +748,7 @@
   </tbody>
 </table>
 
-<h3 id="instalación-de-ansible-automation-platform">Instalación de Ansible Automation Platform</h3>
+<h3 id="practica---instalación-de-ansible-automation-platform">PRACTICA - Instalación de Ansible Automation Platform</h3>
 
 <p>La instalación de Ansible Automation Platform requiere una serie de pasos preparatorios para asegurar un despliegue sin problemas. Nos centraremos en una instalación “Growth” contenerizada en RHEL 10.</p>
 
@@ -352,7 +758,7 @@
 
 <p>Para la instalación, el usuario que ejecuta el instalador debe tener permisos para elevar privilegios a root sin necesidad de introducir una contraseña. Esto es fundamental, ya que muchos pasos del proceso requieren modificar servicios, paquetes y configuraciones críticas del sistema.</p>
 
-<p>Para configurar esto, edita el archivo <code class="language-plaintext highlighter-rouge">sudoers</code> y añade una línea similar a la siguiente, sustituyendo <code class="language-plaintext highlighter-rouge">user</code> por el nombre de tu usuario:</p>
+<p>Para configurar esto, editamos el archivo <code class="language-plaintext highlighter-rouge">sudoers</code> (lo recomendado es crear un archivo nuevo en /etc/sudoers.d/user, esto es un ejemplo) y añadir una línea similar a la siguiente, sustituyendo <code class="language-plaintext highlighter-rouge">user</code> por el nombre de tu usuario:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user <span class="nv">ALL</span><span class="o">=(</span>ALL<span class="o">)</span> NOPASSWD: ALL
 </code></pre></div></div>
@@ -362,33 +768,33 @@
 
 <p><strong>Verificación del Nombre de Host (FQDN)</strong></p>
 
-<p>Es crucial que el nombre de host de tu servidor esté configurado como un Nombre de Dominio Completamente Cualificado (FQDN). Esto asegura una comunicación adecuada entre los servicios de AAP.</p>
+<p>Es crucial que el nombre de host del servidor esté configurado como un Nombre de Dominio Completamente Cualificado (FQDN). Esto asegura una comunicación adecuada entre los servicios de AAP.</p>
 
-<p>Puedes verificarlo con el siguiente comando:</p>
+<p>Podemos verificarlo con el siguiente comando:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">hostname</span> <span class="nt">-f</span>
 </code></pre></div></div>
 <p><img src="/assets/images/AAPInstallguide/AAP02.png" alt="Texto alternativo" /></p>
 
-<p>Si no devuelve un FQDN, deberás configurarlo en tu sistema RHEL.</p>
+<p>Si no devuelve un FQDN, debemos configurarlo en nuestro sistema RHEL.</p>
 
 <p><strong>Gestión de Suscripciones y Repositorios</strong></p>
 
-<p>Para acceder a los paquetes y contenedores de Red Hat, tu servidor RHEL debe estar correctamente suscrito y los repositorios necesarios deben estar habilitados.</p>
+<p>Para acceder a los paquetes y contenedores de Red Hat, el servidor RHEL debe estar correctamente suscrito y los repositorios necesarios deben estar habilitados.</p>
 
-<p>Asegúrate de que tu sistema está suscrito a Red Hat y que tienes acceso a los repositorios <code class="language-plaintext highlighter-rouge">BaseOS</code> y <code class="language-plaintext highlighter-rouge">AppStream</code>. Puedes comprobar el estado de tu suscripción con:</p>
+<p>Nos aseguramos de que el sistema está suscrito a Red Hat y que tiene acceso a los repositorios <code class="language-plaintext highlighter-rouge">BaseOS</code> y <code class="language-plaintext highlighter-rouge">AppStream</code>. Podemos comprobar el estado de la suscripción con:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>subscription-manager status
 </code></pre></div></div>
 <p><img src="/assets/images/AAPInstallguide/AAP03.png" alt="Texto alternativo" /></p>
 
-<p>Si no está suscrito, regístralo con:</p>
+<p>Si no está suscrito, podemos registrarlo con:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>subscription-manager register
 </code></pre></div></div>
 
 <p>Es necesario que los repositorios de <code class="language-plaintext highlighter-rouge">AppStream</code> y <code class="language-plaintext highlighter-rouge">BaseOS</code> estén habilitados, para ello verificamos que los tenemos activos.
-Aquí tienes una imagen que muestra cómo verificar los repositorios activos:</p>
+Aquí tenemos una imagen que muestra cómo verificar los repositorios activos:</p>
 
 <p><img src="/assets/images/AAPInstallguide/AAP04.png" alt="Texto alternativo" /></p>
 
@@ -415,7 +821,7 @@ Aquí tienes una imagen que muestra cómo verificar los repositorios activos:</p
 
 <p>Nosotros para esta guía elegiremos la online, una vez elegida la modalidad, descargamos el archivo <code class="language-plaintext highlighter-rouge">.tar.gz</code> correspondiente a la versión y arquitectura del sistema.</p>
 
-<p>Aquí tienes una imagen que ilustra la descarga desde el portal:</p>
+<p>Aquí tenemos una imagen que ilustra la descarga desde el portal:</p>
 
 <p><img src="/assets/images/AAPInstallguide/AAP06.png" alt="Texto alternativo" /></p>
 
@@ -552,7 +958,7 @@ Aquí tienes una imagen que muestra cómo verificar los repositorios activos:</p
 
 <p>Y en los campos <code class="language-plaintext highlighter-rouge">registry_username=your_rhn_username</code> y <code class="language-plaintext highlighter-rouge">registry_password=your_rhn_password</code> indicamos nuestro usuario y contraseña de la cuenta de Red Hat.</p>
 
-<p>Una vez lo tenemos todo listo podemos lanzar el instalador y indicar el archivo de inventario correspondiente (opción <code class="language-plaintext highlighter-rouge">-i</code>). Asegúrate de estar en el directorio donde descomprimiste el instalador (e.g., <code class="language-plaintext highlighter-rouge">/home/user/demos/ansible-automation-platform-containerized-setup-2.5-19</code>).</p>
+<p>Una vez lo tenemos todo listo podemos lanzar el instalador y indicar el archivo de inventario correspondiente (opción <code class="language-plaintext highlighter-rouge">-i</code>). Nos tenemos que assegurar de estar en el directorio donde descomprimimos el instalador (e.g., <code class="language-plaintext highlighter-rouge">/home/user/demos/ansible-automation-platform-containerized-setup-2.5-19</code>).</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> /home/user/demos/ansible-automation-platform-containerized-setup-2.5-19
 ansible-playbook <span class="nt">-i</span> inventory-growth ansible.containerized_installer.install
@@ -562,16 +968,16 @@ ansible-playbook <span class="nt">-i</span> inventory-growth ansible.containeriz
 
 <p>Cuando finalice la instalación de Ansible Automation Platform (AAP), el siguiente paso es comprobar que la interfaz web esté disponible.</p>
 
-<p>De manera predeterminada, puedes acceder escribiendo en tu navegador:</p>
+<p>De manera predeterminada, podemos acceder escribiendo en el navegador:</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://&lt;gateway_node&gt;:443
 </code></pre></div></div>
 
-<p>Aquí debes reemplazar <code class="language-plaintext highlighter-rouge">&lt;gateway_node&gt;</code> por el nombre o la dirección IP del servidor donde desplegaste el Automation Gateway.</p>
+<p>Aquí reemplazar <code class="language-plaintext highlighter-rouge">&lt;gateway_node&gt;</code> por el nombre o la dirección IP del servidor donde desplegamos el Automation Gateway.</p>
 
-<p>Para entrar al panel, utiliza el usuario administrador (<code class="language-plaintext highlighter-rouge">gateway_admin_username</code>) y la contraseña que definiste en la instalación (<code class="language-plaintext highlighter-rouge">gateway_admin_password</code>).</p>
+<p>Para entrar al panel, utilizar el usuario admin (<code class="language-plaintext highlighter-rouge">gateway_admin_username</code>) y la contraseña que definiste en la instalación (<code class="language-plaintext highlighter-rouge">gateway_admin_password</code>).</p>
 
-<p>Aquí tienes una captura de pantalla de la pantalla de inicio de sesión de AAP:
+<p>Aquí tenemos una captura de pantalla de la pantalla de inicio de sesión de AAP:
 <img src="/assets/images/AAPInstallguide/AAP13.png" alt="Texto alternativo" /></p>
 
 <p>Para habilitar el soporte completo y recibir actualizaciones, debemos activar la suscripción de Ansible Automation Platform. Dentro de la interfaz web, nos dirigimos a la sección de administración de suscripciones e introducimos nuestras credenciales de acceso de Red Hat (Client ID y Client Secret).</p>
@@ -582,7 +988,7 @@ ansible-playbook <span class="nt">-i</span> inventory-growth ansible.containeriz
 
 <p><img src="/assets/images/AAPInstallguide/AAP15.png" alt="Texto alternativo" /></p>
 
-<p>Mi idea con este artículo era desmitificar el proceso, compartir contigo esa “receta” que a mí me ha funcionado bien para arrancar rápido con una topología “Growth”. Podemos pensar en ella como un campo de pruebas personal, donde podemos cacharrear, aprender y, lo más importante, empezar a ver lo que ofrece AAP sin el estrés de una configuración gigante. Y con una gran flexibilidad para crecer cuando nosotros queramos.</p>]]></content><author><name>Xavi Vico Marti</name></author><category term="Automation" /><category term="Ansible" /><category term="RedHat" /><category term="AAP" /><category term="AnsibleAutomationPlatform" /><category term="RHEL" /><category term="InstallationGuide" /><category term="Containerized" /><summary type="html"><![CDATA[Sumérgete en la instalación de Red Hat Ansible Automation Platform 2.5 en RHEL 10. Guía práctica para configurar una topología 'Growth' contenerizada, ideal para desarrollo y pruebas.]]></summary></entry><entry><title type="html">Seguridad Empresarial con Red Hat: Más Allá del Código Abierto</title><link href="http://localhost:4000/seguridad/red%20hat/open%20source/Seguridad-empresarial-con-red-hat/" rel="alternate" type="text/html" title="Seguridad Empresarial con Red Hat: Más Allá del Código Abierto" /><published>2025-09-15T00:00:00+02:00</published><updated>2025-09-15T00:00:00+02:00</updated><id>http://localhost:4000/seguridad/red%20hat/open%20source/Seguridad-empresarial-con-red-hat</id><content type="html" xml:base="http://localhost:4000/seguridad/red%20hat/open%20source/Seguridad-empresarial-con-red-hat/"><![CDATA[<h2 id="el-paradigma-de-la-seguridad-en-el-open-source">El Paradigma de la Seguridad en el Open Source</h2>
+<p>Mi idea con este artículo era desmitificar el proceso, compartir esa “receta” que a mí me ha funcionado bien para arrancar rápido con una topología “Growth”. Podemos pensar en ella como un campo de pruebas personal, donde podemos cacharrear, aprender y, lo más importante, empezar a ver lo que ofrece AAP sin el estrés de una configuración gigante y con una gran flexibilidad para crecer cuando nosotros queramos.</p>]]></content><author><name>Xavi Vico Marti</name></author><category term="Automation" /><category term="Ansible" /><category term="RedHat" /><category term="AAP" /><category term="AnsibleAutomationPlatform" /><category term="RHEL" /><category term="InstallationGuide" /><category term="Containerized" /><summary type="html"><![CDATA[Instalación de Red Hat Ansible Automation Platform 2.5 en RHEL 10. Guía para configurar una topología 'Growth' contenerizada, ideal para desarrollo y pruebas.]]></summary></entry><entry><title type="html">Seguridad Empresarial con Red Hat: Más Allá del Código Abierto</title><link href="http://localhost:4000/seguridad/red%20hat/open%20source/Seguridad-empresarial-con-red-hat/" rel="alternate" type="text/html" title="Seguridad Empresarial con Red Hat: Más Allá del Código Abierto" /><published>2025-09-15T00:00:00+02:00</published><updated>2025-09-15T00:00:00+02:00</updated><id>http://localhost:4000/seguridad/red%20hat/open%20source/Seguridad-empresarial-con-red-hat</id><content type="html" xml:base="http://localhost:4000/seguridad/red%20hat/open%20source/Seguridad-empresarial-con-red-hat/"><![CDATA[<h2 id="el-paradigma-de-la-seguridad-en-el-open-source">El Paradigma de la Seguridad en el Open Source</h2>
 
 <p>El software de código abierto se ha convertido en una pieza clave para impulsar la innovación tecnológica. Su esencia está en la colaboración y la transparencia, lo que ha permitido avances extraordinarios, pero aquí es donde aparece lo que podríamos llamar el dilema del código abierto. Aunque este modelo colaborativo es su mayor fortaleza, también plantea desafíos cuando se trata de adoptarlo a nivel empresarial. No es el código en sí el problema, sino cómo las organizaciones entienden y, sobre todo, cómo gestionan su seguridad y los riesgos asociados.</p>
 

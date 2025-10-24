@@ -11,7 +11,7 @@
     <meta charset="utf-8">
 
 <!-- begin _includes/seo.html --><title>Red Hat Ansible Automation Platform 2.5: Guía de Instalación en RHEL 10 (Topología Growth Contenerizada) - Xavi Vico Marti</title>
-<meta name="description" content="Sumérgete en la instalación de Red Hat Ansible Automation Platform 2.5 en RHEL 10. Guía práctica para configurar una topología ‘Growth’ contenerizada, ideal para desarrollo y pruebas.">
+<meta name="description" content="Instalación de Red Hat Ansible Automation Platform 2.5 en RHEL 10. Guía para configurar una topología ‘Growth’ contenerizada, ideal para desarrollo y pruebas.">
 
 
   <meta name="author" content="Xavi Vico Marti">
@@ -27,7 +27,7 @@
 <meta property="og:url" content="http://localhost:4000/automation/ansible/redhat/AAP-Guia-de-instalacion-2.5/">
 
 
-  <meta property="og:description" content="Sumérgete en la instalación de Red Hat Ansible Automation Platform 2.5 en RHEL 10. Guía práctica para configurar una topología ‘Growth’ contenerizada, ideal para desarrollo y pruebas.">
+  <meta property="og:description" content="Instalación de Red Hat Ansible Automation Platform 2.5 en RHEL 10. Guía para configurar una topología ‘Growth’ contenerizada, ideal para desarrollo y pruebas.">
 
 
 
@@ -127,12 +127,6 @@
               >Blog</a>
             </li><li class="masthead__menu-item">
               <a
-                href="/projects/"
-                
-                
-              >Projects</a>
-            </li><li class="masthead__menu-item">
-              <a
                 href="/about/"
                 
                 
@@ -177,7 +171,7 @@
         
       </h1>
       
-        <p class="page__lead">Sumérgete en la instalación de Red Hat Ansible Automation Platform 2.5 en RHEL 10. Guía práctica para configurar una topología ‘Growth’ contenerizada, ideal para desarrollo y pruebas.
+        <p class="page__lead">Instalación de Red Hat Ansible Automation Platform 2.5 en RHEL 10. Guía para configurar una topología ‘Growth’ contenerizada, ideal para desarrollo y pruebas.
 </p>
       
       
@@ -336,7 +330,7 @@
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Red Hat Ansible Automation Platform 2.5: Guía de Instalación en RHEL 10 (Topología Growth Contenerizada)">
-    <meta itemprop="description" content="Sumérgete en la instalación de Red Hat Ansible Automation Platform 2.5 en RHEL 10. Guía práctica para configurar una topología ‘Growth’ contenerizada, ideal para desarrollo y pruebas.">
+    <meta itemprop="description" content="Instalación de Red Hat Ansible Automation Platform 2.5 en RHEL 10. Guía para configurar una topología ‘Growth’ contenerizada, ideal para desarrollo y pruebas.">
     <meta itemprop="datePublished" content="2025-10-01T00:00:00+02:00">
     
 
@@ -348,7 +342,7 @@
           <aside class="sidebar__right ">
             <nav class="toc">
               <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> En esta página</h4></header>
-              <ul class="toc__menu"><li><a href="#red-hat-ansible-automation-platform-25-tu-guía-práctica-de-instalación-en-rhel-10-topología-growth-contenerizada">Red Hat Ansible Automation Platform 2.5: Tu Guía Práctica de Instalación en RHEL 10 (Topología Growth Contenerizada)</a><ul><li><a href="#introducción">Introducción</a></li><li><a href="#entendiendo-ansible-automation-platform-aap">Entendiendo Ansible Automation Platform (AAP)</a></li><li><a href="#topologías-y-métodos-de-instalación">Topologías y Métodos de Instalación</a></li><li><a href="#componentes">Componentes</a></li><li><a href="#detalles-técnicos">Detalles Técnicos</a><ul><li><a href="#virtual-machine-requirements">Virtual machine requirements</a></li><li><a href="#system-configuration">System configuration</a></li><li><a href="#network-ports-and-protocols">Network ports and protocols</a></li></ul></li><li><a href="#instalación-de-ansible-automation-platform">Instalación de Ansible Automation Platform</a><ul><li><a href="#preparación-del-sistema-operativo">Preparación del Sistema Operativo</a></li><li><a href="#descarga-del-instalador-de-ansible-automation-platform">Descarga del Instalador de Ansible Automation Platform</a></li><li><a href="#configuración-del-archivo-de-inventario">Configuración del Archivo de Inventario</a></li></ul></li></ul></li></ul>
+              <ul class="toc__menu"><li><a href="#red-hat-ansible-automation-platform-25-tu-guía-práctica-de-instalación-en-rhel-10-topología-growth-contenerizada">Red Hat Ansible Automation Platform 2.5: Tu Guía Práctica de Instalación en RHEL 10 (Topología Growth Contenerizada)</a><ul><li><a href="#introducción">Introducción</a></li><li><a href="#entendiendo-ansible-automation-platform-aap">Entendiendo Ansible Automation Platform (AAP)</a></li><li><a href="#topologías-y-métodos-de-instalación">Topologías y Métodos de Instalación</a></li><li><a href="#componentes">Componentes</a></li><li><a href="#detalles-técnicos">Detalles Técnicos</a><ul><li><a href="#virtual-machine-requirements">Virtual machine requirements</a></li><li><a href="#system-configuration">System configuration</a></li><li><a href="#network-ports-and-protocols">Network ports and protocols</a></li></ul></li><li><a href="#practica---instalación-de-ansible-automation-platform">PRACTICA - Instalación de Ansible Automation Platform</a><ul><li><a href="#preparación-del-sistema-operativo">Preparación del Sistema Operativo</a></li><li><a href="#descarga-del-instalador-de-ansible-automation-platform">Descarga del Instalador de Ansible Automation Platform</a></li><li><a href="#configuración-del-archivo-de-inventario">Configuración del Archivo de Inventario</a></li></ul></li></ul></li></ul>
             </nav>
           </aside>
         
@@ -356,11 +350,11 @@
 
 <h3 id="introducción">Introducción</h3>
 
-<p>En esta guía, nos sumergiremos en el proceso de instalación de Red Hat Ansible Automation Platform (AAP) 2.5 en un entorno Red Hat Enterprise Linux (RHEL) 10. Nuestro objetivo es que puedas configurar rápidamente AAP utilizando una topología “Growth” contenerizada, lo que significa que todos los componentes se instalarán en una única máquina virtual.</p>
+<p>Esta guía sirve para ver el proceso de instalación de Red Hat Ansible Automation Platform (AAP) 2.5 en un entorno Red Hat Enterprise Linux (RHEL) 10. El objetivo es instalar AAP utilizando una topología “Growth” contenerizada, lo que significa que todos los componentes se instalarán en una única máquina virtual.</p>
 
-<p>Desde mi experiencia, esta configuración es perfecta para desarrolladores, para realizar pruebas o para pequeñas implementaciones donde estás comenzando a explorar el poder de la automatización con AAP. Además, lo mejor de esta topología es su flexibilidad: si tus necesidades crecen, siempre podrás escalar a una arquitectura “Enterprise” más compleja, con alta disponibilidad y recursos distribuidos.</p>
+<p>Esta configuración es perfecta para desarrolladores, para realizar pruebas o para pequeñas implementaciones donde estás comenzando a explorar el poder de la automatización con AAP. Además, lo mejor de esta topología es su flexibilidad, se podrá escalar a una arquitectura “Enterprise” más compleja, con alta disponibilidad y recursos distribuidos.</p>
 
-<p>A lo largo de este artículo, te guiaré por los requisitos previos del sistema, la configuración esencial del entorno y un repaso por los componentes clave de AAP, para que tengas una base sólida antes de empezar la instalación paso a paso.</p>
+<p>En este artículo, revisaremos los requisitos previos del sistema, la configuración esencial del entorno y los componentes clave de AAP, para tener una base sólida antes de empezar la instalación paso a paso.</p>
 
 <h3 id="entendiendo-ansible-automation-platform-aap">Entendiendo Ansible Automation Platform (AAP)</h3>
 
@@ -430,7 +424,7 @@
 
 <p>Para armar el “rompecabezas” de Ansible Automation Platform, es crucial conocer las piezas que lo componen. AAP no es solo una herramienta, sino un ecosistema de servicios interconectados que trabajan juntos para potenciar tu automatización.</p>
 
-<p>A continuación, te presento un resumen de los componentes más importantes que debemos conocer, basándome en la documentación oficial de Red Hat y mi propia experiencia:</p>
+<p>Los componentes más importantes que debemos conocer, basándome en la documentación oficial de Red Hat:</p>
 
 <table>
   <thead>
@@ -501,11 +495,11 @@
 
 <h3 id="detalles-técnicos">Detalles Técnicos</h3>
 
-<p>Esta sección se enfoca en los requisitos validados por Red Hat para una instalación “Growth” contenerizada. Aquí te muestro el diseño y las especificaciones para desplegar AAP en una única máquina virtual, de forma clara y sencilla.</p>
+<p>Esta sección se enfoca en los requisitos validados por Red Hat para una instalación “Growth” contenerizada. Aquí muestro el diseño y las especificaciones para desplegar AAP en una única máquina virtual, de forma clara y sencilla.</p>
 
 <h4 id="virtual-machine-requirements">Virtual machine requirements</h4>
 
-<p>Basándonos en la documentación de Red Hat, estos son los requisitos mínimos de hardware para tu VM de RHEL 10 en una topología “Growth”. Aunque estos son los mínimos, mi consejo es que, si puedes, siempre asignes un poco más, especialmente en RAM, para una mejor experiencia:</p>
+<p>Estos son los requisitos mínimos de hardware para tu VM de RHEL 10 en una topología “Growth”:</p>
 
 <table>
   <thead>
@@ -536,7 +530,7 @@
 
 <h4 id="system-configuration">System configuration</h4>
 
-<p>Estos son los aspectos clave que tu sistema RHEL 10 debe cumplir, según la documentación de Red Hat. Presta especial atención a la suscripción, ya que es un paso que a menudo se pasa por alto y puede causar frustración:</p>
+<p>Estos son los aspectos clave que tu sistema RHEL 10 debe cumplir. Atención a la suscripción, ya que es un paso que a menudo se pasa por alto y puede causar problemas:</p>
 
 <table>
   <thead>
@@ -554,7 +548,7 @@
     </tr>
     <tr>
       <td style="text-align: left">Sistema operativo</td>
-      <td style="text-align: left">Red Hat Enterprise Linux 9.2 o versiones menores posteriores de Red Hat Enterprise Linux 9.<br />Red Hat Enterprise Linux 10 o versiones menores posteriores de Red Hat Enterprise Linux 10.</td>
+      <td style="text-align: left">Red Hat Enterprise Linux 9.2 o versiones posteriores de Red Hat Enterprise Linux 9.<br />Red Hat Enterprise Linux 10 o versiones posteriores de Red Hat Enterprise Linux 10.</td>
       <td style="text-align: left">—</td>
     </tr>
     <tr>
@@ -582,7 +576,7 @@
 
 <h4 id="network-ports-and-protocols">Network ports and protocols</h4>
 
-<p>A continuación, se listan los puertos de red y protocolos que AAP utiliza para la comunicación entre sus componentes, según la documentación oficial de Red Hat. Es crucial que estos puertos estén abiertos en tu firewall para asegurar la correcta operación de la plataforma:</p>
+<p>A continuación, se listan los puertos de red y protocolos que AAP utiliza para la comunicación entre sus componentes. Es crucial que estos puertos estén abiertos en el firewall para asegurar la correcta operación de la plataforma:</p>
 
 <table>
   <thead>
@@ -696,7 +690,7 @@
   </tbody>
 </table>
 
-<h3 id="instalación-de-ansible-automation-platform">Instalación de Ansible Automation Platform</h3>
+<h3 id="practica---instalación-de-ansible-automation-platform">PRACTICA - Instalación de Ansible Automation Platform</h3>
 
 <p>La instalación de Ansible Automation Platform requiere una serie de pasos preparatorios para asegurar un despliegue sin problemas. Nos centraremos en una instalación “Growth” contenerizada en RHEL 10.</p>
 
@@ -706,7 +700,7 @@
 
 <p>Para la instalación, el usuario que ejecuta el instalador debe tener permisos para elevar privilegios a root sin necesidad de introducir una contraseña. Esto es fundamental, ya que muchos pasos del proceso requieren modificar servicios, paquetes y configuraciones críticas del sistema.</p>
 
-<p>Para configurar esto, edita el archivo <code class="language-plaintext highlighter-rouge">sudoers</code> y añade una línea similar a la siguiente, sustituyendo <code class="language-plaintext highlighter-rouge">user</code> por el nombre de tu usuario:</p>
+<p>Para configurar esto, editamos el archivo <code class="language-plaintext highlighter-rouge">sudoers</code> (lo recomendado es crear un archivo nuevo en /etc/sudoers.d/user, esto es un ejemplo) y añadir una línea similar a la siguiente, sustituyendo <code class="language-plaintext highlighter-rouge">user</code> por el nombre de tu usuario:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user <span class="nv">ALL</span><span class="o">=(</span>ALL<span class="o">)</span> NOPASSWD: ALL
 </code></pre></div></div>
@@ -716,33 +710,33 @@
 
 <p><strong>Verificación del Nombre de Host (FQDN)</strong></p>
 
-<p>Es crucial que el nombre de host de tu servidor esté configurado como un Nombre de Dominio Completamente Cualificado (FQDN). Esto asegura una comunicación adecuada entre los servicios de AAP.</p>
+<p>Es crucial que el nombre de host del servidor esté configurado como un Nombre de Dominio Completamente Cualificado (FQDN). Esto asegura una comunicación adecuada entre los servicios de AAP.</p>
 
-<p>Puedes verificarlo con el siguiente comando:</p>
+<p>Podemos verificarlo con el siguiente comando:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">hostname</span> <span class="nt">-f</span>
 </code></pre></div></div>
 <p><img src="/assets/images/AAPInstallguide/AAP02.png" alt="Texto alternativo" /></p>
 
-<p>Si no devuelve un FQDN, deberás configurarlo en tu sistema RHEL.</p>
+<p>Si no devuelve un FQDN, debemos configurarlo en nuestro sistema RHEL.</p>
 
 <p><strong>Gestión de Suscripciones y Repositorios</strong></p>
 
-<p>Para acceder a los paquetes y contenedores de Red Hat, tu servidor RHEL debe estar correctamente suscrito y los repositorios necesarios deben estar habilitados.</p>
+<p>Para acceder a los paquetes y contenedores de Red Hat, el servidor RHEL debe estar correctamente suscrito y los repositorios necesarios deben estar habilitados.</p>
 
-<p>Asegúrate de que tu sistema está suscrito a Red Hat y que tienes acceso a los repositorios <code class="language-plaintext highlighter-rouge">BaseOS</code> y <code class="language-plaintext highlighter-rouge">AppStream</code>. Puedes comprobar el estado de tu suscripción con:</p>
+<p>Nos aseguramos de que el sistema está suscrito a Red Hat y que tiene acceso a los repositorios <code class="language-plaintext highlighter-rouge">BaseOS</code> y <code class="language-plaintext highlighter-rouge">AppStream</code>. Podemos comprobar el estado de la suscripción con:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>subscription-manager status
 </code></pre></div></div>
 <p><img src="/assets/images/AAPInstallguide/AAP03.png" alt="Texto alternativo" /></p>
 
-<p>Si no está suscrito, regístralo con:</p>
+<p>Si no está suscrito, podemos registrarlo con:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>subscription-manager register
 </code></pre></div></div>
 
 <p>Es necesario que los repositorios de <code class="language-plaintext highlighter-rouge">AppStream</code> y <code class="language-plaintext highlighter-rouge">BaseOS</code> estén habilitados, para ello verificamos que los tenemos activos.
-Aquí tienes una imagen que muestra cómo verificar los repositorios activos:</p>
+Aquí tenemos una imagen que muestra cómo verificar los repositorios activos:</p>
 
 <p><img src="/assets/images/AAPInstallguide/AAP04.png" alt="Texto alternativo" /></p>
 
@@ -769,7 +763,7 @@ Aquí tienes una imagen que muestra cómo verificar los repositorios activos:</p
 
 <p>Nosotros para esta guía elegiremos la online, una vez elegida la modalidad, descargamos el archivo <code class="language-plaintext highlighter-rouge">.tar.gz</code> correspondiente a la versión y arquitectura del sistema.</p>
 
-<p>Aquí tienes una imagen que ilustra la descarga desde el portal:</p>
+<p>Aquí tenemos una imagen que ilustra la descarga desde el portal:</p>
 
 <p><img src="/assets/images/AAPInstallguide/AAP06.png" alt="Texto alternativo" /></p>
 
@@ -906,7 +900,7 @@ Aquí tienes una imagen que muestra cómo verificar los repositorios activos:</p
 
 <p>Y en los campos <code class="language-plaintext highlighter-rouge">registry_username=your_rhn_username</code> y <code class="language-plaintext highlighter-rouge">registry_password=your_rhn_password</code> indicamos nuestro usuario y contraseña de la cuenta de Red Hat.</p>
 
-<p>Una vez lo tenemos todo listo podemos lanzar el instalador y indicar el archivo de inventario correspondiente (opción <code class="language-plaintext highlighter-rouge">-i</code>). Asegúrate de estar en el directorio donde descomprimiste el instalador (e.g., <code class="language-plaintext highlighter-rouge">/home/user/demos/ansible-automation-platform-containerized-setup-2.5-19</code>).</p>
+<p>Una vez lo tenemos todo listo podemos lanzar el instalador y indicar el archivo de inventario correspondiente (opción <code class="language-plaintext highlighter-rouge">-i</code>). Nos tenemos que assegurar de estar en el directorio donde descomprimimos el instalador (e.g., <code class="language-plaintext highlighter-rouge">/home/user/demos/ansible-automation-platform-containerized-setup-2.5-19</code>).</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> /home/user/demos/ansible-automation-platform-containerized-setup-2.5-19
 ansible-playbook <span class="nt">-i</span> inventory-growth ansible.containerized_installer.install
@@ -916,16 +910,16 @@ ansible-playbook <span class="nt">-i</span> inventory-growth ansible.containeriz
 
 <p>Cuando finalice la instalación de Ansible Automation Platform (AAP), el siguiente paso es comprobar que la interfaz web esté disponible.</p>
 
-<p>De manera predeterminada, puedes acceder escribiendo en tu navegador:</p>
+<p>De manera predeterminada, podemos acceder escribiendo en el navegador:</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://&lt;gateway_node&gt;:443
 </code></pre></div></div>
 
-<p>Aquí debes reemplazar <code class="language-plaintext highlighter-rouge">&lt;gateway_node&gt;</code> por el nombre o la dirección IP del servidor donde desplegaste el Automation Gateway.</p>
+<p>Aquí reemplazar <code class="language-plaintext highlighter-rouge">&lt;gateway_node&gt;</code> por el nombre o la dirección IP del servidor donde desplegamos el Automation Gateway.</p>
 
-<p>Para entrar al panel, utiliza el usuario administrador (<code class="language-plaintext highlighter-rouge">gateway_admin_username</code>) y la contraseña que definiste en la instalación (<code class="language-plaintext highlighter-rouge">gateway_admin_password</code>).</p>
+<p>Para entrar al panel, utilizar el usuario admin (<code class="language-plaintext highlighter-rouge">gateway_admin_username</code>) y la contraseña que definiste en la instalación (<code class="language-plaintext highlighter-rouge">gateway_admin_password</code>).</p>
 
-<p>Aquí tienes una captura de pantalla de la pantalla de inicio de sesión de AAP:
+<p>Aquí tenemos una captura de pantalla de la pantalla de inicio de sesión de AAP:
 <img src="/assets/images/AAPInstallguide/AAP13.png" alt="Texto alternativo" /></p>
 
 <p>Para habilitar el soporte completo y recibir actualizaciones, debemos activar la suscripción de Ansible Automation Platform. Dentro de la interfaz web, nos dirigimos a la sección de administración de suscripciones e introducimos nuestras credenciales de acceso de Red Hat (Client ID y Client Secret).</p>
@@ -936,7 +930,7 @@ ansible-playbook <span class="nt">-i</span> inventory-growth ansible.containeriz
 
 <p><img src="/assets/images/AAPInstallguide/AAP15.png" alt="Texto alternativo" /></p>
 
-<p>Mi idea con este artículo era desmitificar el proceso, compartir contigo esa “receta” que a mí me ha funcionado bien para arrancar rápido con una topología “Growth”. Podemos pensar en ella como un campo de pruebas personal, donde podemos cacharrear, aprender y, lo más importante, empezar a ver lo que ofrece AAP sin el estrés de una configuración gigante. Y con una gran flexibilidad para crecer cuando nosotros queramos.</p>
+<p>Mi idea con este artículo era desmitificar el proceso, compartir esa “receta” que a mí me ha funcionado bien para arrancar rápido con una topología “Growth”. Podemos pensar en ella como un campo de pruebas personal, donde podemos cacharrear, aprender y, lo más importante, empezar a ver lo que ofrece AAP sin el estrés de una configuración gigante y con una gran flexibilidad para crecer cuando nosotros queramos.</p>
 
         
       </section>
@@ -1021,7 +1015,7 @@ ansible-playbook <span class="nt">-i</span> inventory-growth ansible.containeriz
       <a href="/seguridad/red%20hat/open%20source/Seguridad-empresarial-con-red-hat/" class="pagination--pager" title="Seguridad Empresarial con Red Hat: Más Allá del Código Abierto">Anterior</a>
     
     
-      <a href="#" class="pagination--pager disabled">Siguiente</a>
+      <a href="/redhat/activedirectory/RHEL-Integracion-RHEL-10-con-AD/" class="pagination--pager" title="Red Hat Enterprise Linux: Integración de RHEL 10 con Active Directory 2019 usando SSSD y realmd">Siguiente</a>
     
   </nav>
 
@@ -1038,6 +1032,47 @@ ansible-playbook <span class="nt">-i</span> inventory-growth ansible.containeriz
   
   <h2 class="page__related-title">Puede que también te interese</h2>
   <div class="grid__wrapper">
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/redhat/activedirectory/RHEL-Integracion-RHEL-10-con-AD/" rel="permalink">Red Hat Enterprise Linux: Integración de RHEL 10 con Active Directory 2019 usando SSSD y realmd
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          8 minuto(s) de lectura
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Guía para integrar Red Hat Enterprise Linux 10.0 (RHEL 10) con Active Directory 2019, utilizando las herramientas SSSD y realmd
+</p>
+  </article>
+</div>
+
     
       
       

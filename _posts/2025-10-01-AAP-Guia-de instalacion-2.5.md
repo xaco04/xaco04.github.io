@@ -15,7 +15,7 @@ toc: true
 read_time: true
 comments: true
 classes: wide
-excerpt: "Sumérgete en la instalación de Red Hat Ansible Automation Platform 2.5 en RHEL 10. Guía práctica para configurar una topología 'Growth' contenerizada, ideal para desarrollo y pruebas."
+excerpt: "Instalación de Red Hat Ansible Automation Platform 2.5 en RHEL 10. Guía para configurar una topología 'Growth' contenerizada, ideal para desarrollo y pruebas."
 header:
   overlay_image: /assets/images/RedHatbanner.png # Asegúrate de tener una imagen de banner en esta ruta
   overlay_filter: 0.5 # Ajusta el oscurecimiento de la imagen si es necesario
@@ -25,11 +25,11 @@ header:
 
 ### Introducción
 
-En esta guía, nos sumergiremos en el proceso de instalación de Red Hat Ansible Automation Platform (AAP) 2.5 en un entorno Red Hat Enterprise Linux (RHEL) 10. Nuestro objetivo es que puedas configurar rápidamente AAP utilizando una topología "Growth" contenerizada, lo que significa que todos los componentes se instalarán en una única máquina virtual.
+Esta guía sirve para ver el proceso de instalación de Red Hat Ansible Automation Platform (AAP) 2.5 en un entorno Red Hat Enterprise Linux (RHEL) 10. El objetivo es instalar AAP utilizando una topología "Growth" contenerizada, lo que significa que todos los componentes se instalarán en una única máquina virtual.
 
-Desde mi experiencia, esta configuración es perfecta para desarrolladores, para realizar pruebas o para pequeñas implementaciones donde estás comenzando a explorar el poder de la automatización con AAP. Además, lo mejor de esta topología es su flexibilidad: si tus necesidades crecen, siempre podrás escalar a una arquitectura "Enterprise" más compleja, con alta disponibilidad y recursos distribuidos.
+Esta configuración es perfecta para desarrolladores, para realizar pruebas o para pequeñas implementaciones donde estás comenzando a explorar el poder de la automatización con AAP. Además, lo mejor de esta topología es su flexibilidad, se podrá escalar a una arquitectura "Enterprise" más compleja, con alta disponibilidad y recursos distribuidos.
 
-A lo largo de este artículo, te guiaré por los requisitos previos del sistema, la configuración esencial del entorno y un repaso por los componentes clave de AAP, para que tengas una base sólida antes de empezar la instalación paso a paso.
+En este artículo, revisaremos los requisitos previos del sistema, la configuración esencial del entorno y los componentes clave de AAP, para tener una base sólida antes de empezar la instalación paso a paso.
 
 ### Entendiendo Ansible Automation Platform (AAP)
 
@@ -70,7 +70,7 @@ Existen tres métodos principales para instalar y desplegar Ansible Automation P
 
 Para armar el "rompecabezas" de Ansible Automation Platform, es crucial conocer las piezas que lo componen. AAP no es solo una herramienta, sino un ecosistema de servicios interconectados que trabajan juntos para potenciar tu automatización.
 
-A continuación, te presento un resumen de los componentes más importantes que debemos conocer, basándome en la documentación oficial de Red Hat y mi propia experiencia:
+Los componentes más importantes que debemos conocer, basándome en la documentación oficial de Red Hat:
 
 | Componente                | Descripción                                                               | ¿Por qué importa?                                                                  |
 | :------------------------ | :------------------------------------------------------------------------ | :--------------------------------------------------------------------------------- |
@@ -88,11 +88,11 @@ A continuación, te presento un resumen de los componentes más importantes que 
 
 ### Detalles Técnicos
 
-Esta sección se enfoca en los requisitos validados por Red Hat para una instalación "Growth" contenerizada. Aquí te muestro el diseño y las especificaciones para desplegar AAP en una única máquina virtual, de forma clara y sencilla.
+Esta sección se enfoca en los requisitos validados por Red Hat para una instalación "Growth" contenerizada. Aquí muestro el diseño y las especificaciones para desplegar AAP en una única máquina virtual, de forma clara y sencilla.
 
 #### Virtual machine requirements
 
-Basándonos en la documentación de Red Hat, estos son los requisitos mínimos de hardware para tu VM de RHEL 10 en una topología "Growth". Aunque estos son los mínimos, mi consejo es que, si puedes, siempre asignes un poco más, especialmente en RAM, para una mejor experiencia:
+Estos son los requisitos mínimos de hardware para tu VM de RHEL 10 en una topología "Growth":
 
 | Requirement       | Minimum requirement                                                                                                                                                                                                                                                                          |
 | :---------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -103,12 +103,12 @@ Basándonos en la documentación de Red Hat, estos son los requisitos mínimos d
 
 #### System configuration
 
-Estos son los aspectos clave que tu sistema RHEL 10 debe cumplir, según la documentación de Red Hat. Presta especial atención a la suscripción, ya que es un paso que a menudo se pasa por alto y puede causar frustración:
+Estos son los aspectos clave que tu sistema RHEL 10 debe cumplir. Atención a la suscripción, ya que es un paso que a menudo se pasa por alto y puede causar problemas:
 
 | Tipo              | Descripción                                                                                                                                                                 | Notas                                                                                                                                                                                                                                    |
 | :---------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Suscripción       | Suscripción válida de Red Hat Ansible Automation Platform<br>Suscripción válida de Red Hat Enterprise Linux (para poder usar los repositorios BaseOS y AppStream)              |                                                                                                                                                                                                                                          |
-| Sistema operativo | Red Hat Enterprise Linux 9.2 o versiones menores posteriores de Red Hat Enterprise Linux 9.<br>Red Hat Enterprise Linux 10 o versiones menores posteriores de Red Hat Enterprise Linux 10. | —                                                                                                                                                                                                                                        |
+| Sistema operativo | Red Hat Enterprise Linux 9.2 o versiones posteriores de Red Hat Enterprise Linux 9.<br>Red Hat Enterprise Linux 10 o versiones posteriores de Red Hat Enterprise Linux 10. | —                                                                                                                                                                                                                                        |
 | Arquitectura de CPU | x86_64, AArch64, s390x (IBM Z), ppc64le (IBM Power)                                                                                                                         | —                                                                                                                                                                                                                                        |
 | ansible-core      | RHEL 9: el programa de instalación usa `ansible-core` 2.14; la operación de Ansible Automation Platform usa `ansible-core` 2.16.<br>RHEL 10: el programa de instalación y la operación de Ansible Automation Platform usan `ansible-core` 2.16. | El programa de instalación utiliza el paquete `ansible-core` del repositorio AppStream de RHEL. Ansible Automation Platform incluye `ansible-core` 2.16 para su operación, por lo que no es necesario instalarlo manualmente. |
 | Navegador         | Una versión actualmente soportada de Mozilla Firefox o Google Chrome                                                                                                       | —                                                                                                                                                                                                                                        |
@@ -116,7 +116,7 @@ Estos son los aspectos clave que tu sistema RHEL 10 debe cumplir, según la docu
 
 #### Network ports and protocols
 
-A continuación, se listan los puertos de red y protocolos que AAP utiliza para la comunicación entre sus componentes, según la documentación oficial de Red Hat. Es crucial que estos puertos estén abiertos en tu firewall para asegurar la correcta operación de la plataforma:
+A continuación, se listan los puertos de red y protocolos que AAP utiliza para la comunicación entre sus componentes. Es crucial que estos puertos estén abiertos en el firewall para asegurar la correcta operación de la plataforma:
 
 | Port number | Protocol | Service    | Source                | Destination           |
 | :---------- | :------- | :--------- | :-------------------- | :-------------------- |
@@ -135,7 +135,7 @@ A continuación, se listan los puertos de red y protocolos que AAP utiliza para 
 | 8443        | TCP      | HTTPS      | Platform gateway      | Platform gateway      |
 | 27199       | TCP      | Receptor   | Automation controller | Execution container   |
 
-### Instalación de Ansible Automation Platform
+### PRACTICA - Instalación de Ansible Automation Platform
 
 La instalación de Ansible Automation Platform requiere una serie de pasos preparatorios para asegurar un despliegue sin problemas. Nos centraremos en una instalación "Growth" contenerizada en RHEL 10.
 
@@ -145,7 +145,7 @@ La instalación de Ansible Automation Platform requiere una serie de pasos prepa
 
 Para la instalación, el usuario que ejecuta el instalador debe tener permisos para elevar privilegios a root sin necesidad de introducir una contraseña. Esto es fundamental, ya que muchos pasos del proceso requieren modificar servicios, paquetes y configuraciones críticas del sistema.
 
-Para configurar esto, edita el archivo `sudoers` y añade una línea similar a la siguiente, sustituyendo `user` por el nombre de tu usuario:
+Para configurar esto, editamos el archivo `sudoers` (lo recomendado es crear un archivo nuevo en /etc/sudoers.d/user, esto es un ejemplo) y añadir una línea similar a la siguiente, sustituyendo `user` por el nombre de tu usuario:
 
 ```bash
 user ALL=(ALL) NOPASSWD: ALL
@@ -156,36 +156,36 @@ Esto permite a `user` ejecutar comandos como `root` con `sudo` sin pedir contras
 
 **Verificación del Nombre de Host (FQDN)**
 
-Es crucial que el nombre de host de tu servidor esté configurado como un Nombre de Dominio Completamente Cualificado (FQDN). Esto asegura una comunicación adecuada entre los servicios de AAP.
+Es crucial que el nombre de host del servidor esté configurado como un Nombre de Dominio Completamente Cualificado (FQDN). Esto asegura una comunicación adecuada entre los servicios de AAP.
 
-Puedes verificarlo con el siguiente comando:
+Podemos verificarlo con el siguiente comando:
 
 ```bash
 hostname -f
 ```
 ![Texto alternativo](/assets/images/AAPInstallguide/AAP02.png)
 
-Si no devuelve un FQDN, deberás configurarlo en tu sistema RHEL.
+Si no devuelve un FQDN, debemos configurarlo en nuestro sistema RHEL.
 
 **Gestión de Suscripciones y Repositorios**
 
-Para acceder a los paquetes y contenedores de Red Hat, tu servidor RHEL debe estar correctamente suscrito y los repositorios necesarios deben estar habilitados.
+Para acceder a los paquetes y contenedores de Red Hat, el servidor RHEL debe estar correctamente suscrito y los repositorios necesarios deben estar habilitados.
 
-Asegúrate de que tu sistema está suscrito a Red Hat y que tienes acceso a los repositorios `BaseOS` y `AppStream`. Puedes comprobar el estado de tu suscripción con:
+Nos aseguramos de que el sistema está suscrito a Red Hat y que tiene acceso a los repositorios `BaseOS` y `AppStream`. Podemos comprobar el estado de la suscripción con:
 
 ```bash
 sudo subscription-manager status
 ```
 ![Texto alternativo](/assets/images/AAPInstallguide/AAP03.png)
 
-Si no está suscrito, regístralo con:
+Si no está suscrito, podemos registrarlo con:
 
 ```bash
 sudo subscription-manager register
 ```
 
 Es necesario que los repositorios de `AppStream` y `BaseOS` estén habilitados, para ello verificamos que los tenemos activos.
-Aquí tienes una imagen que muestra cómo verificar los repositorios activos:
+Aquí tenemos una imagen que muestra cómo verificar los repositorios activos:
 
 ![Texto alternativo](/assets/images/AAPInstallguide/AAP04.png)
 
@@ -214,7 +214,7 @@ Existen dos modalidades principales de instalación:
 
 Nosotros para esta guía elegiremos la online, una vez elegida la modalidad, descargamos el archivo `.tar.gz` correspondiente a la versión y arquitectura del sistema.
 
-Aquí tienes una imagen que ilustra la descarga desde el portal:
+Aquí tenemos una imagen que ilustra la descarga desde el portal:
 
 ![Texto alternativo](/assets/images/AAPInstallguide/AAP06.png)
 
@@ -355,7 +355,7 @@ Modificamos el `<set your own>` por las contraseñas que queramos para nuestro u
 
 Y en los campos `registry_username=your_rhn_username` y `registry_password=your_rhn_password` indicamos nuestro usuario y contraseña de la cuenta de Red Hat.
 
-Una vez lo tenemos todo listo podemos lanzar el instalador y indicar el archivo de inventario correspondiente (opción `-i`). Asegúrate de estar en el directorio donde descomprimiste el instalador (e.g., `/home/user/demos/ansible-automation-platform-containerized-setup-2.5-19`).
+Una vez lo tenemos todo listo podemos lanzar el instalador y indicar el archivo de inventario correspondiente (opción `-i`). Nos tenemos que assegurar de estar en el directorio donde descomprimimos el instalador (e.g., `/home/user/demos/ansible-automation-platform-containerized-setup-2.5-19`).
 
 ```bash
 cd /home/user/demos/ansible-automation-platform-containerized-setup-2.5-19
@@ -367,17 +367,17 @@ ansible-playbook -i inventory-growth ansible.containerized_installer.install
 
 Cuando finalice la instalación de Ansible Automation Platform (AAP), el siguiente paso es comprobar que la interfaz web esté disponible.
 
-De manera predeterminada, puedes acceder escribiendo en tu navegador:
+De manera predeterminada, podemos acceder escribiendo en el navegador:
 
 ```
 https://<gateway_node>:443
 ```
 
-Aquí debes reemplazar `<gateway_node>` por el nombre o la dirección IP del servidor donde desplegaste el Automation Gateway.
+Aquí reemplazar `<gateway_node>` por el nombre o la dirección IP del servidor donde desplegamos el Automation Gateway.
 
-Para entrar al panel, utiliza el usuario administrador (`gateway_admin_username`) y la contraseña que definiste en la instalación (`gateway_admin_password`).
+Para entrar al panel, utilizar el usuario admin (`gateway_admin_username`) y la contraseña que definiste en la instalación (`gateway_admin_password`).
 
-Aquí tienes una captura de pantalla de la pantalla de inicio de sesión de AAP:
+Aquí tenemos una captura de pantalla de la pantalla de inicio de sesión de AAP:
 ![Texto alternativo](/assets/images/AAPInstallguide/AAP13.png)
 
 Para habilitar el soporte completo y recibir actualizaciones, debemos activar la suscripción de Ansible Automation Platform. Dentro de la interfaz web, nos dirigimos a la sección de administración de suscripciones e introducimos nuestras credenciales de acceso de Red Hat (Client ID y Client Secret).
@@ -388,4 +388,4 @@ Finalmente, ya accedemos, ahora podemos empezar a explorar todas las capacidades
 
 ![Texto alternativo](/assets/images/AAPInstallguide/AAP15.png)
 
-Mi idea con este artículo era desmitificar el proceso, compartir contigo esa "receta" que a mí me ha funcionado bien para arrancar rápido con una topología "Growth". Podemos pensar en ella como un campo de pruebas personal, donde podemos cacharrear, aprender y, lo más importante, empezar a ver lo que ofrece AAP sin el estrés de una configuración gigante. Y con una gran flexibilidad para crecer cuando nosotros queramos.
+Mi idea con este artículo era desmitificar el proceso, compartir esa "receta" que a mí me ha funcionado bien para arrancar rápido con una topología "Growth". Podemos pensar en ella como un campo de pruebas personal, donde podemos cacharrear, aprender y, lo más importante, empezar a ver lo que ofrece AAP sin el estrés de una configuración gigante y con una gran flexibilidad para crecer cuando nosotros queramos.

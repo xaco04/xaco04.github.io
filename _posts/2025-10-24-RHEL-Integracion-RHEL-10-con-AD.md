@@ -1,6 +1,6 @@
 ---
 title: "Red Hat Enterprise Linux: Integración de RHEL 10 con Active Directory 2019 usando SSSD y realmd"
-date: 2025-10-14
+date: 2025-10-24
 categories:
   - RedHat
   - ActiveDirectory

@@ -1,0 +1,1099 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="es" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Red Hat Enterprise Linux: Guía de Configuración de un Servidor BIND DNS en RHEL 9.6 - Xavi Vico Marti</title>
+<meta name="description" content="Aprende a instalar, configurar y administrar un servidor DNS con BIND en Red Hat Enterprise Linux 9.6, incluyendo zonas directas e inversas, registros principales y servidores master/slave.">
+
+
+  <meta name="author" content="Xavi Vico Marti">
+  
+  <meta property="article:author" content="Xavi Vico Marti">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="es">
+<meta property="og:site_name" content="Xavi Vico Marti">
+<meta property="og:title" content="Red Hat Enterprise Linux: Guía de Configuración de un Servidor BIND DNS en RHEL 9.6">
+<meta property="og:url" content="http://localhost:4000/redhat/dns/RHEL-Configuracion-BIND-DNS/">
+
+
+  <meta property="og:description" content="Aprende a instalar, configurar y administrar un servidor DNS con BIND en Red Hat Enterprise Linux 9.6, incluyendo zonas directas e inversas, registros principales y servidores master/slave.">
+
+
+
+  <meta property="og:image" content="http://localhost:4000/assets/images/RedHatbanner.png">
+
+
+
+
+
+  <meta property="article:published_time" content="2026-01-09T00:00:00+01:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/redhat/dns/RHEL-Configuracion-BIND-DNS/">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+<!-- Al final del head -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+<link rel="icon" href="/assets/images/faviconsol.png" type="image/x-icon">
+<link rel="shortcut icon" href="/assets/images/faviconsol.png" type="image/x-icon">
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single wide" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Saltar a navegación principal</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Saltar a contenido</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Saltar a pie</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/"><img src="/assets/images/xaco04logo.png" alt=" "></a>
+        
+        <a class="site-title" href="/">
+          
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/"
+                
+                
+              >Home</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/"
+                
+                
+              >Blog</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/about/"
+                
+                
+              >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Alternar búsqueda</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Alternar menú</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+  
+
+
+
+
+
+
+
+<div class="page__hero--overlay"
+  style=" background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/assets/images/RedHatbanner.png');"
+>
+  
+    <div class="wrapper">
+      <h1 id="page-title" class="page__title" itemprop="headline">
+        
+          Red Hat Enterprise Linux: Guía de Configuración de un Servidor BIND DNS en RHEL 9.6
+
+        
+      </h1>
+      
+        <p class="page__lead">Aprende a instalar, configurar y administrar un servidor DNS con BIND en Red Hat Enterprise Linux 9.6, incluyendo zonas directas e inversas, registros principales y servidores master/slave.
+</p>
+      
+      
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          6 minuto(s) de lectura
+        
+      </span>
+    
+  </p>
+
+
+      
+    </div>
+  
+  
+</div>
+
+
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/assets/images/githublogo.png" alt="Xavi Vico Marti" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">Xavi Vico Marti</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Seguir</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Catalonia/Spain</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:xavivico04@gmail.com" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="https://github.com/xaco04" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Red Hat Enterprise Linux: Guía de Configuración de un Servidor BIND DNS en RHEL 9.6">
+    <meta itemprop="description" content="Aprende a instalar, configurar y administrar un servidor DNS con BIND en Red Hat Enterprise Linux 9.6, incluyendo zonas directas e inversas, registros principales y servidores master/slave.">
+    <meta itemprop="datePublished" content="2026-01-09T00:00:00+01:00">
+    
+
+    <div class="page__inner-wrap">
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right ">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> En esta página</h4></header>
+              <ul class="toc__menu"><li><a href="#introducción">Introducción</a></li><li><a href="#bind">BIND</a></li><li><a href="#configuración-de-zonas-dns">Configuración de Zonas DNS</a><ul><li><a href="#tipos-de-zonas">Tipos de zonas</a><ul><li><a href="#zonas-directas">Zonas directas</a></li><li><a href="#zonas-inversas">Zonas inversas</a></li></ul></li><li><a href="#registros-dns-principales">Registros DNS principales</a></li><li><a href="#parámetros-de-control-del-soa">Parámetros de control del SOA</a></li><li><a href="#servidores-master-y-slave">Servidores Master y Slave</a><ul><li><a href="#servidor-primario-master">Servidor primario (Master)</a></li><li><a href="#servidor-secundario-slave">Servidor secundario (Slave)</a></li></ul></li><li><a href="#flujo-de-actualización-de-la-zona">Flujo de actualización de la zona</a></li></ul></li><li><a href="#prerrequisitos">Prerrequisitos</a></li><li><a href="#demo">Demo</a><ul><li><a href="#instalación-de-bind">Instalación de BIND</a></li><li><a href="#configuración-básica-de-bind">Configuración Básica de BIND</a></li></ul></li><li><a href="#configuración-de-zonas">Configuración de Zonas</a><ul><li><a href="#zona-directa-forward-zone">Zona directa (Forward Zone)</a></li><li><a href="#zona-inversa-reverse-zone">Zona inversa (Reverse Zone)</a></li></ul></li></ul>
+            </nav>
+          </aside>
+        
+        <h1 id="introducción">Introducción</h1>
+
+<p>El DNS (Domain Name System) es el sistema que traduce nombres de dominio legibles por humanos, como <code class="language-plaintext highlighter-rouge">www.example.com</code>, en direcciones IP que los ordenadores utilizan para comunicarse.</p>
+
+<p>En un entorno corporativo o incluso doméstico, tener un servidor DNS propio puede mejorar el rendimiento, la seguridad y el control de las consultas de tu red.</p>
+
+<p>En este artículo, veremos como instalar y configurar un servidor DNS con BIND en Red Hat Enterprise Linux (RHEL) 9.6, de forma sencilla y explicando cada paso, los conceptos clave y cómo verificar que todo funcione correctamente.</p>
+
+<hr />
+
+<h1 id="bind">BIND</h1>
+
+<p>BIND (Berkeley Internet Name Domain) es un servidor DNS muy completo y compatible con los estándares de la IETF. Sus usos más comunes incluyen:</p>
+
+<ul>
+  <li>Servidor caching para mejorar la velocidad de resolución de nombres.</li>
+  <li>Servidor autoritativo para zonas que administras.</li>
+  <li>Servidor secundario para replicar zonas y garantizar alta disponibilidad.</li>
+</ul>
+
+<p>BIND puede ejecutarse en modo normal o en un entorno chroot para mayor seguridad. Además, en RHEL, SELinux protege al servicio por defecto, evitando vulnerabilidades conocidas.</p>
+
+<hr />
+
+<h1 id="configuración-de-zonas-dns">Configuración de Zonas DNS</h1>
+
+<p>Una zona DNS es un conjunto de registros que define cómo un dominio se resuelve en direcciones IP, qué servidores pueden responder y qué información adicional existe sobre servicios y políticas del dominio.</p>
+
+<p>En entornos reales, una zona no suele estar en un único servidor; para fiabilidad y redundancia se utilizan servidores primarios y secundarios.</p>
+
+<hr />
+
+<h2 id="tipos-de-zonas">Tipos de zonas</h2>
+
+<h3 id="zonas-directas">Zonas directas</h3>
+
+<ul>
+  <li>También llamadas forward zones.</li>
+  <li>Asocian nombres de dominio a direcciones IP.</li>
+  <li>Se usan los registros A (IPv4) y AAAA (IPv6).</li>
+</ul>
+
+<p><strong>Ejemplo: resolución directa de www.xebec.dlab a IPv4:</strong></p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>www IN A 192.168.6.29
+</code></pre></div></div>
+<h3 id="zonas-inversas">Zonas inversas</h3>
+
+<ul>
+  <li>También llamadas reverse zones.</li>
+  <li>Hacen lo contrario: asocian IP a nombre de dominio.</li>
+  <li>Se usan los registros PTR.</li>
+</ul>
+
+<p><strong>Ejemplo: resolución inversa de 192.168.6.29 a dns.xebec.dlab:</strong></p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>29.6.168.192.in-addr.arpa. IN PTR dns.xebec.dlab.
+</code></pre></div></div>
+
+<p><strong>Nota:</strong>
+Siempre que tengas una zona directa, se recomienda crear la zona inversa correspondiente para que los servicios de correo, autenticación y seguridad funcionen correctamente.</p>
+
+<hr />
+
+<h2 id="registros-dns-principales">Registros DNS principales</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Registro</th>
+      <th>Función principal</th>
+      <th>Ejemplo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>SOA</td>
+      <td>Autoridad y control de la zona</td>
+      <td><code class="language-plaintext highlighter-rouge">@ IN SOA dns.xebec.dlab. admin.xebec.dlab. ( 2026010701 3600 900 604800 86400 )</code></td>
+    </tr>
+    <tr>
+      <td>NS</td>
+      <td>Servidores DNS autoritativos</td>
+      <td><code class="language-plaintext highlighter-rouge">@ IN NS dns1.xebec.dlab.</code></td>
+    </tr>
+    <tr>
+      <td>A</td>
+      <td>Nombre → IPv4</td>
+      <td><code class="language-plaintext highlighter-rouge">www IN A 192.168.6.29</code></td>
+    </tr>
+    <tr>
+      <td>AAAA</td>
+      <td>Nombre → IPv6</td>
+      <td><code class="language-plaintext highlighter-rouge">www IN AAAA 2001:db8::1</code></td>
+    </tr>
+    <tr>
+      <td>CNAME</td>
+      <td>Alias DNS</td>
+      <td><code class="language-plaintext highlighter-rouge">ftp IN CNAME www.xebec.dlab.</code></td>
+    </tr>
+    <tr>
+      <td>MX</td>
+      <td>Servidores de correo</td>
+      <td><code class="language-plaintext highlighter-rouge">@ IN MX 10 mail.xebec.dlab.</code></td>
+    </tr>
+    <tr>
+      <td>TXT</td>
+      <td>Texto, políticas y verificación</td>
+      <td><code class="language-plaintext highlighter-rouge">@ IN TXT "v=spf1 ip4:192.168.6.29 -all"</code></td>
+    </tr>
+    <tr>
+      <td>PTR</td>
+      <td>IP → Nombre (resolución inversa)</td>
+      <td><code class="language-plaintext highlighter-rouge">29.6.168.192.in-addr.arpa. IN PTR dns.xebec.dlab.</code></td>
+    </tr>
+    <tr>
+      <td>SRV</td>
+      <td>Servicios y puertos</td>
+      <td><code class="language-plaintext highlighter-rouge">_ldap._tcp IN SRV 0 5 389 ldap.xebec.dlab.</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Notas importantes:</strong></p>
+
+<ul>
+  <li>Cada zona debe tener un único registro SOA; sin él, la zona no carga.</li>
+  <li>Los registros NS definen qué servidores pueden responder consultas por la zona.</li>
+</ul>
+
+<hr />
+
+<h2 id="parámetros-de-control-del-soa">Parámetros de control del SOA</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Valor</th>
+      <th>Nombre</th>
+      <th>Para qué sirve</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2026010701</td>
+      <td>Serial</td>
+      <td>Versión de la zona</td>
+    </tr>
+    <tr>
+      <td>3600</td>
+      <td>Refresh</td>
+      <td>Cada cuánto el slave consulta cambios en el master</td>
+    </tr>
+    <tr>
+      <td>900</td>
+      <td>Retry</td>
+      <td>Tiempo de espera si falla la conexión al master</td>
+    </tr>
+    <tr>
+      <td>604800</td>
+      <td>Expire</td>
+      <td>Cuándo la zona deja de ser válida si no se actualiza</td>
+    </tr>
+    <tr>
+      <td>86400</td>
+      <td>Minimum TTL</td>
+      <td>Tiempo de caché de las respuestas</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Es fundamental incrementar el serial cada vez que se modifica la zona para que los servidores secundarios se sincronicen.</p>
+
+<hr />
+
+<h2 id="servidores-master-y-slave">Servidores Master y Slave</h2>
+
+<h3 id="servidor-primario-master">Servidor primario (Master)</h3>
+
+<p>Es el dueño de la zona, donde se mantienen los registros originales.</p>
+
+<p>Se edita directamente el archivo de zona:</p>
+
+<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">zone</span> <span class="s2">"xebec.dlab"</span> {
+    <span class="n">type</span> <span class="n">master</span>;
+    <span class="n">file</span> <span class="s2">"/var/named/xebec.dlab.zone"</span>;
+};
+</code></pre></div></div>
+
+<p>Aquí se definen SOA, NS, A, AAAA, MX, TXT…
+Incrementar el serial del SOA garantiza que los slaves se sincronicen correctamente.</p>
+
+<h3 id="servidor-secundario-slave">Servidor secundario (Slave)</h3>
+
+<p>No tiene el archivo editable, copia la zona automáticamente desde el master:</p>
+
+<p>Guarda la copia local en <code class="language-plaintext highlighter-rouge">/var/named/slaves/xebec.dlab.zone</code>.
+Responde consultas DNS igual que el master.</p>
+
+<p>Ambos servidores (master y slave) deben aparecer como NS en la zona:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@ IN NS dns1.xebec.dlab.  ; master
+@ IN NS dns2.xebec.dlab.  ; slave
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="flujo-de-actualización-de-la-zona">Flujo de actualización de la zona</h2>
+
+<ol>
+  <li>Se hace un cambio en el master (ej. agregar un registro A).</li>
+  <li>Se incrementa el serial del SOA.</li>
+  <li>El slave detecta el cambio consultando el serial (cada Refresh segundos).</li>
+  <li>El slave descarga la zona y la guarda localmente.</li>
+  <li>Ambos servidores pueden responder consultas de forma autoritativa.</li>
+</ol>
+
+<hr />
+
+<h1 id="prerrequisitos">Prerrequisitos</h1>
+
+<p>Antes de instalar BIND, asegúrate de:</p>
+
+<ul>
+  <li>Tener una IP estática en el servidor.</li>
+  <li>Contar con privilegios de root o un usuario con sudo.</li>
+  <li>Sin conflictos con otros servicios DNS en el mismo host.</li>
+</ul>
+
+<p>Detalles del sistema utilizado en nuestro caso:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Categoría</th>
+      <th>Detalle</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Sistema Operativo</td>
+      <td>Red Hat Enterprise Linux 9.6 (Plow)</td>
+    </tr>
+    <tr>
+      <td>ID del Sistema</td>
+      <td>rhel</td>
+    </tr>
+    <tr>
+      <td>Versión</td>
+      <td>9.6</td>
+    </tr>
+    <tr>
+      <td>Kernel</td>
+      <td>5.14.0-570.62.1.el9_6.x86_64</td>
+    </tr>
+    <tr>
+      <td>Arquitectura</td>
+      <td>x86_64</td>
+    </tr>
+    <tr>
+      <td>Interfaz Loopback</td>
+      <td>lo</td>
+    </tr>
+    <tr>
+      <td>IP Loopback IPv4</td>
+      <td>127.0.0.1/8</td>
+    </tr>
+    <tr>
+      <td>IP Loopback IPv6</td>
+      <td>::1/128</td>
+    </tr>
+    <tr>
+      <td>Interfaz de Red Real</td>
+      <td>ens192 (altname enp11s0)</td>
+    </tr>
+    <tr>
+      <td>IP IPv4</td>
+      <td>192.168.6.29/24</td>
+    </tr>
+    <tr>
+      <td>IP IPv6</td>
+      <td>fe80::20c:29ff:feb4:56e0/64 (link-local)</td>
+    </tr>
+    <tr>
+      <td>Puerta de enlace</td>
+      <td>192.168.6.1</td>
+    </tr>
+    <tr>
+      <td>Red</td>
+      <td>192.168.6.0/24</td>
+    </tr>
+    <tr>
+      <td>Estado de interfaces</td>
+      <td>ambas UP</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h1 id="demo">Demo</h1>
+
+<h2 id="instalación-de-bind">Instalación de BIND</h2>
+
+<p>Primero instalamos los paquetes necesarios bind y bind-utils</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dnf <span class="nb">install bind </span>bind-utils
+</code></pre></div></div>
+<p><img src="/assets/images/20260109-01.png" alt="Texto alternativo" /></p>
+
+<h2 id="configuración-básica-de-bind">Configuración Básica de BIND</h2>
+
+<p>El archivo principal de configuración es /etc/named.conf. Antes de modificarlo, es recomendable hacer una copia de seguridad.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo cp</span> /etc/named.conf /etc/named.conf.bak
+</code></pre></div></div>
+
+<p>Ahora entramos en el archivo /etc/named.conf.</p>
+
+<p>El archivo /etc/named.conf tiene un bloque llamado options { … }. Aquí se definen configuraciones globales para tu servidor DNS, como:</p>
+
+<ul>
+  <li>
+    <p>En qué interfaces de red escuchará (IPv4 e IPv6).</p>
+  </li>
+  <li>
+    <p>Qué IP pueden hacer consultas.</p>
+  </li>
+  <li>
+    <p>Desde qué IP se permite hacer consultas recursivas.</p>
+  </li>
+</ul>
+
+<p>listen-on y listen-on-v6, estas líneas configuran las direcciones IP y puertos en los que el proceso named estará escuchando conexiones entrantes para consultas DNS, separadas por protocolo (IPv4/IPv6)</p>
+
+<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">listen</span>-<span class="n">on</span> <span class="n">port</span> <span class="m">53</span> { <span class="m">127</span>.<span class="m">0</span>.<span class="m">0</span>.<span class="m">1</span>; <span class="m">192</span>.<span class="m">168</span>.<span class="m">6</span>.<span class="m">0</span>/<span class="m">24</span>; };
+<span class="n">listen</span>-<span class="n">on</span>-<span class="n">v6</span> { ::<span class="m">1</span>; };
+
+</code></pre></div></div>
+<p>El port 53 es el puerto estándar para DNS, listen-on lista de direcciones IPv4 donde escuchará y listen-on-v6 lo mismo pero para IPv6.</p>
+
+<p>allow-query define quién puede consultar tu servidor DNS</p>
+
+<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">allow</span>-<span class="n">query</span> { <span class="m">127</span>.<span class="m">0</span>.<span class="m">0</span>.<span class="m">1</span>; <span class="m">192</span>.<span class="m">168</span>.<span class="m">6</span>.<span class="m">0</span>/<span class="m">24</span>; };
+</code></pre></div></div>
+<p>En nuestro caso localhost el propio servidor y 192.168.6.0/24 toda la subred IPv4 de 192.168.6.0 a 192.168.6.255.</p>
+
+<p><strong>Esto evita que cualquier IP externa haga consultas a nuestro servidor (lo cual es más seguro).</strong></p>
+
+<p>La línea allow-recursion define quién puede hacer consultas recursivas, es decir, cuando nuestro servidor tiene que buscar la respuesta en otros servidores DNS de internet.</p>
+
+<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">allow</span>-<span class="n">recursion</span> { <span class="m">127</span>.<span class="m">0</span>.<span class="m">0</span>.<span class="m">1</span>; <span class="m">192</span>.<span class="m">168</span>.<span class="m">6</span>.<span class="m">0</span>/<span class="m">24</span>; };
+</code></pre></div></div>
+
+<p><strong>Si un cliente no está en esta lista, no podrá hacer consultas recursivas, esto previene que tu servidor sea usado en ataques de amplificación DNS.</strong></p>
+
+<p>Finalmente, nuestro archivo de configuración quedaría de la siguiente manera</p>
+
+<p>Antes de iniciar BIND, verificamos la sintaxis, si el comando no muestra ningún resultado, la sintaxis es correcta.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>named-checkconf
+</code></pre></div></div>
+
+<p>Si no hay salida, la sintaxis es correcta.</p>
+
+<p>Permitimos el tráfico DNS en el firewall y arrancamos el servicio</p>
+
+<hr />
+
+<h1 id="configuración-de-zonas">Configuración de Zonas</h1>
+
+<h2 id="zona-directa-forward-zone">Zona directa (Forward Zone)</h2>
+
+<p>Añadimos la definición de zona en el archivo /etc/named.conf</p>
+
+<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">zone</span> <span class="s2">"xebec.dlab"</span> {
+    <span class="n">type</span> <span class="n">master</span>;
+    <span class="n">file</span> <span class="s2">"/var/named/xebec.dlab.zone"</span>;
+    <span class="n">allow</span>-<span class="n">query</span> { <span class="n">any</span>; };
+    <span class="n">allow</span>-<span class="n">transfer</span> { <span class="n">none</span>; };
+};
+</code></pre></div></div>
+<p>Este servidor actúa como el principal (type master) para la xebec.dlab zone</p>
+
+<p>Guardamos el archivo y volvemos a validar la sintaxis</p>
+
+<p>Creamos el archivo /var/named/xebec.dlab.zone con el siguiente contenido</p>
+
+<p>Establezemos los permisos adecuados para que solo el grupo named lo pueda leer</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chown </span>root:named /var/named/xebec.dlab.zone
+<span class="nb">chmod </span>640 /var/named/xebec.dlab.zone
+</code></pre></div></div>
+<p>Verificamos la sintaxis de la zona</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>named-checkzone xebec.dlab /var/named/xebec.dlab.zone
+</code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl reload named
+</code></pre></div></div>
+<p>Finalmente verificamos que funciona correctamente</p>
+
+<h2 id="zona-inversa-reverse-zone">Zona inversa (Reverse Zone)</h2>
+
+<p>Primero agregamos una nueva definición de zona al /etc/named.conf</p>
+
+<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">zone</span> <span class="s2">"6.168.192.in-addr.arpa"</span> {
+    <span class="n">type</span> <span class="n">master</span>;
+    <span class="n">file</span> <span class="s2">"/var/named/6.168.192.in-addr.arpa.zone"</span>;
+    <span class="n">allow</span>-<span class="n">query</span> { <span class="n">any</span>; };
+    <span class="n">allow</span>-<span class="n">transfer</span> { <span class="n">none</span>; };   
+};
+</code></pre></div></div>
+<p>Verificamos sintaxis</p>
+
+<p>Creamos el archivo /var/named/6.168.192.in-addr.arpa.zone</p>
+
+<p>Asignamos los permisos adecuados igual que hemos hecho el la Zona directa (Forward zone)</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chown </span>root:named /var/named/6.168.192.in-addr.arpa.zone
+<span class="nb">chmod </span>640 /var/named/6.168.192.in-addr.arpa.zone
+</code></pre></div></div>
+<p>Verificamos la sintaxis del archivo</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>named-checkzone 6.168.192.in-addr.arpa /var/named/6.168.192.in-addr.arpa.zone
+</code></pre></div></div>
+<p>Y recargamos el BIND </p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl reload named
+</code></pre></div></div>
+<p>Para acabar verificamos que funciona</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Etiquetas: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#bind" class="page__taxonomy-item p-category" rel="tag">BIND</a><span class="sep">, </span>
+    
+      <a href="/tags/#dns" class="page__taxonomy-item p-category" rel="tag">DNS</a><span class="sep">, </span>
+    
+      <a href="/tags/#rhel" class="page__taxonomy-item p-category" rel="tag">RHEL</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categorías: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#dns" class="page__taxonomy-item p-category" rel="tag">DNS</a><span class="sep">, </span>
+    
+      <a href="/categories/#redhat" class="page__taxonomy-item p-category" rel="tag">RedHat</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Actualizado:</strong> <time class="dt-published" datetime="2026-01-09T00:00:00+01:00">January 9, 2026</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  <h4 class="page__share-title">Compartir en</h4>
+
+  <a href="https://x.com/intent/tweet?text=Red+Hat+Enterprise+Linux%3A+Gu%C3%ADa+de+Configuraci%C3%B3n+de+un+Servidor+BIND+DNS+en+RHEL+9.6%20http%3A%2F%2Flocalhost%3A4000%2Fredhat%2Fdns%2FRHEL-Configuracion-BIND-DNS%2F" class="btn btn--x" aria-label="Share on X" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Compartir en X">
+    <i class="fab fa-fw fa-x-twitter" aria-hidden="true"></i><span> X</span>
+  </a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fredhat%2Fdns%2FRHEL-Configuracion-BIND-DNS%2F" class="btn btn--facebook" aria-label="Share on Facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Compartir en Facebook">
+    <i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span>
+  </a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/redhat/dns/RHEL-Configuracion-BIND-DNS/" class="btn btn--linkedin" aria-label="Share on LinkedIn" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Compartir en LinkedIn">
+    <i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span>
+  </a>
+
+  <a href="https://bsky.app/intent/compose?text=Red+Hat+Enterprise+Linux%3A+Gu%C3%ADa+de+Configuraci%C3%B3n+de+un+Servidor+BIND+DNS+en+RHEL+9.6%20http%3A%2F%2Flocalhost%3A4000%2Fredhat%2Fdns%2FRHEL-Configuracion-BIND-DNS%2F" class="btn btn--bluesky" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Compartir en Bluesky">
+    <i class="fab fa-fw fa-bluesky" aria-hidden="true"></i><span> Bluesky</span>
+  </a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/redhat/activedirectory/Red-Hat-Ansible-Automation-Platform-2.6-Gu%C3%ADa-de-Integraci%C3%B3n-con-Active-Directory-(LDAP-LDAPS)/" class="pagination--pager" title="Red Hat Ansible Automation Platform 2.6: Guía de Integración con Active Directory (LDAP/LDAPS)">Anterior</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Siguiente</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    
+<div class="page__related">
+  
+  <h2 class="page__related-title">Puede que también te interese</h2>
+  <div class="grid__wrapper">
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/redhat/activedirectory/Red-Hat-Ansible-Automation-Platform-2.6-Gu%C3%ADa-de-Integraci%C3%B3n-con-Active-Directory-(LDAP-LDAPS)/" rel="permalink">Red Hat Ansible Automation Platform 2.6: Guía de Integración con Active Directory (LDAP/LDAPS)
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          18 minuto(s) de lectura
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Guía detallada para integrar Red Hat Ansible Automation Platform 2.6 con Active Directory 2019, utilizando autenticación LDAP o LDAPS para permitir el acceso...</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/redhat/activedirectory/RHEL-Integracion-RHEL-10-con-AD/" rel="permalink">Red Hat Enterprise Linux: Integración de RHEL 10 con Active Directory 2019 usando SSSD y realmd
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          7 minuto(s) de lectura
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Guía para integrar Red Hat Enterprise Linux 10.0 (RHEL 10) con Active Directory 2019, utilizando las herramientas SSSD y realmd
+</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/automation/ansible/redhat/AAP-Guia-de-instalacion-2.5/" rel="permalink">Red Hat Ansible Automation Platform 2.5: Guía de Instalación en RHEL 10 (Topología Growth Contenerizada)
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          14 minuto(s) de lectura
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Instalación de Red Hat Ansible Automation Platform 2.5 en RHEL 10. Guía para configurar una topología ‘Growth’ contenerizada, ideal para desarrollo y pruebas.
+</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/seguridad/red%20hat/open%20source/Seguridad-empresarial-con-red-hat/" rel="permalink">Seguridad Empresarial con Red Hat: Más Allá del Código Abierto
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          19 minuto(s) de lectura
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Exploramos cómo Red Hat refuerza la seguridad empresarial más allá del software de código abierto, integrando RHEL, SELinux, Ansible, Insights y OpenShift.
+</p>
+  </article>
+</div>
+
+    
+  </div>
+</div>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Términos de búsqueda...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Términos de búsqueda..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+<script>
+  const swiper = new Swiper(".mySwiper", {
+    slidesPerView: 1,
+    spaceBetween: 20,
+    loop: true,
+    pagination: { el: ".swiper-pagination", clickable: true },
+    navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+    breakpoints: { 768: { slidesPerView: 2 }, 1200: { slidesPerView: 3 } },
+  });
+</script>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+  </body>
+</html>

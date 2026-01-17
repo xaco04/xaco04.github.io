@@ -74,7 +74,7 @@ www IN A 192.168.6.29
 ```
 
 **Nota:**
-Siempre que tengas una zona directa, se recomienda crear la zona inversa correspondiente para que los servicios de correo, autenticación y seguridad funcionen correctamente.
+Siempre que tengamos una zona directa, se recomienda crear la zona inversa correspondiente para que los servicios de correo, autenticación y seguridad funcionen correctamente.
 
 ---
 
@@ -113,42 +113,6 @@ Es fundamental incrementar el serial cada vez que se modifica la zona para que l
 
 ---
 
-## Servidores Master y Slave
-
-### Servidor primario (Master)
-
-Es el dueño de la zona, donde se mantienen los registros originales.
-
-Se edita directamente el archivo de zona:
-
-```conf
-zone "xebec.dlab" {
-    type master;
-    file "/var/named/xebec.dlab.zone";
-};
-```
-
-Aquí se definen SOA, NS, A, AAAA, MX, TXT…
-Incrementar el serial del SOA garantiza que los slaves se sincronicen correctamente.
-
-### Servidor secundario (Slave)
-
-No tiene el archivo editable, copia la zona automáticamente desde el master:
-
-
-
-Guarda la copia local en `/var/named/slaves/xebec.dlab.zone`.
-Responde consultas DNS igual que el master.
-
-Ambos servidores (master y slave) deben aparecer como NS en la zona:
-
-```text
-@ IN NS dns1.xebec.dlab.  ; master
-@ IN NS dns2.xebec.dlab.  ; slave
-```
-
----
-
 ## Flujo de actualización de la zona
 
 1. Se hace un cambio en el master (ej. agregar un registro A).
@@ -161,7 +125,7 @@ Ambos servidores (master y slave) deben aparecer como NS en la zona:
 
 # Prerrequisitos
 
-Antes de instalar BIND, asegúrate de:
+Antes de instalar BIND, debemos asegurarnos de:
 
 - Tener una IP estática en el servidor.
 - Contar con privilegios de root o un usuario con sudo.

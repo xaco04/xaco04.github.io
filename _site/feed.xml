@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2026-01-20T18:50:38+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Xavi Vico Marti</title><subtitle>An amazing website.</subtitle><author><name>Xavi Vico Marti</name></author><entry><title type="html">Red Hat Enterprise Linux: Guía de Configuración de un Servidor BIND DNS en RHEL 9.6</title><link href="http://localhost:4000/redhat/dns/RHEL-Configuracion-BIND-DNS/" rel="alternate" type="text/html" title="Red Hat Enterprise Linux: Guía de Configuración de un Servidor BIND DNS en RHEL 9.6" /><published>2026-01-09T00:00:00+01:00</published><updated>2026-01-09T00:00:00+01:00</updated><id>http://localhost:4000/redhat/dns/RHEL-Configuracion-BIND-DNS</id><content type="html" xml:base="http://localhost:4000/redhat/dns/RHEL-Configuracion-BIND-DNS/"><![CDATA[<h1 id="introducción">Introducción</h1>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2026-01-20T21:08:56+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Xavi Vico Marti</title><subtitle>An amazing website.</subtitle><author><name>Xavi Vico Marti</name></author><entry><title type="html">Red Hat Enterprise Linux: Guía de Configuración de un Servidor BIND DNS en RHEL 9.6</title><link href="http://localhost:4000/redhat/dns/RHEL-Configuracion-BIND-DNS/" rel="alternate" type="text/html" title="Red Hat Enterprise Linux: Guía de Configuración de un Servidor BIND DNS en RHEL 9.6" /><published>2026-01-09T00:00:00+01:00</published><updated>2026-01-09T00:00:00+01:00</updated><id>http://localhost:4000/redhat/dns/RHEL-Configuracion-BIND-DNS</id><content type="html" xml:base="http://localhost:4000/redhat/dns/RHEL-Configuracion-BIND-DNS/"><![CDATA[<h1 id="introducción">Introducción</h1>
 
 <p>El Sistema de Nombres de Dominio (DNS) es la infraestructura esencial de Internet que traduce los nombres legibles para los humanos (como www.ejemplo.com) en direcciones IP numéricas (como 192.0.2.1) que las máquinas utilizan para comunicarse.</p>
 
@@ -401,7 +401,427 @@ Siempre que tengamos una zona directa, se recomienda crear la zona inversa corre
 
 <p><img src="/assets/images/20260109-21.png" alt="Texto alternativo" /></p>
 
-<p>Configurar BIND es el primer paso para profesionalizar la gestión de red en cualquier entorno. Esta guía es un ejemplo de cómo instalar un servidor DNS de forma sencilla y funcional. El siguiente nivel de madurez sería implementar alta disponibilidad mediante un servidor secundario (Slave), garantizando así que la red nunca se quede ‘a ciegas’ si el servidor principal falla, pero eso lo exploraremos en una futuro post.</p>]]></content><author><name>Xavi Vico Marti</name></author><category term="RedHat" /><category term="DNS" /><category term="RHEL" /><category term="BIND" /><category term="DNS" /><summary type="html"><![CDATA[Aprende a instalar, configurar y administrar un servidor DNS con BIND en Red Hat Enterprise Linux 9.6, incluyendo zonas directas e inversas, registros principales y servidores master/slave.]]></summary></entry><entry><title type="html">Red Hat Ansible Automation Platform 2.6: Guía de Integración con Active Directory (LDAP/LDAPS)</title><link href="http://localhost:4000/redhat/activedirectory/Red-Hat-Ansible-Automation-Platform-2.6-Gu%C3%ADa-de-Integraci%C3%B3n-con-Active-Directory-(LDAP-LDAPS)/" rel="alternate" type="text/html" title="Red Hat Ansible Automation Platform 2.6: Guía de Integración con Active Directory (LDAP/LDAPS)" /><published>2025-11-07T00:00:00+01:00</published><updated>2025-11-07T00:00:00+01:00</updated><id>http://localhost:4000/redhat/activedirectory/Red-Hat-Ansible-Automation-Platform-2.6:-Gu%C3%ADa-de-Integraci%C3%B3n-con-Active-Directory-(LDAP-LDAPS)</id><content type="html" xml:base="http://localhost:4000/redhat/activedirectory/Red-Hat-Ansible-Automation-Platform-2.6-Gu%C3%ADa-de-Integraci%C3%B3n-con-Active-Directory-(LDAP-LDAPS)/"><![CDATA[<h1 id="introducción">Introducción</h1>
+<p>Configurar BIND es el primer paso para profesionalizar la gestión de red en cualquier entorno. Esta guía es un ejemplo de cómo instalar un servidor DNS de forma sencilla y funcional. El siguiente nivel de madurez sería implementar alta disponibilidad mediante un servidor secundario (Slave), garantizando así que la red nunca se quede ‘a ciegas’ si el servidor principal falla, pero eso lo exploraremos en una futuro post.</p>]]></content><author><name>Xavi Vico Marti</name></author><category term="RedHat" /><category term="DNS" /><category term="RHEL" /><category term="BIND" /><category term="DNS" /><summary type="html"><![CDATA[Configuración basica de un servidor DNS con BIND en Red Hat Enterprise Linux 9.6, incluyendo zonas directas e inversas.]]></summary></entry><entry><title type="html">Red Hat Enterprise Linux: Guía de Configuración basica para un SMTP Postfix server</title><link href="http://localhost:4000/redhat/smtp/RHEL-Configuracion-Postfix-SMTP/" rel="alternate" type="text/html" title="Red Hat Enterprise Linux: Guía de Configuración basica para un SMTP Postfix server" /><published>2026-01-09T00:00:00+01:00</published><updated>2026-01-09T00:00:00+01:00</updated><id>http://localhost:4000/redhat/smtp/RHEL-Configuracion-Postfix-SMTP</id><content type="html" xml:base="http://localhost:4000/redhat/smtp/RHEL-Configuracion-Postfix-SMTP/"><![CDATA[<h1 id="introducción">Introducción</h1>
+
+<p>Mantener el correo funcionando es clave en cualquier infraestructura de TI. En Red Hat Enterprise Linux (RHEL), Postfix es la opción más confiable, rápido, seguro y modular.</p>
+
+<p>Esta guía muestra cómo desplegar Postfix correctamente, explicando lo esencial del protocolo SMTP y las configuraciones de seguridad necesarias para evitar errores graves, como los Open Relays, y mantener tu servidor seguro desde el primer día.</p>
+
+<p>Para administrar un servidor de correo con éxito, es fundamental entender que no se trata de un solo sistema, sino de una cadena de componentes que trabajan juntos.</p>
+
+<p><strong>Importante:</strong> Con la configuración mostrada, este servidor solo está preparado para uso dentro de la red local. No recibe correos directamente de Internet, y únicamente permite el envío de mensajes desde hosts confiables definidos en la red interna. Para un servidor SMTP público se requieren ajustes adicionales en interfaces, autenticación, TLS y DNS.</p>
+
+<h1 id="el-protocolo-smtp-simple-mail-transfer-protocol">El Protocolo SMTP (Simple Mail Transfer Protocol)</h1>
+
+<p>SMTP es el protocolo base que permite el intercambio de mensajes entre servidores de correo. A diferencia de los protocolos de acceso como IMAP o POP3, SMTP se enfoca únicamente en el transporte de los correos.</p>
+
+<p>Funciona principalmente a través de tres puertos:</p>
+
+<ul>
+  <li>Puerto 25: Para la transferencia entre servidores (MTA a MTA).</li>
+  <li>Puerto 587 (Submission): El estándar moderno para que los clientes(Outlook, Gmail o Thunderbird) envíen correos al servidor; normalmente requiere autenticación y TLS.</li>
+  <li>Puerto 465 (SMTPS): SMTP sobre SSL/TLS implícito. Aunque hoy se recomienda STARTTLS, este puerto aún se usa en algunos entornos.</li>
+</ul>
+
+<h1 id="componentes">Componentes</h1>
+
+<p>El flujo de un correo electrónico depende de la interacción coordinada de tres componentes:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Componente</th>
+      <th>Función</th>
+      <th>Ejemplos</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>MUA (Mail User Agent)</strong></td>
+      <td>Interfaz del usuario donde se origina o consulta el correo.</td>
+      <td>Outlook, Thunderbird, Gmail, comandos de shell</td>
+    </tr>
+    <tr>
+      <td><strong>MTA (Mail Transfer Agent)</strong></td>
+      <td>Núcleo del sistema que recibe correos del MUA o de otros MTA y decide su ruta hacia el destino.</td>
+      <td>Postfix, Sendmail, Exim</td>
+    </tr>
+    <tr>
+      <td><strong>MDA (Mail Delivery Agent)</strong></td>
+      <td>Recibe los correos del MTA y los entrega al buzón físico o virtual del usuario.</td>
+      <td>Dovecot, entrega local, procmail</td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="postfix">Postfix</h1>
+
+<p>Postfix es un Agente de Transferencia de Correo (MTA). Su trabajo principal es enviar, recibir y enrutar correos electrónicos. Pero no todos los servidores necesitan hacerlo todo; Postfix es flexible:</p>
+
+<ul>
+  <li>Servidor completo: Atiende tanto correos entrantes como salientes, ideal para organizaciones con flujo de correo grande.</li>
+  <li>Solo envío local: Permite que tus aplicaciones internas envíen notificaciones o alertas sin depender de un proveedor externo. Perfecto si generas mucho correo saliente que un servicio externo no aceptaría.</li>
+  <li>Opción ligera: Puedes usarlo solo para lo esencial, sin cargar tu sistema con un servidor SMTP completo, manteniendo la seguridad y eficiencia.</li>
+</ul>
+
+<h1 id="requisitos">Requisitos</h1>
+
+<ul>
+  <li><strong>Registro del sistema</strong>
+    <ul>
+      <li>El servidor debe estar registrado correctamente mediante <strong>Red Hat Subscription Management</strong>.</li>
+    </ul>
+  </li>
+  <li><strong>Nombre de host completo (FQDN)</strong>
+    <ul>
+      <li>El servidor debe contar con un <strong>Fully Qualified Domain Name (FQDN)</strong> válido.</li>
+      <li>Este FQDN se utilizará para identificar al servidor ante otros sistemas de correo en Internet.</li>
+    </ul>
+  </li>
+  <li><strong>Configuración de DNS</strong>
+    <ul>
+      <li><strong>Registro MX:</strong> Debe existir un registro MX que apunte al servidor, indicando que puede recibir correo.</li>
+      <li><strong>Registro A:</strong> El FQDN debe resolverse correctamente a la dirección IP del servidor.</li>
+    </ul>
+  </li>
+  <li><strong>Reconocimiento externo</strong>
+    <ul>
+      <li>Con un FQDN válido y los registros DNS configurados, el servidor podrá ser reconocido por otros servidores de correo y participar correctamente en el intercambio de mensajes.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Detalles del sistema utilizado en nuestro caso:</p>
+
+<h2 id="añadir-lo-que-tiene-la-mv-utilizada-y-un-diagrama-de-flujo-del-smtp">AÑADIR LO QUE TIENE LA MV UTILIZADA Y UN DIAGRAMA DE FLUJO DEL SMTP</h2>
+
+<h1 id="demo">Demo</h1>
+
+<h2 id="instalación">Instalación</h2>
+
+<p>En muchas instalaciones de RHEL, el servicio Sendmail puede estar presente. Para evitar conflictos en la ocupación del puerto 25 y asegurar una gestión de colas limpia, es necesario eliminarlo antes de proceder:</p>
+
+<p><img src="/assets/images/20260120/20260120-01.png" alt="Texto alternativo" /></p>
+
+<p>Postfix se encuentra en los repositorios oficiales de RHEL. Su instalación se realiza mediante el gestor de paquetes DNF:</p>
+
+<p><img src="/assets/images/20260120/20260120-02.png" alt="Texto alternativo" /></p>
+
+<h2 id="configuración-del-servicio">Configuración del Servicio</h2>
+
+<p>El archivo principal de configuración se encuentra en <strong>/etc/postfix/main.cf</strong>. Este archivo utiliza una sintaxis de “parámetro = valor” y es donde reside toda la lógica operativa del MTA.</p>
+
+<h3 id="parámetro-inet_interfaces">Parámetro <code class="language-plaintext highlighter-rouge">inet_interfaces</code></h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Aspecto</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Función</strong></td>
+      <td>Define en qué direcciones IP debe escuchar Postfix para aceptar conexiones entrantes de correo.</td>
+    </tr>
+    <tr>
+      <td><strong>Comportamiento por defecto</strong></td>
+      <td>Postfix escucha únicamente en la interfaz de loopback (<code class="language-plaintext highlighter-rouge">127.0.0.1</code> o <code class="language-plaintext highlighter-rouge">::1</code>), permitiendo recibir correos solo desde la propia máquina.</td>
+    </tr>
+    <tr>
+      <td><strong>Configuración con IP específica</strong></td>
+      <td>Al especificar una dirección IP (por ejemplo <code class="language-plaintext highlighter-rouge">192.0.2.1</code>), Postfix aceptará conexiones SMTP desde otras máquinas que se conecten a esa IP.</td>
+    </tr>
+    <tr>
+      <td><strong>Escuchar en todas las interfaces</strong></td>
+      <td>Permite que Postfix escuche en todas las interfaces de red disponibles.</td>
+    </tr>
+    <tr>
+      <td><strong>Ejemplo de configuración</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">inet_interfaces = all</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><img src="/assets/images/20260120/20260120-03.png" alt="Texto alternativo" /></p>
+
+<h3 id="parámetro-myhostname">Parámetro <code class="language-plaintext highlighter-rouge">myhostname</code></h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Aspecto</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Función</strong></td>
+      <td>Define el nombre de host del servidor SMTP.</td>
+    </tr>
+    <tr>
+      <td><strong>Uso principal</strong></td>
+      <td>Se utiliza en los encabezados de los correos (por ejemplo, en el <code class="language-plaintext highlighter-rouge">HELO</code> y <code class="language-plaintext highlighter-rouge">Received</code>).</td>
+    </tr>
+    <tr>
+      <td><strong>Recomendación</strong></td>
+      <td>Debe ser un <strong>FQDN válido</strong> que resuelva correctamente en DNS.</td>
+    </tr>
+    <tr>
+      <td><strong>Ejemplo de configuración</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">myhostname = smtp.example.com</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><img src="/assets/images/20260120/20260120-04.png" alt="Texto alternativo" /></p>
+
+<h3 id="parámetro-mydomain">Parámetro <code class="language-plaintext highlighter-rouge">mydomain</code></h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Aspecto</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Función</strong></td>
+      <td>Define el dominio principal del servidor de correo.</td>
+    </tr>
+    <tr>
+      <td><strong>Relación con <code class="language-plaintext highlighter-rouge">myhostname</code></strong></td>
+      <td>Generalmente corresponde a la parte de dominio del FQDN definido en <code class="language-plaintext highlighter-rouge">myhostname</code>.</td>
+    </tr>
+    <tr>
+      <td><strong>Uso común</strong></td>
+      <td>Se utiliza como base para otros parámetros de configuración de Postfix.</td>
+    </tr>
+    <tr>
+      <td><strong>Ejemplo de configuración</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">mydomain = example.com</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><img src="/assets/images/20260120/20260120-05.png" alt="Texto alternativo" /></p>
+
+<h3 id="parámetro-myorigin">Parámetro <code class="language-plaintext highlighter-rouge">myorigin</code></h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Aspecto</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Función</strong></td>
+      <td>Define el dominio que se añade a los correos enviados localmente.</td>
+    </tr>
+    <tr>
+      <td><strong>Comportamiento</strong></td>
+      <td>Determina el dominio de origen para usuarios locales que envían correo.</td>
+    </tr>
+    <tr>
+      <td><strong>Valor recomendado</strong></td>
+      <td>Utilizar el dominio definido en <code class="language-plaintext highlighter-rouge">mydomain</code>.</td>
+    </tr>
+    <tr>
+      <td><strong>Ejemplo de configuración</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">myorigin = $mydomain</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><img src="/assets/images/20260120/20260120-06.png" alt="Texto alternativo" /></p>
+
+<h3 id="parámetro-mynetworks">Parámetro <code class="language-plaintext highlighter-rouge">mynetworks</code></h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Aspecto</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Función</strong></td>
+      <td>Define las direcciones IP y subredes que están autorizadas a enviar correos a través del servidor sin autenticación.</td>
+    </tr>
+    <tr>
+      <td><strong>Uso principal</strong></td>
+      <td>Permite que sistemas internos o de confianza actúen como clientes SMTP del servidor.</td>
+    </tr>
+    <tr>
+      <td><strong>Formato</strong></td>
+      <td>Lista de direcciones IP o subredes en notación CIDR, separadas por comas.</td>
+    </tr>
+    <tr>
+      <td><strong>Ejemplo de configuración</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">mynetworks = 127.0.0.1/32, [::1]/128, 192.0.2.1/24, [2001:db8:1::1]/64</code></td>
+    </tr>
+    <tr>
+      <td><strong>Consideración de seguridad</strong></td>
+      <td>Solo deben incluirse <strong>IPs o redes totalmente confiables</strong>. Agregar clientes externos puede convertir el servidor en un <strong>Open Relay</strong>.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><img src="/assets/images/20260120/20260120-07.png" alt="Texto alternativo" /></p>
+
+<p>Otros parámetros importantes pero que no modificaremos en este post son los siguientes:</p>
+
+<h3 id="parámetro-inet_protocols">Parámetro <code class="language-plaintext highlighter-rouge">inet_protocols</code></h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Aspecto</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Función</strong></td>
+      <td>Define qué versiones del protocolo IP utilizará Postfix.</td>
+    </tr>
+    <tr>
+      <td><strong>Valores comunes</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">ipv4</code>, <code class="language-plaintext highlighter-rouge">ipv6</code>, <code class="language-plaintext highlighter-rouge">all</code></td>
+    </tr>
+    <tr>
+      <td><strong>Comportamiento por defecto</strong></td>
+      <td>En sistemas modernos, suele ser <code class="language-plaintext highlighter-rouge">all</code>.</td>
+    </tr>
+    <tr>
+      <td><strong>Recomendación</strong></td>
+      <td>Limitar a <code class="language-plaintext highlighter-rouge">ipv4</code> si el sistema no tiene IPv6 configurado correctamente.</td>
+    </tr>
+    <tr>
+      <td><strong>Ejemplo de configuración</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">inet_protocols = ipv4</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="parámetro-mydestination">Parámetro <code class="language-plaintext highlighter-rouge">mydestination</code></h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Aspecto</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Función</strong></td>
+      <td>Define los dominios para los cuales este servidor considera que es el destino final del correo.</td>
+    </tr>
+    <tr>
+      <td><strong>Uso principal</strong></td>
+      <td>Determina qué correos deben entregarse localmente en lugar de reenviarse a otro servidor.</td>
+    </tr>
+    <tr>
+      <td><strong>Comportamiento típico</strong></td>
+      <td>Incluye el nombre del host, el dominio y <code class="language-plaintext highlighter-rouge">localhost</code>.</td>
+    </tr>
+    <tr>
+      <td><strong>Ejemplo de configuración</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">mydestination = $myhostname, localhost.$mydomain, localhost, $mydomain</code></td>
+    </tr>
+    <tr>
+      <td><strong>Consideración</strong></td>
+      <td>No debe incluir dominios que se entreguen a otros servidores, ya que podría causar bucles de correo.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="parámetro-relayhost">Parámetro <code class="language-plaintext highlighter-rouge">relayhost</code></h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Aspecto</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Función</strong></td>
+      <td>Define el servidor al que Postfix reenviará todo el correo saliente.</td>
+    </tr>
+    <tr>
+      <td><strong>Uso principal</strong></td>
+      <td>Se utiliza cuando el servidor no entrega correo directamente a Internet.</td>
+    </tr>
+    <tr>
+      <td><strong>Casos comunes</strong></td>
+      <td>Proveedores externos de correo, gateways SMTP o servidores corporativos.</td>
+    </tr>
+    <tr>
+      <td><strong>Formato</strong></td>
+      <td>Nombre de host o dirección IP, opcionalmente con puerto.</td>
+    </tr>
+    <tr>
+      <td><strong>Ejemplo de configuración</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">relayhost = [smtp.relay.example.com]:587</code></td>
+    </tr>
+    <tr>
+      <td><strong>Nota</strong></td>
+      <td>Normalmente se combina con autenticación SMTP y TLS.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Para asegurarnos de que no hay errores en el main.cf, lanzamos el siguiente comando:</p>
+
+<p><img src="/assets/images/20260120/20260120-08.png" alt="Texto alternativo" /></p>
+
+<h2 id="habilitar-y-ejecutar-postfix">Habilitar y ejecutar Postfix</h2>
+
+<p>Iniciamos y habilitamos el servicio .</p>
+
+<p><img src="/assets/images/20260120/20260120-09.png" alt="Texto alternativo" /></p>
+
+<p>Para que el tráfico fluya, el cortafuegos de RHEL (firewalld) debe permitir conexiones entrantes en el puerto 25. Esto se logra habilitando el servicio predefinido:</p>
+
+<p><img src="/assets/images/20260120/20260120-10.png" alt="Texto alternativo" /></p>
+
+<p>Verificamos el estado del servicio</p>
+
+<p><img src="/assets/images/20260120/20260120-11.png" alt="Texto alternativo" /></p>
+
+<p>Si el servicio no está activo, podemos reiniciarlo</p>
+
+<p><img src="/assets/images/20260120/20260120-12.png" alt="Texto alternativo" /></p>
+
+<p>Para aplicar los cambios en la configuración</p>
+
+<p><img src="/assets/images/20260120/20260120-13.png" alt="Texto alternativo" /></p>
+
+<h2 id="verificación">Verificación</h2>
+
+<p>Para verificar el correcto funcionamiento, podemos utilizar el siguiente comando:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"Este es un mensaje de prueba"</span> | mail <span class="nt">-s</span> <span class="s2">"Prueba SMTP"</span> usuario@example.com
+</code></pre></div></div>
+
+<p>Para supervisar los errores de Postfix en tiempo real, se recomienda utilizar el siguiente comando:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">tail</span> <span class="nt">-f</span> /var/log/maillog | <span class="nb">grep</span> <span class="nt">-i</span> error
+</code></pre></div></div>
+
+<p>En este post hemos configurado un servidor SMTP Postfix, orientado a un entorno interno o corporativo.</p>
+
+<p>El servidor actúa como un MTA directo, entregando el correo saliente sin depender de un relay externo y aceptando conexiones únicamente en interfaces y redes explícitamente autorizadas.</p>
+
+<p>El resultado es un servidor Postfix diseñado para manejar de forma segura y confiable el correo interno, perfecto para enviar notificaciones desde aplicaciones y operar en entornos de laboratorio.</p>]]></content><author><name>Xavi Vico Marti</name></author><category term="RedHat" /><category term="SMTP" /><category term="RHEL" /><category term="Postfix" /><category term="SMTP" /><summary type="html"><![CDATA[Configuracion basica de un servidor postfix SMTP.]]></summary></entry><entry><title type="html">Red Hat Ansible Automation Platform 2.6: Guía de Integración con Active Directory (LDAP/LDAPS)</title><link href="http://localhost:4000/redhat/activedirectory/Red-Hat-Ansible-Automation-Platform-2.6-Gu%C3%ADa-de-Integraci%C3%B3n-con-Active-Directory-(LDAP-LDAPS)/" rel="alternate" type="text/html" title="Red Hat Ansible Automation Platform 2.6: Guía de Integración con Active Directory (LDAP/LDAPS)" /><published>2025-11-07T00:00:00+01:00</published><updated>2025-11-07T00:00:00+01:00</updated><id>http://localhost:4000/redhat/activedirectory/Red-Hat-Ansible-Automation-Platform-2.6:-Gu%C3%ADa-de-Integraci%C3%B3n-con-Active-Directory-(LDAP-LDAPS)</id><content type="html" xml:base="http://localhost:4000/redhat/activedirectory/Red-Hat-Ansible-Automation-Platform-2.6-Gu%C3%ADa-de-Integraci%C3%B3n-con-Active-Directory-(LDAP-LDAPS)/"><![CDATA[<h1 id="introducción">Introducción</h1>
 
 <p>El propósito de este documento es mostrar cómo integrar Ansible Automation Platform (AAP) con Active Directory mediante el protocolo LDAP o LDAPS, permitiendo que los usuarios del dominio puedan autenticarse directamente con sus credenciales corporativas. Con esta configuración, los usuarios del dominio podrán iniciar sesión directamente en AAP con sus credenciales, sin que el sistema almacene contraseñas locales.</p>
 

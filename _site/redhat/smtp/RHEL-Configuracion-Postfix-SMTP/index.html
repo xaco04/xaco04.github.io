@@ -1,0 +1,1090 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="es" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Red Hat Enterprise Linux: Guía de Configuración basica para un SMTP Postfix server - Xavi Vico Marti</title>
+<meta name="description" content="Configuracion basica de un servidor postfix SMTP.">
+
+
+  <meta name="author" content="Xavi Vico Marti">
+  
+  <meta property="article:author" content="Xavi Vico Marti">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="es">
+<meta property="og:site_name" content="Xavi Vico Marti">
+<meta property="og:title" content="Red Hat Enterprise Linux: Guía de Configuración basica para un SMTP Postfix server">
+<meta property="og:url" content="http://localhost:4000/redhat/smtp/RHEL-Configuracion-Postfix-SMTP/">
+
+
+  <meta property="og:description" content="Configuracion basica de un servidor postfix SMTP.">
+
+
+
+  <meta property="og:image" content="http://localhost:4000/assets/images/RedHatbanner.png">
+
+
+
+
+
+  <meta property="article:published_time" content="2026-01-09T00:00:00+01:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/redhat/smtp/RHEL-Configuracion-Postfix-SMTP/">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+<!-- Al final del head -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+<link rel="icon" href="/assets/images/faviconsol.png" type="image/x-icon">
+<link rel="shortcut icon" href="/assets/images/faviconsol.png" type="image/x-icon">
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single wide" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Saltar a navegación principal</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Saltar a contenido</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Saltar a pie</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/"><img src="/assets/images/xaco04logo.png" alt=" "></a>
+        
+        <a class="site-title" href="/">
+          
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/"
+                
+                
+              >Home</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/"
+                
+                
+              >Blog</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/about/"
+                
+                
+              >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Alternar búsqueda</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Alternar menú</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+  
+
+
+
+
+
+
+
+<div class="page__hero--overlay"
+  style=" background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/assets/images/RedHatbanner.png');"
+>
+  
+    <div class="wrapper">
+      <h1 id="page-title" class="page__title" itemprop="headline">
+        
+          Red Hat Enterprise Linux: Guía de Configuración basica para un SMTP Postfix server
+
+        
+      </h1>
+      
+        <p class="page__lead">Configuracion basica de un servidor postfix SMTP.
+</p>
+      
+      
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          6 minuto(s) de lectura
+        
+      </span>
+    
+  </p>
+
+
+      
+    </div>
+  
+  
+</div>
+
+
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/assets/images/githublogo.png" alt="Xavi Vico Marti" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">Xavi Vico Marti</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Seguir</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Catalonia/Spain</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:xavivico04@gmail.com" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="https://github.com/xaco04" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Red Hat Enterprise Linux: Guía de Configuración basica para un SMTP Postfix server">
+    <meta itemprop="description" content="Configuracion basica de un servidor postfix SMTP.">
+    <meta itemprop="datePublished" content="2026-01-09T00:00:00+01:00">
+    
+
+    <div class="page__inner-wrap">
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right ">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> En esta página</h4></header>
+              <ul class="toc__menu"><li><a href="#introducción">Introducción</a></li><li><a href="#el-protocolo-smtp-simple-mail-transfer-protocol">El Protocolo SMTP (Simple Mail Transfer Protocol)</a></li><li><a href="#componentes">Componentes</a></li><li><a href="#postfix">Postfix</a></li><li><a href="#requisitos">Requisitos</a><ul><li><a href="#añadir-lo-que-tiene-la-mv-utilizada-y-un-diagrama-de-flujo-del-smtp">AÑADIR LO QUE TIENE LA MV UTILIZADA Y UN DIAGRAMA DE FLUJO DEL SMTP</a></li></ul></li><li><a href="#demo">Demo</a><ul><li><a href="#instalación">Instalación</a></li><li><a href="#configuración-del-servicio">Configuración del Servicio</a><ul><li><a href="#parámetro-inet_interfaces">Parámetro inet_interfaces</a></li><li><a href="#parámetro-myhostname">Parámetro myhostname</a></li><li><a href="#parámetro-mydomain">Parámetro mydomain</a></li><li><a href="#parámetro-myorigin">Parámetro myorigin</a></li><li><a href="#parámetro-mynetworks">Parámetro mynetworks</a></li><li><a href="#parámetro-inet_protocols">Parámetro inet_protocols</a></li><li><a href="#parámetro-mydestination">Parámetro mydestination</a></li><li><a href="#parámetro-relayhost">Parámetro relayhost</a></li></ul></li><li><a href="#habilitar-y-ejecutar-postfix">Habilitar y ejecutar Postfix</a></li><li><a href="#verificación">Verificación</a></li></ul></li></ul>
+            </nav>
+          </aside>
+        
+        <h1 id="introducción">Introducción</h1>
+
+<p>Mantener el correo funcionando es clave en cualquier infraestructura de TI. En Red Hat Enterprise Linux (RHEL), Postfix es la opción más confiable, rápido, seguro y modular.</p>
+
+<p>Esta guía muestra cómo desplegar Postfix correctamente, explicando lo esencial del protocolo SMTP y las configuraciones de seguridad necesarias para evitar errores graves, como los Open Relays, y mantener tu servidor seguro desde el primer día.</p>
+
+<p>Para administrar un servidor de correo con éxito, es fundamental entender que no se trata de un solo sistema, sino de una cadena de componentes que trabajan juntos.</p>
+
+<p><strong>Importante:</strong> Con la configuración mostrada, este servidor solo está preparado para uso dentro de la red local. No recibe correos directamente de Internet, y únicamente permite el envío de mensajes desde hosts confiables definidos en la red interna. Para un servidor SMTP público se requieren ajustes adicionales en interfaces, autenticación, TLS y DNS.</p>
+
+<h1 id="el-protocolo-smtp-simple-mail-transfer-protocol">El Protocolo SMTP (Simple Mail Transfer Protocol)</h1>
+
+<p>SMTP es el protocolo base que permite el intercambio de mensajes entre servidores de correo. A diferencia de los protocolos de acceso como IMAP o POP3, SMTP se enfoca únicamente en el transporte de los correos.</p>
+
+<p>Funciona principalmente a través de tres puertos:</p>
+
+<ul>
+  <li>Puerto 25: Para la transferencia entre servidores (MTA a MTA).</li>
+  <li>Puerto 587 (Submission): El estándar moderno para que los clientes(Outlook, Gmail o Thunderbird) envíen correos al servidor; normalmente requiere autenticación y TLS.</li>
+  <li>Puerto 465 (SMTPS): SMTP sobre SSL/TLS implícito. Aunque hoy se recomienda STARTTLS, este puerto aún se usa en algunos entornos.</li>
+</ul>
+
+<h1 id="componentes">Componentes</h1>
+
+<p>El flujo de un correo electrónico depende de la interacción coordinada de tres componentes:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Componente</th>
+      <th>Función</th>
+      <th>Ejemplos</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>MUA (Mail User Agent)</strong></td>
+      <td>Interfaz del usuario donde se origina o consulta el correo.</td>
+      <td>Outlook, Thunderbird, Gmail, comandos de shell</td>
+    </tr>
+    <tr>
+      <td><strong>MTA (Mail Transfer Agent)</strong></td>
+      <td>Núcleo del sistema que recibe correos del MUA o de otros MTA y decide su ruta hacia el destino.</td>
+      <td>Postfix, Sendmail, Exim</td>
+    </tr>
+    <tr>
+      <td><strong>MDA (Mail Delivery Agent)</strong></td>
+      <td>Recibe los correos del MTA y los entrega al buzón físico o virtual del usuario.</td>
+      <td>Dovecot, entrega local, procmail</td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="postfix">Postfix</h1>
+
+<p>Postfix es un Agente de Transferencia de Correo (MTA). Su trabajo principal es enviar, recibir y enrutar correos electrónicos. Pero no todos los servidores necesitan hacerlo todo; Postfix es flexible:</p>
+
+<ul>
+  <li>Servidor completo: Atiende tanto correos entrantes como salientes, ideal para organizaciones con flujo de correo grande.</li>
+  <li>Solo envío local: Permite que tus aplicaciones internas envíen notificaciones o alertas sin depender de un proveedor externo. Perfecto si generas mucho correo saliente que un servicio externo no aceptaría.</li>
+  <li>Opción ligera: Puedes usarlo solo para lo esencial, sin cargar tu sistema con un servidor SMTP completo, manteniendo la seguridad y eficiencia.</li>
+</ul>
+
+<h1 id="requisitos">Requisitos</h1>
+
+<ul>
+  <li><strong>Registro del sistema</strong>
+    <ul>
+      <li>El servidor debe estar registrado correctamente mediante <strong>Red Hat Subscription Management</strong>.</li>
+    </ul>
+  </li>
+  <li><strong>Nombre de host completo (FQDN)</strong>
+    <ul>
+      <li>El servidor debe contar con un <strong>Fully Qualified Domain Name (FQDN)</strong> válido.</li>
+      <li>Este FQDN se utilizará para identificar al servidor ante otros sistemas de correo en Internet.</li>
+    </ul>
+  </li>
+  <li><strong>Configuración de DNS</strong>
+    <ul>
+      <li><strong>Registro MX:</strong> Debe existir un registro MX que apunte al servidor, indicando que puede recibir correo.</li>
+      <li><strong>Registro A:</strong> El FQDN debe resolverse correctamente a la dirección IP del servidor.</li>
+    </ul>
+  </li>
+  <li><strong>Reconocimiento externo</strong>
+    <ul>
+      <li>Con un FQDN válido y los registros DNS configurados, el servidor podrá ser reconocido por otros servidores de correo y participar correctamente en el intercambio de mensajes.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Detalles del sistema utilizado en nuestro caso:</p>
+
+<h2 id="añadir-lo-que-tiene-la-mv-utilizada-y-un-diagrama-de-flujo-del-smtp">AÑADIR LO QUE TIENE LA MV UTILIZADA Y UN DIAGRAMA DE FLUJO DEL SMTP</h2>
+
+<h1 id="demo">Demo</h1>
+
+<h2 id="instalación">Instalación</h2>
+
+<p>En muchas instalaciones de RHEL, el servicio Sendmail puede estar presente. Para evitar conflictos en la ocupación del puerto 25 y asegurar una gestión de colas limpia, es necesario eliminarlo antes de proceder:</p>
+
+<p><img src="/assets/images/20260120/20260120-01.png" alt="Texto alternativo" /></p>
+
+<p>Postfix se encuentra en los repositorios oficiales de RHEL. Su instalación se realiza mediante el gestor de paquetes DNF:</p>
+
+<p><img src="/assets/images/20260120/20260120-02.png" alt="Texto alternativo" /></p>
+
+<h2 id="configuración-del-servicio">Configuración del Servicio</h2>
+
+<p>El archivo principal de configuración se encuentra en <strong>/etc/postfix/main.cf</strong>. Este archivo utiliza una sintaxis de “parámetro = valor” y es donde reside toda la lógica operativa del MTA.</p>
+
+<h3 id="parámetro-inet_interfaces">Parámetro <code class="language-plaintext highlighter-rouge">inet_interfaces</code></h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Aspecto</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Función</strong></td>
+      <td>Define en qué direcciones IP debe escuchar Postfix para aceptar conexiones entrantes de correo.</td>
+    </tr>
+    <tr>
+      <td><strong>Comportamiento por defecto</strong></td>
+      <td>Postfix escucha únicamente en la interfaz de loopback (<code class="language-plaintext highlighter-rouge">127.0.0.1</code> o <code class="language-plaintext highlighter-rouge">::1</code>), permitiendo recibir correos solo desde la propia máquina.</td>
+    </tr>
+    <tr>
+      <td><strong>Configuración con IP específica</strong></td>
+      <td>Al especificar una dirección IP (por ejemplo <code class="language-plaintext highlighter-rouge">192.0.2.1</code>), Postfix aceptará conexiones SMTP desde otras máquinas que se conecten a esa IP.</td>
+    </tr>
+    <tr>
+      <td><strong>Escuchar en todas las interfaces</strong></td>
+      <td>Permite que Postfix escuche en todas las interfaces de red disponibles.</td>
+    </tr>
+    <tr>
+      <td><strong>Ejemplo de configuración</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">inet_interfaces = all</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><img src="/assets/images/20260120/20260120-03.png" alt="Texto alternativo" /></p>
+
+<h3 id="parámetro-myhostname">Parámetro <code class="language-plaintext highlighter-rouge">myhostname</code></h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Aspecto</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Función</strong></td>
+      <td>Define el nombre de host del servidor SMTP.</td>
+    </tr>
+    <tr>
+      <td><strong>Uso principal</strong></td>
+      <td>Se utiliza en los encabezados de los correos (por ejemplo, en el <code class="language-plaintext highlighter-rouge">HELO</code> y <code class="language-plaintext highlighter-rouge">Received</code>).</td>
+    </tr>
+    <tr>
+      <td><strong>Recomendación</strong></td>
+      <td>Debe ser un <strong>FQDN válido</strong> que resuelva correctamente en DNS.</td>
+    </tr>
+    <tr>
+      <td><strong>Ejemplo de configuración</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">myhostname = smtp.example.com</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><img src="/assets/images/20260120/20260120-04.png" alt="Texto alternativo" /></p>
+
+<h3 id="parámetro-mydomain">Parámetro <code class="language-plaintext highlighter-rouge">mydomain</code></h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Aspecto</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Función</strong></td>
+      <td>Define el dominio principal del servidor de correo.</td>
+    </tr>
+    <tr>
+      <td><strong>Relación con <code class="language-plaintext highlighter-rouge">myhostname</code></strong></td>
+      <td>Generalmente corresponde a la parte de dominio del FQDN definido en <code class="language-plaintext highlighter-rouge">myhostname</code>.</td>
+    </tr>
+    <tr>
+      <td><strong>Uso común</strong></td>
+      <td>Se utiliza como base para otros parámetros de configuración de Postfix.</td>
+    </tr>
+    <tr>
+      <td><strong>Ejemplo de configuración</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">mydomain = example.com</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><img src="/assets/images/20260120/20260120-05.png" alt="Texto alternativo" /></p>
+
+<h3 id="parámetro-myorigin">Parámetro <code class="language-plaintext highlighter-rouge">myorigin</code></h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Aspecto</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Función</strong></td>
+      <td>Define el dominio que se añade a los correos enviados localmente.</td>
+    </tr>
+    <tr>
+      <td><strong>Comportamiento</strong></td>
+      <td>Determina el dominio de origen para usuarios locales que envían correo.</td>
+    </tr>
+    <tr>
+      <td><strong>Valor recomendado</strong></td>
+      <td>Utilizar el dominio definido en <code class="language-plaintext highlighter-rouge">mydomain</code>.</td>
+    </tr>
+    <tr>
+      <td><strong>Ejemplo de configuración</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">myorigin = $mydomain</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><img src="/assets/images/20260120/20260120-06.png" alt="Texto alternativo" /></p>
+
+<h3 id="parámetro-mynetworks">Parámetro <code class="language-plaintext highlighter-rouge">mynetworks</code></h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Aspecto</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Función</strong></td>
+      <td>Define las direcciones IP y subredes que están autorizadas a enviar correos a través del servidor sin autenticación.</td>
+    </tr>
+    <tr>
+      <td><strong>Uso principal</strong></td>
+      <td>Permite que sistemas internos o de confianza actúen como clientes SMTP del servidor.</td>
+    </tr>
+    <tr>
+      <td><strong>Formato</strong></td>
+      <td>Lista de direcciones IP o subredes en notación CIDR, separadas por comas.</td>
+    </tr>
+    <tr>
+      <td><strong>Ejemplo de configuración</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">mynetworks = 127.0.0.1/32, [::1]/128, 192.0.2.1/24, [2001:db8:1::1]/64</code></td>
+    </tr>
+    <tr>
+      <td><strong>Consideración de seguridad</strong></td>
+      <td>Solo deben incluirse <strong>IPs o redes totalmente confiables</strong>. Agregar clientes externos puede convertir el servidor en un <strong>Open Relay</strong>.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><img src="/assets/images/20260120/20260120-07.png" alt="Texto alternativo" /></p>
+
+<p>Otros parámetros importantes pero que no modificaremos en este post son los siguientes:</p>
+
+<h3 id="parámetro-inet_protocols">Parámetro <code class="language-plaintext highlighter-rouge">inet_protocols</code></h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Aspecto</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Función</strong></td>
+      <td>Define qué versiones del protocolo IP utilizará Postfix.</td>
+    </tr>
+    <tr>
+      <td><strong>Valores comunes</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">ipv4</code>, <code class="language-plaintext highlighter-rouge">ipv6</code>, <code class="language-plaintext highlighter-rouge">all</code></td>
+    </tr>
+    <tr>
+      <td><strong>Comportamiento por defecto</strong></td>
+      <td>En sistemas modernos, suele ser <code class="language-plaintext highlighter-rouge">all</code>.</td>
+    </tr>
+    <tr>
+      <td><strong>Recomendación</strong></td>
+      <td>Limitar a <code class="language-plaintext highlighter-rouge">ipv4</code> si el sistema no tiene IPv6 configurado correctamente.</td>
+    </tr>
+    <tr>
+      <td><strong>Ejemplo de configuración</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">inet_protocols = ipv4</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="parámetro-mydestination">Parámetro <code class="language-plaintext highlighter-rouge">mydestination</code></h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Aspecto</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Función</strong></td>
+      <td>Define los dominios para los cuales este servidor considera que es el destino final del correo.</td>
+    </tr>
+    <tr>
+      <td><strong>Uso principal</strong></td>
+      <td>Determina qué correos deben entregarse localmente en lugar de reenviarse a otro servidor.</td>
+    </tr>
+    <tr>
+      <td><strong>Comportamiento típico</strong></td>
+      <td>Incluye el nombre del host, el dominio y <code class="language-plaintext highlighter-rouge">localhost</code>.</td>
+    </tr>
+    <tr>
+      <td><strong>Ejemplo de configuración</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">mydestination = $myhostname, localhost.$mydomain, localhost, $mydomain</code></td>
+    </tr>
+    <tr>
+      <td><strong>Consideración</strong></td>
+      <td>No debe incluir dominios que se entreguen a otros servidores, ya que podría causar bucles de correo.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="parámetro-relayhost">Parámetro <code class="language-plaintext highlighter-rouge">relayhost</code></h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Aspecto</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Función</strong></td>
+      <td>Define el servidor al que Postfix reenviará todo el correo saliente.</td>
+    </tr>
+    <tr>
+      <td><strong>Uso principal</strong></td>
+      <td>Se utiliza cuando el servidor no entrega correo directamente a Internet.</td>
+    </tr>
+    <tr>
+      <td><strong>Casos comunes</strong></td>
+      <td>Proveedores externos de correo, gateways SMTP o servidores corporativos.</td>
+    </tr>
+    <tr>
+      <td><strong>Formato</strong></td>
+      <td>Nombre de host o dirección IP, opcionalmente con puerto.</td>
+    </tr>
+    <tr>
+      <td><strong>Ejemplo de configuración</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">relayhost = [smtp.relay.example.com]:587</code></td>
+    </tr>
+    <tr>
+      <td><strong>Nota</strong></td>
+      <td>Normalmente se combina con autenticación SMTP y TLS.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Para asegurarnos de que no hay errores en el main.cf, lanzamos el siguiente comando:</p>
+
+<p><img src="/assets/images/20260120/20260120-08.png" alt="Texto alternativo" /></p>
+
+<h2 id="habilitar-y-ejecutar-postfix">Habilitar y ejecutar Postfix</h2>
+
+<p>Iniciamos y habilitamos el servicio .</p>
+
+<p><img src="/assets/images/20260120/20260120-09.png" alt="Texto alternativo" /></p>
+
+<p>Para que el tráfico fluya, el cortafuegos de RHEL (firewalld) debe permitir conexiones entrantes en el puerto 25. Esto se logra habilitando el servicio predefinido:</p>
+
+<p><img src="/assets/images/20260120/20260120-10.png" alt="Texto alternativo" /></p>
+
+<p>Verificamos el estado del servicio</p>
+
+<p><img src="/assets/images/20260120/20260120-11.png" alt="Texto alternativo" /></p>
+
+<p>Si el servicio no está activo, podemos reiniciarlo</p>
+
+<p><img src="/assets/images/20260120/20260120-12.png" alt="Texto alternativo" /></p>
+
+<p>Para aplicar los cambios en la configuración</p>
+
+<p><img src="/assets/images/20260120/20260120-13.png" alt="Texto alternativo" /></p>
+
+<h2 id="verificación">Verificación</h2>
+
+<p>Para verificar el correcto funcionamiento, podemos utilizar el siguiente comando:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"Este es un mensaje de prueba"</span> | mail <span class="nt">-s</span> <span class="s2">"Prueba SMTP"</span> usuario@example.com
+</code></pre></div></div>
+
+<p>Para supervisar los errores de Postfix en tiempo real, se recomienda utilizar el siguiente comando:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">tail</span> <span class="nt">-f</span> /var/log/maillog | <span class="nb">grep</span> <span class="nt">-i</span> error
+</code></pre></div></div>
+
+<p>En este post hemos configurado un servidor SMTP Postfix, orientado a un entorno interno o corporativo.</p>
+
+<p>El servidor actúa como un MTA directo, entregando el correo saliente sin depender de un relay externo y aceptando conexiones únicamente en interfaces y redes explícitamente autorizadas.</p>
+
+<p>El resultado es un servidor Postfix diseñado para manejar de forma segura y confiable el correo interno, perfecto para enviar notificaciones desde aplicaciones y operar en entornos de laboratorio.</p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Etiquetas: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#postfix" class="page__taxonomy-item p-category" rel="tag">Postfix</a><span class="sep">, </span>
+    
+      <a href="/tags/#rhel" class="page__taxonomy-item p-category" rel="tag">RHEL</a><span class="sep">, </span>
+    
+      <a href="/tags/#smtp" class="page__taxonomy-item p-category" rel="tag">SMTP</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categorías: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#redhat" class="page__taxonomy-item p-category" rel="tag">RedHat</a><span class="sep">, </span>
+    
+      <a href="/categories/#smtp" class="page__taxonomy-item p-category" rel="tag">SMTP</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Actualizado:</strong> <time class="dt-published" datetime="2026-01-09T00:00:00+01:00">January 9, 2026</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  <h4 class="page__share-title">Compartir en</h4>
+
+  <a href="https://x.com/intent/tweet?text=Red+Hat+Enterprise+Linux%3A+Gu%C3%ADa+de+Configuraci%C3%B3n+basica+para+un+SMTP+Postfix+server%20http%3A%2F%2Flocalhost%3A4000%2Fredhat%2Fsmtp%2FRHEL-Configuracion-Postfix-SMTP%2F" class="btn btn--x" aria-label="Share on X" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Compartir en X">
+    <i class="fab fa-fw fa-x-twitter" aria-hidden="true"></i><span> X</span>
+  </a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fredhat%2Fsmtp%2FRHEL-Configuracion-Postfix-SMTP%2F" class="btn btn--facebook" aria-label="Share on Facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Compartir en Facebook">
+    <i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span>
+  </a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/redhat/smtp/RHEL-Configuracion-Postfix-SMTP/" class="btn btn--linkedin" aria-label="Share on LinkedIn" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Compartir en LinkedIn">
+    <i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span>
+  </a>
+
+  <a href="https://bsky.app/intent/compose?text=Red+Hat+Enterprise+Linux%3A+Gu%C3%ADa+de+Configuraci%C3%B3n+basica+para+un+SMTP+Postfix+server%20http%3A%2F%2Flocalhost%3A4000%2Fredhat%2Fsmtp%2FRHEL-Configuracion-Postfix-SMTP%2F" class="btn btn--bluesky" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Compartir en Bluesky">
+    <i class="fab fa-fw fa-bluesky" aria-hidden="true"></i><span> Bluesky</span>
+  </a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/redhat/dns/RHEL-Configuracion-BIND-DNS/" class="pagination--pager" title="Red Hat Enterprise Linux: Guía de Configuración de un Servidor BIND DNS en RHEL 9.6">Anterior</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Siguiente</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    
+<div class="page__related">
+  
+  <h2 class="page__related-title">Puede que también te interese</h2>
+  <div class="grid__wrapper">
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/redhat/dns/RHEL-Configuracion-BIND-DNS/" rel="permalink">Red Hat Enterprise Linux: Guía de Configuración de un Servidor BIND DNS en RHEL 9.6
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          7 minuto(s) de lectura
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Configuración basica de un servidor DNS con BIND en Red Hat Enterprise Linux 9.6, incluyendo zonas directas e inversas.
+</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/redhat/activedirectory/Red-Hat-Ansible-Automation-Platform-2.6-Gu%C3%ADa-de-Integraci%C3%B3n-con-Active-Directory-(LDAP-LDAPS)/" rel="permalink">Red Hat Ansible Automation Platform 2.6: Guía de Integración con Active Directory (LDAP/LDAPS)
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          18 minuto(s) de lectura
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Guía detallada para integrar Red Hat Ansible Automation Platform 2.6 con Active Directory 2019, utilizando autenticación LDAP o LDAPS para permitir el acceso...</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/redhat/activedirectory/RHEL-Integracion-RHEL-10-con-AD/" rel="permalink">Red Hat Enterprise Linux: Integración de RHEL 10 con Active Directory 2019 usando SSSD y realmd
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          7 minuto(s) de lectura
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Guía para integrar Red Hat Enterprise Linux 10.0 (RHEL 10) con Active Directory 2019, utilizando las herramientas SSSD y realmd
+</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/automation/ansible/redhat/AAP-Guia-de-instalacion-2.5/" rel="permalink">Red Hat Ansible Automation Platform 2.5: Guía de Instalación en RHEL 10 (Topología Growth Contenerizada)
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          14 minuto(s) de lectura
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Instalación de Red Hat Ansible Automation Platform 2.5 en RHEL 10. Guía para configurar una topología ‘Growth’ contenerizada, ideal para desarrollo y pruebas.
+</p>
+  </article>
+</div>
+
+    
+  </div>
+</div>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Términos de búsqueda...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Términos de búsqueda..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+<script>
+  const swiper = new Swiper(".mySwiper", {
+    slidesPerView: 1,
+    spaceBetween: 20,
+    loop: true,
+    pagination: { el: ".swiper-pagination", clickable: true },
+    navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+    breakpoints: { 768: { slidesPerView: 2 }, 1200: { slidesPerView: 3 } },
+  });
+</script>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+  </body>
+</html>

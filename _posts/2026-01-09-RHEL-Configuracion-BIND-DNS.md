@@ -12,7 +12,7 @@ toc: true
 read_time: true
 comments: true
 classes: wide
-excerpt: "Aprende a instalar, configurar y administrar un servidor DNS con BIND en Red Hat Enterprise Linux 9.6, incluyendo zonas directas e inversas, registros principales y servidores master/slave."
+excerpt: "Configuración basica de un servidor DNS con BIND en Red Hat Enterprise Linux 9.6, incluyendo zonas directas e inversas."
 header:
   overlay_image: /assets/images/RedHatbanner.png
   overlay_filter: 0.5

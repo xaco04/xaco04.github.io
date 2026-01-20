@@ -188,7 +188,7 @@
       <span class="page__meta-readtime">
         <i class="far fa-clock" aria-hidden="true"></i>
         
-          6 minuto(s) de lectura
+          7 minuto(s) de lectura
         
       </span>
     
@@ -342,33 +342,48 @@
           <aside class="sidebar__right ">
             <nav class="toc">
               <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> En esta página</h4></header>
-              <ul class="toc__menu"><li><a href="#introducción">Introducción</a></li><li><a href="#bind">BIND</a></li><li><a href="#configuración-de-zonas-dns">Configuración de Zonas DNS</a><ul><li><a href="#tipos-de-zonas">Tipos de zonas</a><ul><li><a href="#zonas-directas">Zonas directas</a></li><li><a href="#zonas-inversas">Zonas inversas</a></li></ul></li><li><a href="#registros-dns-principales">Registros DNS principales</a></li><li><a href="#parámetros-de-control-del-soa">Parámetros de control del SOA</a></li><li><a href="#servidores-master-y-slave">Servidores Master y Slave</a><ul><li><a href="#servidor-primario-master">Servidor primario (Master)</a></li><li><a href="#servidor-secundario-slave">Servidor secundario (Slave)</a></li></ul></li><li><a href="#flujo-de-actualización-de-la-zona">Flujo de actualización de la zona</a></li></ul></li><li><a href="#prerrequisitos">Prerrequisitos</a></li><li><a href="#demo">Demo</a><ul><li><a href="#instalación-de-bind">Instalación de BIND</a></li><li><a href="#configuración-básica-de-bind">Configuración Básica de BIND</a></li></ul></li><li><a href="#configuración-de-zonas">Configuración de Zonas</a><ul><li><a href="#zona-directa-forward-zone">Zona directa (Forward Zone)</a></li><li><a href="#zona-inversa-reverse-zone">Zona inversa (Reverse Zone)</a></li></ul></li></ul>
+              <ul class="toc__menu"><li><a href="#introducción">Introducción</a></li><li><a href="#funcionamiento-de-la-resolución-de-nombres">Funcionamiento de la Resolución de Nombres</a></li><li><a href="#bind">BIND</a></li><li><a href="#configuración-de-zonas-dns">Configuración de Zonas DNS</a><ul><li><a href="#tipos-de-zonas">Tipos de zonas</a><ul><li><a href="#zonas-directas">Zonas directas</a></li><li><a href="#zonas-inversas">Zonas inversas</a></li></ul></li><li><a href="#registros-dns-principales">Registros DNS principales</a></li><li><a href="#parámetros-de-control-del-soa">Parámetros de control del SOA</a></li></ul></li><li><a href="#prerrequisitos">Prerrequisitos</a></li><li><a href="#diagrama-de-instalación-dns-bind-server">Diagrama de instalación DNS BIND server</a></li><li><a href="#demo">Demo</a><ul><li><a href="#instalación-de-bind">Instalación de BIND</a></li><li><a href="#configuración-básica-de-bind">Configuración Básica de BIND</a></li></ul></li><li><a href="#configuración-de-zonas">Configuración de Zonas</a><ul><li><a href="#zona-directa-forward-zone">Zona directa (Forward Zone)</a></li><li><a href="#zona-inversa-reverse-zone">Zona inversa (Reverse Zone)</a></li></ul></li></ul>
             </nav>
           </aside>
         
         <h1 id="introducción">Introducción</h1>
 
-<p>El DNS (Domain Name System) es el sistema que traduce nombres de dominio legibles por humanos, como <code class="language-plaintext highlighter-rouge">www.example.com</code>, en direcciones IP que los ordenadores utilizan para comunicarse.</p>
+<p>El Sistema de Nombres de Dominio (DNS) es la infraestructura esencial de Internet que traduce los nombres legibles para los humanos (como www.ejemplo.com) en direcciones IP numéricas (como 192.0.2.1) que las máquinas utilizan para comunicarse.</p>
 
-<p>En un entorno corporativo o incluso doméstico, tener un servidor DNS propio puede mejorar el rendimiento, la seguridad y el control de las consultas de tu red.</p>
+<p>El DNS se compone de tres elementos principales:</p>
+<ul>
+  <li>Sintaxis: Una forma jerárquica de nombrar entidades en Internet.</li>
+  <li>Reglas de delegación: Normas para asignar autoridad sobre ciertos nombres.</li>
+  <li>Implementación: El sistema real que mapea los nombres a las direcciones.</li>
+</ul>
 
-<p>En este artículo, veremos como instalar y configurar un servidor DNS con BIND en Red Hat Enterprise Linux (RHEL) 9.6, de forma sencilla y explicando cada paso, los conceptos clave y cómo verificar que todo funcione correctamente.</p>
+<p>El DNS funciona como un árbol invertido</p>
+<ul>
+  <li>Root Domain (Raíz): Representado por un punto . (normalmente omitido, pero obligatorio en nombres de dominio completos o FQDN).</li>
+  <li>Top-Level Domains (TLD): Como .com, .org o los territoriales (ccTLDs) como .es o .mx.</li>
+  <li>Second-Level Domains (SLD): Como ejemplo.com.</li>
+  <li>Subdominios: Como ventas.ejemplo.com.</li>
+</ul>
 
-<hr />
+<p>Cada nivel del árbol DNS delega la autoridad a los niveles inferiores. Quien tiene autoridad sobre un dominio es responsable de mantener una lista de sus subdominios.</p>
+
+<p>Aunque a menudo se usan como sinónimos, cuando hablamos de zona este es un punto administrativo que abarca un dominio y todos sus subdominios, a menos que estos hayan sido delegados a otra autoridad, zona y dominio se suelen confundir…</p>
+
+<p>Otro concepto clave que debemos saber son los Servidores Autoritativos estos son aquellos que contienen la información oficial de una zona específica en un archivo de zona, lo veremos mas adelante.</p>
+
+<h1 id="funcionamiento-de-la-resolución-de-nombres">Funcionamiento de la Resolución de Nombres</h1>
+
+<p>Cuando escribes una dirección web, el stub resolver de tu ordenador actúa como un mensajero básico que le pasa el recado a un resolver externo para que busque la dirección real. Este resolver inicia un viaje preguntando primero a los servidores raíz, quienes lo dirigen a los servidores del tipo de dominio como el .com, hasta llegar finalmente al servidor autoritativo que tiene la respuesta exacta. Una vez encontrada la IP, el resolver la guarda en su caché para recordarla en el futuro y se la entrega a tu equipo para que la web cargue al instante. Todo este proceso es el que gestiona de forma profesional el software BIND, permitiendo que los nombres se conviertan en números de manera rápida y segura.</p>
+
+<p><img src="/assets/images/20260109-22.png" alt="Texto alternativo" /></p>
 
 <h1 id="bind">BIND</h1>
 
-<p>BIND (Berkeley Internet Name Domain) es un servidor DNS muy completo y compatible con los estándares de la IETF. Sus usos más comunes incluyen:</p>
+<p>BIND (Berkeley Internet Name Domain) es una herramienta versátil que permite gestionar todo el sistema DNS mediante su archivo de configuración named.conf, pudiendo actuar como servidor oficial de dominios, buscador de direcciones o intermediario básico. Su gran ventaja es la flexibilidad, ya que permite que un mismo equipo realice múltiples funciones a la vez para ahorrar recursos en redes pequeñas, aunque las grandes empresas prefieran dedicar un servidor exclusivo para cada tarea por seguridad y rendimiento.</p>
 
-<ul>
-  <li>Servidor caching para mejorar la velocidad de resolución de nombres.</li>
-  <li>Servidor autoritativo para zonas que administras.</li>
-  <li>Servidor secundario para replicar zonas y garantizar alta disponibilidad.</li>
-</ul>
+<p>En este artículo, muestro como instalar y configurar un servidor DNS con BIND en Red Hat Enterprise Linux (RHEL) 9.6, de forma sencilla y explicando cada paso, los conceptos clave y cómo verificar que todo funcione correctamente.</p>
 
 <p>BIND puede ejecutarse en modo normal o en un entorno chroot para mayor seguridad. Además, en RHEL, SELinux protege al servicio por defecto, evitando vulnerabilidades conocidas.</p>
-
-<hr />
 
 <h1 id="configuración-de-zonas-dns">Configuración de Zonas DNS</h1>
 
@@ -406,7 +421,7 @@
 </code></pre></div></div>
 
 <p><strong>Nota:</strong>
-Siempre que tengas una zona directa, se recomienda crear la zona inversa correspondiente para que los servicios de correo, autenticación y seguridad funcionen correctamente.</p>
+Siempre que tengamos una zona directa, se recomienda crear la zona inversa correspondiente para que los servicios de correo, autenticación y seguridad funcionen correctamente.</p>
 
 <hr />
 
@@ -521,53 +536,9 @@ Siempre que tengas una zona directa, se recomienda crear la zona inversa corresp
 
 <hr />
 
-<h2 id="servidores-master-y-slave">Servidores Master y Slave</h2>
-
-<h3 id="servidor-primario-master">Servidor primario (Master)</h3>
-
-<p>Es el dueño de la zona, donde se mantienen los registros originales.</p>
-
-<p>Se edita directamente el archivo de zona:</p>
-
-<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">zone</span> <span class="s2">"xebec.dlab"</span> {
-    <span class="n">type</span> <span class="n">master</span>;
-    <span class="n">file</span> <span class="s2">"/var/named/xebec.dlab.zone"</span>;
-};
-</code></pre></div></div>
-
-<p>Aquí se definen SOA, NS, A, AAAA, MX, TXT…
-Incrementar el serial del SOA garantiza que los slaves se sincronicen correctamente.</p>
-
-<h3 id="servidor-secundario-slave">Servidor secundario (Slave)</h3>
-
-<p>No tiene el archivo editable, copia la zona automáticamente desde el master:</p>
-
-<p>Guarda la copia local en <code class="language-plaintext highlighter-rouge">/var/named/slaves/xebec.dlab.zone</code>.
-Responde consultas DNS igual que el master.</p>
-
-<p>Ambos servidores (master y slave) deben aparecer como NS en la zona:</p>
-
-<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@ IN NS dns1.xebec.dlab.  ; master
-@ IN NS dns2.xebec.dlab.  ; slave
-</code></pre></div></div>
-
-<hr />
-
-<h2 id="flujo-de-actualización-de-la-zona">Flujo de actualización de la zona</h2>
-
-<ol>
-  <li>Se hace un cambio en el master (ej. agregar un registro A).</li>
-  <li>Se incrementa el serial del SOA.</li>
-  <li>El slave detecta el cambio consultando el serial (cada Refresh segundos).</li>
-  <li>El slave descarga la zona y la guarda localmente.</li>
-  <li>Ambos servidores pueden responder consultas de forma autoritativa.</li>
-</ol>
-
-<hr />
-
 <h1 id="prerrequisitos">Prerrequisitos</h1>
 
-<p>Antes de instalar BIND, asegúrate de:</p>
+<p>Antes de instalar BIND, debemos asegurarnos de:</p>
 
 <ul>
   <li>Tener una IP estática en el servidor.</li>
@@ -646,22 +617,21 @@ Responde consultas DNS igual que el master.</p>
 
 <hr />
 
+<h1 id="diagrama-de-instalación-dns-bind-server">Diagrama de instalación DNS BIND server</h1>
+
+<p><img src="/assets/images/20260109-23.png" alt="Texto alternativo" /></p>
+
 <h1 id="demo">Demo</h1>
 
 <h2 id="instalación-de-bind">Instalación de BIND</h2>
 
 <p>Primero instalamos los paquetes necesarios bind y bind-utils</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dnf <span class="nb">install bind </span>bind-utils
-</code></pre></div></div>
 <p><img src="/assets/images/20260109-01.png" alt="Texto alternativo" /></p>
 
 <h2 id="configuración-básica-de-bind">Configuración Básica de BIND</h2>
 
 <p>El archivo principal de configuración es /etc/named.conf. Antes de modificarlo, es recomendable hacer una copia de seguridad.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo cp</span> /etc/named.conf /etc/named.conf.bak
-</code></pre></div></div>
 
 <p>Ahora entramos en el archivo /etc/named.conf.</p>
 
@@ -681,37 +651,37 @@ Responde consultas DNS igual que el master.</p>
 
 <p>listen-on y listen-on-v6, estas líneas configuran las direcciones IP y puertos en los que el proceso named estará escuchando conexiones entrantes para consultas DNS, separadas por protocolo (IPv4/IPv6)</p>
 
-<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">listen</span>-<span class="n">on</span> <span class="n">port</span> <span class="m">53</span> { <span class="m">127</span>.<span class="m">0</span>.<span class="m">0</span>.<span class="m">1</span>; <span class="m">192</span>.<span class="m">168</span>.<span class="m">6</span>.<span class="m">0</span>/<span class="m">24</span>; };
-<span class="n">listen</span>-<span class="n">on</span>-<span class="n">v6</span> { ::<span class="m">1</span>; };
+<p><img src="/assets/images/20260109-02.png" alt="Texto alternativo" /></p>
 
-</code></pre></div></div>
 <p>El port 53 es el puerto estándar para DNS, listen-on lista de direcciones IPv4 donde escuchará y listen-on-v6 lo mismo pero para IPv6.</p>
 
 <p>allow-query define quién puede consultar tu servidor DNS</p>
 
-<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">allow</span>-<span class="n">query</span> { <span class="m">127</span>.<span class="m">0</span>.<span class="m">0</span>.<span class="m">1</span>; <span class="m">192</span>.<span class="m">168</span>.<span class="m">6</span>.<span class="m">0</span>/<span class="m">24</span>; };
-</code></pre></div></div>
+<p><img src="/assets/images/20260109-03.png" alt="Texto alternativo" /></p>
+
 <p>En nuestro caso localhost el propio servidor y 192.168.6.0/24 toda la subred IPv4 de 192.168.6.0 a 192.168.6.255.</p>
 
 <p><strong>Esto evita que cualquier IP externa haga consultas a nuestro servidor (lo cual es más seguro).</strong></p>
 
 <p>La línea allow-recursion define quién puede hacer consultas recursivas, es decir, cuando nuestro servidor tiene que buscar la respuesta en otros servidores DNS de internet.</p>
 
-<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">allow</span>-<span class="n">recursion</span> { <span class="m">127</span>.<span class="m">0</span>.<span class="m">0</span>.<span class="m">1</span>; <span class="m">192</span>.<span class="m">168</span>.<span class="m">6</span>.<span class="m">0</span>/<span class="m">24</span>; };
-</code></pre></div></div>
+<p><img src="/assets/images/20260109-04.png" alt="Texto alternativo" /></p>
 
 <p><strong>Si un cliente no está en esta lista, no podrá hacer consultas recursivas, esto previene que tu servidor sea usado en ataques de amplificación DNS.</strong></p>
 
 <p>Finalmente, nuestro archivo de configuración quedaría de la siguiente manera</p>
 
+<p><img src="/assets/images/20260109-05.png" alt="Texto alternativo" /></p>
+
 <p>Antes de iniciar BIND, verificamos la sintaxis, si el comando no muestra ningún resultado, la sintaxis es correcta.</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>named-checkconf
-</code></pre></div></div>
+<p><img src="/assets/images/20260109-06.png" alt="Texto alternativo" /></p>
 
 <p>Si no hay salida, la sintaxis es correcta.</p>
 
 <p>Permitimos el tráfico DNS en el firewall y arrancamos el servicio</p>
+
+<p><img src="/assets/images/20260109-07.png" alt="Texto alternativo" /></p>
 
 <hr />
 
@@ -721,62 +691,65 @@ Responde consultas DNS igual que el master.</p>
 
 <p>Añadimos la definición de zona en el archivo /etc/named.conf</p>
 
-<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">zone</span> <span class="s2">"xebec.dlab"</span> {
-    <span class="n">type</span> <span class="n">master</span>;
-    <span class="n">file</span> <span class="s2">"/var/named/xebec.dlab.zone"</span>;
-    <span class="n">allow</span>-<span class="n">query</span> { <span class="n">any</span>; };
-    <span class="n">allow</span>-<span class="n">transfer</span> { <span class="n">none</span>; };
-};
-</code></pre></div></div>
+<p><img src="/assets/images/20260109-08.png" alt="Texto alternativo" /></p>
+
 <p>Este servidor actúa como el principal (type master) para la xebec.dlab zone</p>
 
 <p>Guardamos el archivo y volvemos a validar la sintaxis</p>
 
+<p><img src="/assets/images/20260109-09.png" alt="Texto alternativo" /></p>
+
 <p>Creamos el archivo /var/named/xebec.dlab.zone con el siguiente contenido</p>
+
+<p><img src="/assets/images/20260109-10.png" alt="Texto alternativo" /></p>
 
 <p>Establezemos los permisos adecuados para que solo el grupo named lo pueda leer</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chown </span>root:named /var/named/xebec.dlab.zone
-<span class="nb">chmod </span>640 /var/named/xebec.dlab.zone
-</code></pre></div></div>
+<p><img src="/assets/images/20260109-11.png" alt="Texto alternativo" /></p>
+
 <p>Verificamos la sintaxis de la zona</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>named-checkzone xebec.dlab /var/named/xebec.dlab.zone
-</code></pre></div></div>
+<p><img src="/assets/images/20260109-12.png" alt="Texto alternativo" /></p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl reload named
-</code></pre></div></div>
+<p>Recargamos el BIND</p>
+
+<p><img src="/assets/images/20260109-13.png" alt="Texto alternativo" /></p>
+
 <p>Finalmente verificamos que funciona correctamente</p>
+
+<p><img src="/assets/images/20260109-14.png" alt="Texto alternativo" /></p>
 
 <h2 id="zona-inversa-reverse-zone">Zona inversa (Reverse Zone)</h2>
 
 <p>Primero agregamos una nueva definición de zona al /etc/named.conf</p>
 
-<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">zone</span> <span class="s2">"6.168.192.in-addr.arpa"</span> {
-    <span class="n">type</span> <span class="n">master</span>;
-    <span class="n">file</span> <span class="s2">"/var/named/6.168.192.in-addr.arpa.zone"</span>;
-    <span class="n">allow</span>-<span class="n">query</span> { <span class="n">any</span>; };
-    <span class="n">allow</span>-<span class="n">transfer</span> { <span class="n">none</span>; };   
-};
-</code></pre></div></div>
+<p><img src="/assets/images/20260109-15.png" alt="Texto alternativo" /></p>
+
 <p>Verificamos sintaxis</p>
+
+<p><img src="/assets/images/20260109-16.png" alt="Texto alternativo" /></p>
 
 <p>Creamos el archivo /var/named/6.168.192.in-addr.arpa.zone</p>
 
+<p><img src="/assets/images/20260109-17.png" alt="Texto alternativo" /></p>
+
 <p>Asignamos los permisos adecuados igual que hemos hecho el la Zona directa (Forward zone)</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chown </span>root:named /var/named/6.168.192.in-addr.arpa.zone
-<span class="nb">chmod </span>640 /var/named/6.168.192.in-addr.arpa.zone
-</code></pre></div></div>
+<p><img src="/assets/images/20260109-18.png" alt="Texto alternativo" /></p>
+
 <p>Verificamos la sintaxis del archivo</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>named-checkzone 6.168.192.in-addr.arpa /var/named/6.168.192.in-addr.arpa.zone
-</code></pre></div></div>
+<p><img src="/assets/images/20260109-19.png" alt="Texto alternativo" /></p>
+
 <p>Y recargamos el BIND </p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl reload named
-</code></pre></div></div>
+<p><img src="/assets/images/20260109-20.png" alt="Texto alternativo" /></p>
+
 <p>Para acabar verificamos que funciona</p>
+
+<p><img src="/assets/images/20260109-21.png" alt="Texto alternativo" /></p>
+
+<p>Configurar BIND es el primer paso para profesionalizar la gestión de red en cualquier entorno. Esta guía es un ejemplo de cómo instalar un servidor DNS de forma sencilla y funcional. El siguiente nivel de madurez sería implementar alta disponibilidad mediante un servidor secundario (Slave), garantizando así que la red nunca se quede ‘a ciegas’ si el servidor principal falla, pero eso lo exploraremos en una futuro post.</p>
 
         
       </section>

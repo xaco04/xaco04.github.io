@@ -77,7 +77,32 @@ Postfix es un Agente de Transferencia de Correo (MTA). Su trabajo principal es e
 
 Detalles del sistema utilizado en nuestro caso:
 
-## AÑADIR LO QUE TIENE LA MV UTILIZADA Y UN DIAGRAMA DE FLUJO DEL SMTP
+| Categoría | Detalle |
+|---------|--------|
+| Sistema Operativo | Red Hat Enterprise Linux 9.7 (Plow) |
+| ID del Sistema | rhel |
+| Versión | 9.7 |
+| Kernel | 5.14.0-570.62.1.el9_6.x86_64 |
+| Arquitectura | x86_64 |
+| Hostname | smtp.rocks.dlab |
+| Tipo de sistema | Máquina Virtual |
+| Virtualización | VMware |
+| Chassis | vm |
+| Firmware | 6.00 |
+| Machine ID | 31259135be044e90b95787e4502c6c2e |
+| Boot ID | d288b5ba21854d65a3099c1743924257 |
+| Interfaz Loopback | lo |
+| IP Loopback IPv4 | 127.0.0.1/8 |
+| IP Loopback IPv6 | ::1/128 |
+| Interfaz de Red Real | ens192 (altname enp11s0) |
+| Dirección MAC | 00:0c:29:ce:f7:06 |
+| IP IPv4 | 192.168.6.28/24 |
+| IP IPv6 | fe80::20c:29ff:fece:f706/64 (link-local) |
+| Puerta de enlace | 192.168.6.1 |
+| Red | 192.168.6.0/24 |
+| Estado de interfaces | lo y ens192 → UP |
+| Tipo de IP | IPv4 dinámica |
+| Ámbito IPv6 | link-local |
 
 
 # Demo
@@ -207,7 +232,7 @@ Iniciamos y habilitamos el servicio .
 
 ![Texto alternativo](/assets/images/20260120/20260120-09.png)
 
-Para que el tráfico fluya, el cortafuegos de RHEL (firewalld) debe permitir conexiones entrantes en el puerto 25. Esto se logra habilitando el servicio predefinido:
+Para que el tráfico fluya, el firewall de RHEL (firewalld) debe permitir conexiones entrantes en el puerto 25. Esto se logra habilitando el servicio predefinido:
 
 ![Texto alternativo](/assets/images/20260120/20260120-10.png)
 
@@ -237,7 +262,7 @@ Para supervisar los errores de Postfix en tiempo real, se recomienda utilizar el
 tail -f /var/log/maillog | grep -i error
 ```
 
-En este post hemos configurado un servidor SMTP Postfix, orientado a un entorno interno o corporativo.
+En este post hemos configurado un servidor SMTP Postfix, orientado a un entorno interno.
 
 El servidor actúa como un MTA directo, entregando el correo saliente sin depender de un relay externo y aceptando conexiones únicamente en interfaces y redes explícitamente autorizadas.
 

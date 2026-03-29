@@ -1,92 +1,210 @@
----
-layout: splash
-classes: home-cards
-title: "Xavi Vico Martí"
-excerpt: "DevOps Engineer - Infrastructure Automation & Monitoring<br />"
-header:
-  overlay_color: "#5e616c"
-  overlay_image: /assets/images/banner.png
-  caption: ""
-feature_row:
-  - image_path: /assets/images/rhel.png
-    alt: "customizable"
-    title: "Red Hat Enterprise Linux"
-    excerpt: "Everything from the menus, sidebars, comments, and more can be configured."
-    url: "/docs/configuration/"
-    btn_label: "Learn more"
-  - image_path: /assets/images/ansible.png
-    alt: "fully responsive"
-    title: "Ansible"
-    excerpt: "Built with HTML5 + CSS3. All layouts are fully responsive."
-    url: "/docs/layouts/"
-    btn_label: "Learn more"
-  - image_path: /assets/images/instana.png
-    alt: "monitoring"
-    title: "Instana"
-    excerpt: "Application performance monitoring and observability."
-    url: "/docs/layouts/"
-    btn_label: "Learn more"
-  - image_path: /assets/images/kubernetes.png
-    alt: "k8s"
-    title: "Kubernetes"
-    excerpt: "Orchestration and container management."
-    url: "/docs/license/"
-    btn_label: "Learn more"
-  - image_path: /assets/images/openshift.png
-    alt: "openshift"
-    title: "Red Hat OpenShift"
-    excerpt: "Enterprise Kubernetes platform."
-    url: "/docs/license/"
-    btn_label: "Learn more"
-  - image_path: /assets/images/aws.png
-    alt: "aws"
-    title: "Amazon Web Services"
-    excerpt: "Cloud computing services."
-    url: "/docs/layouts/"
-    btn_label: "Learn more"
-  - image_path: /assets/images/kubernetes.png
-    alt: "k8s"
-    title: "Kubernetes"
-    excerpt: "Orchestration and container management."
-    url: "/docs/license/"
-    btn_label: "Learn more"
-  - image_path: /assets/images/kubernetes.png
-    alt: "k8s"
-    title: "Kubernetes"
-    excerpt: "Orchestration and container management."
-    url: "/docs/license/"
-    btn_label: "Learn more"
----
-<section class="home-cards-redhat">
-  <div class="cards-grid">
-    {% assign posts = site.posts | slice: 0,6 %}
+<!DOCTYPE html>
+<html lang="es">
 
-    <!-- Card grande -->
-    {% assign first = posts[0] %}
-    <article class="card card-large">
-      <div class="card-content">
-        <h2><a href="{{ first.url | relative_url }}">{{ first.title }}</a></h2>
-        <p>{{ first.excerpt | strip_html | truncate: 150 }}</p>
-        <a href="{{ first.url | relative_url }}" class="btn">Leer más</a>
-      </div>
-    <!--  {% if first.header.overlay_image %}
-      <img src="{{ first.header.overlay_image | relative_url }}" alt="{{ first.title }}">
-      {% endif %} -->
-    </article>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Xavi — IT Ops & DevOps Engineer">
+    <meta name="author" content="Xavi Vico Marti">
+    <meta property="og:title" content="Xavi Vico Marti | Portfolio">
+    <meta property="og:description"
+        content="Red Hat Partner · Bug Bounty Hunter">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <title>Xavi Vico Marti | Portfolio</title>
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>☀️</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
 
-    <!-- Card secundaria -->
-    {% assign second = posts[1] %}
-    <article class="card card-secondary">
-      <h3><a href="{{ second.url | relative_url }}">{{ second.title }}</a></h3>
-      <a href="{{ second.url | relative_url }}" class="btn">Leer más</a>
-    </article>
+<body>
+    <header class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#hero" class="nav-logo">
+                <span class="logo-icon">🪪</span>
+                <span class="logo-name">Xavi<span class="logo-accent">Vico Marti</span></span>
+            </a>
+            <nav class="nav-links" id="navLinks">
+                <a href="#about" class="nav-link">Sobre mí</a>
+                <a href="#projects" class="nav-link">Laboratorios</a>
+                <a href="#vulnerabilities" class="nav-link">Vulnerabilidades</a>
+                <a href="#courses" class="nav-link">Certificaciones</a>
+            </nav>
+            <button class="hamburger" id="hamburger" aria-label="Abrir menú">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+    <section class="hero" id="hero">
+        <div class="hero-orb"></div>
+        <div class="hero-inner">
+            <div class="hero-content">
+                <p class="hero-terminal">&gt;_ ~/PORTFOLIO</p>
+                <h1 class="hero-title">Xavi<br><span class="hero-title-accent">Vico Marti</span></h1>
+                <p class="hero-subtitle">Technology Consultant | Sysadmin | Bug Bounty &amp; Hunter
+                </p>
+                <div class="hero-cta">
+                    <a href="#about" class="btn-primary">Más sobre mí</a>
+                    <a href="#vulnerabilities" class="btn-secondary">Hall of Fame →</a>
+                </div>
+            </div>
+            <div class="hero-photo-wrap">
+                <div class="hero-photo-ring"></div>
+                <img src="images/profile.jpg" alt="Xavi Vico Marti" class="hero-photo" id="heroImage">
+            </div>
+        </div>
+        <div class="hero-scroll">
+            <span>scroll</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+    <section class="section" id="about">
+        <div class="section-container">
+            <div class="section-header reveal">
+                <p class="section-label">// quién soy</p>
+                <h2 class="section-title">Sobre mí</h2>
+            </div>
+            <div class="about-grid reveal">
+                <div class="about-bio">
+                    <div class="about-avatar">
+                        <img src="images/profile.jpg" alt="Xaco04" id="profileImage">
+                    </div>
+                    <div class="about-text">
+                        <p>Trabajo de <strong>consultor tecnológico</strong>, colaborando como <strong>Red Hat Partner</strong> en el despliegue de soluciones empresariales <strong>OpenShift</strong>, <strong>Ansible Automation Platform</strong> y otras soluciones de infraestructura.</p>
+                        <p>Me gusta también experimentar por mi cuenta, montando y diseñando <strong>laboratorios prácticos</strong> y explorando nuevas tecnologías. 
+                        Como hobby, me interesa la <strong>seguridad informática y el bug bounty</strong>, por el desafío y la curiosidad de aprender cómo funcionan los sistemas.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section" id="projects">
+        <div class="section-container">
+            <div class="section-header reveal">
+                <p class="section-label">// designs</p>
+                <h2 class="section-title">Arquitectura &amp; Laboratorios DevOps</h2>
+            </div>
+            <div class="projects-grid reveal">
+                <a href="nose" target="_blank" rel="noopener noreferrer" class="project-card">
+                    <div class="project-card-top">
+                        <img src="nose" alt="Project Logo" class="project-logo"
+                            onerror="this.style.display='none'">
+                        <div class="project-badge">Open Source</div>
+                    </div>
+                    <h3 class="project-name">Ejemplo1</h3>
+                    <p class="project-desc">Ejemplo1 descripcion</p>
+                    <div class="project-tags">
+                        <span class="tag">Docker</span>
+                        <span class="tag">CTF</span>
+                        <span class="tag">Pentesting</span>
+                    </div>
+                </a>
+                <a href="nose" target="_blank" rel="noopener noreferrer" class="project-card">
+                    <div class="project-card-top">
+                        <img src="nose" alt="Project Logo" class="project-logo"
+                            onerror="this.style.display='none'">
+                        <div class="project-badge">Ejemplo2</div>
+                    </div>
+                    <h3 class="project-name">Ejemplo2</h3>
+                    <p class="project-desc">Ejemplo2 descripcion</p>
+                    <div class="project-tags">
+                        <span class="tag">Formación</span>
+                        <span class="tag">Comunidad</span>
+                        <span class="tag">Hacking Ético</span>
+                    </div>
+                </a>
+                <a href="nose" target="_blank" rel="noopener noreferrer"
+                    class="project-card">
+                    <div class="project-card-top">
+                        <img src="nose" alt="Ejemplo3" class="project-logo"
+                            onerror="this.style.display='none'">
+                        <div class="project-badge">Ejemplo3</div>
+                    </div>
+                    <h3 class="project-name">Ejemplo3</h3>
+                    <p class="project-desc">Ejemplo3 descripcion</p>
+                    <div class="project-tags">
+                        <span class="tag">Tutoriales</span>
+                        <span class="tag">CTF</span>
+                        <span class="tag">Educación</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+    <section class="section section-alt" id="vulnerabilities">
+        <div class="section-container">
+            <div class="section-header reveal">
+                <p class="section-label">// bug bounty</p>
+                <h2 class="section-title">Vulnerabilidades Reportadas</h2>
+            </div>
+            <p class="section-intro reveal"><p class="section-intro reveal">Vulnerabilidades reportadas a organizaciones públicas y privadas.</p>
+            <div class="vuln-grid reveal">
+                <div class="vuln-card">
+                    <div class="vuln-logo-wrap">
+                        <img src="nose" alt="nose logo"
+                            class="vuln-logo"
+                            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                        <div class="vuln-logo-fallback" style="display:none">🚀</div>
+                    </div>
+                    <div class="vuln-body">
+                        <div class="vuln-top">
+                            <h3 class="vuln-org">nose</h3>
+                            <span class="vuln-badge vuln-badge-acknowledged">Acknowledged</span>
+                        </div>
+                        <p class="vuln-desc">nose descripcion</p>
+                        <div class="vuln-tags">
+                            <span class="tag">Responsible Disclosure</span>
+                            <span class="tag">Gov</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section" id="media">
+        <div class="section-container">
+            <div class="section-header reveal">
+                <p class="section-label">// Certificaciones</p>
+                <h2 class="section-title">Red Hat</h2>
+            </div>
+            <div class="media-grid reveal">
+                <div class="project-card media-card">
+                    <div class="media-photo-wrap">
+                        <img src="nose" alt="RHCSA" class="media-photo">
+                    </div>
+                    <div class="media-content">
+                        <h3 class="project-name">RHCSA</h3>
+                        <p class="project-desc"> Red Hat Certified System Administrator.</p>
+                    </div>
+                </div>
+                <div class="project-card media-card">
+                    <div class="media-photo-wrap">
+                        <img src="nose" alt="RHCE" class="media-photo">
+                    </div>
+                    <div class="media-content">
+                        <h3 class="project-name">RHCE</h3>
+                        <p class="project-desc"> Red Hat Certified Engineer.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-logo">
+                <span>☀️</span>
+                <span>Xavi Vico Marti</span>
+            </div>
+            <p class="footer-copy">&copy; 2026 Xavi Vico Marti · Todos los derechos reservados</p>
+        </div>
+    </footer>
+    <script src="js/script.js"></script>
+</body>
 
-    <!-- Cards pequeñas -->
-    {% for post in posts offset:2 %}
-    <article class="card card-small">
-      <span class="tag">Nuevo</span>
-      <h4><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h4>
-    </article>
-    {% endfor %}
-  </div>
-</section>
+</html>

@@ -1,3 +1,0 @@
-bundle install --binstubs
-
-bin/jekyll serve --livereload
